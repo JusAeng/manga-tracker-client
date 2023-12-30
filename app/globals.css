@@ -30,3 +30,7 @@
   box-sizing: border-box;
   font-family: "sukhumvit", sans-serif;
 }
+
+h3 {
+  font-family: "sukhumvit-semibold";
+}
