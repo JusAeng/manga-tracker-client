@@ -34,3 +34,7 @@
 h3 {
   font-family: "sukhumvit-semibold";
 }
+
+.shadow-card {
+  box-shadow: 0px 6px 6px rgba(112, 144, 176, 0.15);
+}
