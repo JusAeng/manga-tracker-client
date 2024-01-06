@@ -19,7 +19,7 @@ interface MenuIconProp {
 
 const actions: ActionType[] = [
   { icon: <RiHomeFill size={20} />, name: "Home", link: "/" },
-  { icon: <RiSearchFill size={20} />, name: "Search", link: "/search" },
+  // { icon: <RiSearchFill size={20} />, name: "Search", link: "/search" },
   { icon: <ImBooks size={20} />, name: "Shelf", link: "/shelf" },
   { icon: <FaUserAlt size={20} />, name: "Profile", link: "/profile" },
 ];
@@ -39,7 +39,7 @@ const Navbar = () => {
   };
 
   return (
-    <main className="flex border justify-around">
+    <main className="flex border justify-around fixed bottom-[0px] w-[100vw] bg-[#ffffff] h-[40px]">
       {actions.map((action) => (
         <div
           key={action.name}
