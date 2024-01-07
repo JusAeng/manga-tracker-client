@@ -1,3 +1,4 @@
+import BackButton from "@/app/components/BackButton";
 import VolumnCard from "../VolumnCard";
 
 export default function AnimeDetailPage({
@@ -6,14 +7,16 @@ export default function AnimeDetailPage({
   params: { animeName: string };
 }) {
   return (
-    <div>
+    <main>
       <div
         className="h-[30vh] bg-[#5c7df7]"
         // style={{
         //   background:
         //     'url("https://st4.depositphotos.com/14953852/22772/v/450/depositphotos_227725020-stock-illustration-image-available-icon-flat-vector.jpg")',
         // }}
-      ></div>
+      >
+        <BackButton />
+      </div>
       <div className="h-[10vh] bg-[#e1e6fa] mb-[10px]">
         detail {params.animeName}
       </div>
@@ -22,6 +25,6 @@ export default function AnimeDetailPage({
           <VolumnCard key={v} animeName="Hunter" vol={v} />
         ))}
       </div>
-    </div>
+    </main>
   );
 }
