@@ -37,7 +37,7 @@ const MenuBar: React.FC<Iprop> = ({ head, rank, sort, search }) => {
   }, [setSearchText]);
 
   return (
-    <main className="bg-[#5c7df7] h-[40px] grid place-items-center">
+    <main className="bg-[#5c7df7] h-[40px] grid place-items-center w-[100%] sticky top-[0px]">
       {isSearch ? (
         <div className="flex justify-between px-[10px] w-[100%]">
           <div onClick={handleSearch}>back</div>
