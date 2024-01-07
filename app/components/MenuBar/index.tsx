@@ -1,3 +1,8 @@
+"use client";
+
+import useSearch from "@/app/hooks/UseSearch";
+import { useEffect, useRef, useState } from "react";
+
 interface Iprop {
   head: string;
   rank?: boolean;
@@ -5,31 +10,62 @@ interface Iprop {
   search?: boolean;
 }
 
-const SearchButton = () => {
-  return (
-    <div>
-      <div>searchh</div>
-    </div>
-  );
-};
-
-const SortButton = () => {
-  return (
-    <div>
-      <div>sortt</div>
-    </div>
-  );
-};
-
 const MenuBar: React.FC<Iprop> = ({ head, rank, sort, search }) => {
+  const [isSearch, setIsSearch] = useState(false);
+  const [isFilter, setIsFilter] = useState(false);
+
+  const { searchText, setSearchText } = useSearch();
+  const searchRef = useRef<HTMLInputElement>(null);
+
+  const handleFilter = () => {
+    setIsFilter(!isFilter);
+  };
+
+  const handleSearch = () => {
+    setIsFilter(false);
+    setSearchText("");
+    setIsSearch(!isSearch);
+  };
+
+  const handleTypingSearch = () => {
+    const textSearchRef = searchRef.current?.value || "";
+    setSearchText(textSearchRef);
+  };
+
+  useEffect(() => {
+    setSearchText("");
+  }, [setSearchText]);
+
   return (
-    <main className="flex bg-[#5c7df7] h-[40px] justify-between items-center px-[10px]">
-      <h1 className="bg-[#ffffff]">{head}</h1>
-      <div className="flex justify-around bg-[#ffffff] gap-[20px]">
-        {rank && <div>rank</div>}
-        {sort && <SortButton />}
-        {search && <SearchButton />}
-      </div>
+    <main className="bg-[#5c7df7] h-[40px] grid place-items-center">
+      {isSearch ? (
+        <div className="flex justify-between px-[10px] w-[100%]">
+          <div onClick={handleSearch}>back</div>
+          <input
+            type="text"
+            onChange={handleTypingSearch}
+            ref={searchRef}
+            value={searchText}
+          />
+        </div>
+      ) : (
+        <div className="flex justify-between items-center px-[10px] w-[100%]">
+          <h1 className="bg-[#ffffff]">{head}</h1>
+          <div className="flex justify-around bg-[#ffffff] gap-[20px]">
+            {rank && <div>rank</div>}
+            {sort && (
+              <div onClick={handleFilter}>
+                <div>sor</div>
+              </div>
+            )}
+            {search && (
+              <div onClick={handleSearch}>
+                <div>search</div>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
     </main>
   );
 };
