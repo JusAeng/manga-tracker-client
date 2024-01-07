@@ -1,10 +1,11 @@
+import HomeContainer from "./components/HomepageContainer";
 import MenuBar from "./components/MenuBar";
 
 export default function Home() {
   return (
     <main className="bg-[#ffffff]">
-      <MenuBar head={"Homepage"} rank={true} search={true} />
-      <p>This is homepage</p>
+      <MenuBar head={"For you"} rank={true} search={true} />
+      <HomeContainer />
     </main>
   );
 }
