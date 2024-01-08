@@ -1,10 +1,13 @@
+"use client";
+
 import testData from "@/app/temp/anime.json";
 import tt from "@/app/temp/tt.json";
 import TrendingCard from "../TrendingCard";
 import HighlightCard from "../HighlightCard";
 import AnimeCard from "../AnimeCard";
+import useSearch from "@/app/hooks/UseSearch";
 
-const HomeContainer = () => {
+const MainContainer = () => {
   const myAnimes = testData;
 
   return (
@@ -118,6 +121,32 @@ const HomeContainer = () => {
         </div>
       </div>
     </main>
+  );
+};
+
+const SearchContainer = () => {
+  const myAnimes = testData;
+  return (
+    <div className="flex justify-center">
+      <div className="flex flex-col gap-[20px]">
+        {myAnimes.map((anime) => (
+          <AnimeCard
+            key={anime.name}
+            image={anime.image}
+            name={anime.name}
+            author={anime.author}
+            lastEpisode={anime.lastEpisode}
+          />
+        ))}
+      </div>
+    </div>
+  );
+};
+
+const HomeContainer = () => {
+  const { searchText } = useSearch();
+  return (
+    <main>{searchText === "" ? <MainContainer /> : <SearchContainer />}</main>
   );
 };
 
