@@ -38,3 +38,7 @@ h3 {
 .shadow-card {
   box-shadow: 0px 6px 6px rgba(112, 144, 176, 0.15);
 }
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
