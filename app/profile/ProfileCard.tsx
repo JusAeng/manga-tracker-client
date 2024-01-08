@@ -5,7 +5,7 @@ const ProfileCard = () => {
       <section className="">
         <p>zPlanC</p>
         <p>All Subscribe:</p>
-        <p>All Manga:</p>
+        <p>All Books:</p>
       </section>
     </main>
   );
