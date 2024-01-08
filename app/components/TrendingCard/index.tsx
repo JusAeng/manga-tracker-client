@@ -8,8 +8,8 @@ interface IProp {
 
 const TrendingCard: React.FC<IProp> = ({ image, name, author }) => {
   return (
-    <div className="bg-[#ff0000]">
-      <div className="relative w-[68px] h-[68px]">
+    <div>
+      <div className="relative w-[100px] h-[120px]">
         <Image
           src={image}
           alt="Picture of the author"
