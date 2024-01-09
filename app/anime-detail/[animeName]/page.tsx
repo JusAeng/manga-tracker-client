@@ -1,5 +1,6 @@
 import BackButton from "@/app/components/BackButton";
 import VolumnCard from "../VolumnCard";
+import ReadMoreContainer from "../ReadMoreContainer";
 
 export default function AnimeDetailPage({
   params,
@@ -17,10 +18,8 @@ export default function AnimeDetailPage({
       >
         <BackButton />
       </div>
-      <div className="h-[10vh] bg-[#e1e6fa] mb-[10px]">
-        detail {params.animeName}
-      </div>
-      <div className="container flex flex-col gap-[5px]">
+      <ReadMoreContainer />
+      <div className="container flex flex-col gap-[5px] mt-[10px]">
         {[1, 2, 3, 4, 5].map((v) => (
           <VolumnCard key={v} animeName="Hunter" vol={v} />
         ))}
