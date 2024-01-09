@@ -3,11 +3,11 @@ import Image from "next/image";
 import { useState } from "react";
 
 interface Iprop {
-  animeName: string;
+  mangaName: string;
   vol: number;
 }
 
-const VolumnCard: React.FC<Iprop> = ({ animeName, vol }) => {
+const VolumnCard: React.FC<Iprop> = ({ mangaName, vol }) => {
   const [isBuy, setIsBuy] = useState(false);
   const handleClick = () => {
     setIsBuy(!isBuy);

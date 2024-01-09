@@ -5,7 +5,7 @@ import ReadMoreContainer from "../ReadMoreContainer";
 export default function AnimeDetailPage({
   params,
 }: {
-  params: { animeName: string };
+  params: { mangaName: string };
 }) {
   return (
     <main>
@@ -21,7 +21,7 @@ export default function AnimeDetailPage({
       <ReadMoreContainer />
       <div className="container flex flex-col gap-[5px] mt-[10px]">
         {[1, 2, 3, 4, 5].map((v) => (
-          <VolumnCard key={v} animeName="Hunter" vol={v} />
+          <VolumnCard key={v} mangaName="Hunter" vol={v} />
         ))}
       </div>
     </main>
