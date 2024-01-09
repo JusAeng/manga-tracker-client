@@ -14,7 +14,7 @@ const HighlightCard: React.FC<IProp> = ({ image, genres, name }) => {
 
   const handleView = () => {
     let temp = name.replace(/\s+/g, "-");
-    router.push(`/anime-detail/${temp}`);
+    router.push(`/manga-detail/${temp}`);
   };
   const handleSub = () => {
     console.log("subscribe");
