@@ -10,11 +10,11 @@ interface Iprop {
   lastEpisode: number;
 }
 
-const AnimeCard: React.FC<Iprop> = ({ image, name, author, lastEpisode }) => {
+const MangaCard: React.FC<Iprop> = ({ image, name, author, lastEpisode }) => {
   const router = useRouter();
   const handleClick = () => {
     let temp = name.replace(/\s+/g, "-");
-    router.push(`/anime-detail/${temp}`);
+    router.push(`/manga-detail/${temp}`);
   };
 
   return (
@@ -47,4 +47,4 @@ const AnimeCard: React.FC<Iprop> = ({ image, name, author, lastEpisode }) => {
   );
 };
 
-export default AnimeCard;
+export default MangaCard;
