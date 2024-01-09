@@ -1,6 +1,6 @@
 "use client";
 
-import AnimeCard from "../components/AnimeCard";
+import MangaCard from "../components/MangaCard";
 import useSearch from "../hooks/UseSearch";
 import testData from "../temp/anime.json";
 
@@ -18,7 +18,7 @@ const MangaContainer = () => {
     <div className="flex flex-col items-center gap-[10px] mt-[10px]">
       {filtered.map((data) => {
         return (
-          <AnimeCard
+          <MangaCard
             key={data.name}
             image={data.image}
             name={data.name}

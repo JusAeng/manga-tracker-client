@@ -4,7 +4,7 @@ import testData from "@/app/temp/anime.json";
 import tt from "@/app/temp/tt.json";
 import TrendingCard from "../TrendingCard";
 import HighlightCard from "../HighlightCard";
-import AnimeCard from "../AnimeCard";
+import MangaCard from "../MangaCard";
 import useSearch from "@/app/hooks/UseSearch";
 
 const MainContainer = () => {
@@ -138,7 +138,7 @@ const SearchContainer = () => {
     <div className="flex justify-center">
       <div className="flex flex-col gap-[20px]">
         {filtered.map((anime) => (
-          <AnimeCard
+          <MangaCard
             key={anime.name}
             image={anime.image}
             name={anime.name}
