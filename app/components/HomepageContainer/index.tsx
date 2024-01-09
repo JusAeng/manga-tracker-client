@@ -126,10 +126,18 @@ const MainContainer = () => {
 
 const SearchContainer = () => {
   const myAnimes = testData;
+  const { searchText } = useSearch();
+
+  let filtered = myAnimes?.filter(
+    (manga) =>
+      manga.name.toLowerCase().includes(searchText.toLowerCase()) ||
+      manga.author.toLowerCase().includes(searchText.toLowerCase())
+  );
+
   return (
     <div className="flex justify-center">
       <div className="flex flex-col gap-[20px]">
-        {myAnimes.map((anime) => (
+        {filtered.map((anime) => (
           <AnimeCard
             key={anime.name}
             image={anime.image}
