@@ -1,4 +1,7 @@
+"use client";
+
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 interface IProp {
   image: string;
@@ -7,8 +10,13 @@ interface IProp {
 }
 
 const TrendingCard: React.FC<IProp> = ({ image, name, author }) => {
+  const router = useRouter();
+  const handleView = () => {
+    let temp = name.replace(/\s+/g, "-");
+    router.push(`/manga-detail/${temp}`);
+  };
   return (
-    <div>
+    <main onClick={handleView}>
       <div className="relative w-[100px] h-[120px]">
         <Image
           src={image}
@@ -23,7 +31,7 @@ const TrendingCard: React.FC<IProp> = ({ image, name, author }) => {
       </div>
       <p>{name}</p>
       <p>{author}</p>
-    </div>
+    </main>
   );
 };
 
