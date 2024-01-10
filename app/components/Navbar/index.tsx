@@ -3,8 +3,8 @@
 import { RiHomeFill, RiSearchFill } from "react-icons/ri";
 import { ImBooks } from "react-icons/im";
 import { FaUserAlt } from "react-icons/fa";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useRouter, usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 
 interface ActionType {
   icon: JSX.Element;
@@ -18,10 +18,10 @@ interface MenuIconProp {
 }
 
 const actions: ActionType[] = [
-  { icon: <RiHomeFill size={20} />, name: "Home", link: "/" },
+  { icon: <RiHomeFill size={20} />, name: "home", link: "/" },
   // { icon: <RiSearchFill size={20} />, name: "Search", link: "/search" },
-  { icon: <ImBooks size={20} />, name: "Shelf", link: "/shelf" },
-  { icon: <FaUserAlt size={19} />, name: "Profile", link: "/profile" },
+  { icon: <ImBooks size={20} />, name: "shelf", link: "/shelf" },
+  { icon: <FaUserAlt size={19} />, name: "profile", link: "/profile" },
 ];
 
 const MenuIcon: React.FC<MenuIconProp> = ({ action, color }) => (
@@ -30,13 +30,17 @@ const MenuIcon: React.FC<MenuIconProp> = ({ action, color }) => (
 
 const Navbar = () => {
   const router = useRouter();
-  const [menu, setMenu] = useState("Home");
+  const pathname = usePathname();
+  const [menu, setMenu] = useState(pathname);
 
   const handleSpeedDialAction = (action: ActionType) => {
-    setMenu(action.name);
+    setMenu(action.link);
     router.push(action.link);
-    console.log(action.link);
   };
+
+  useEffect(() => {
+    console.log(menu);
+  }, [menu]);
 
   return (
     <main className="flex justify-around fixed bottom-[0px] w-[100vw] bg-[#2e2e2f] h-[45px]">
@@ -48,12 +52,12 @@ const Navbar = () => {
         >
           <MenuIcon
             action={action}
-            color={menu === action.name ? "#ffffff" : "#777777"}
+            color={menu === action.link ? "#ffffff" : "#777777"}
           />
           <p
             className={
               "text-[10px]" +
-              (menu === action.name ? " text-[#ffffff]" : " text-[#777777]")
+              (menu === action.link ? " text-[#ffffff]" : " text-[#777777]")
             }
           >
             {action.name}
