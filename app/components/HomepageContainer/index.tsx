@@ -12,11 +12,14 @@ const MainContainer = () => {
 
   return (
     <main>
-      <HighlightCard
-        image={tt[0].image}
-        genres={["sci-fi", "action"]}
-        name={myAnimes[0].name}
-      />
+      <section className="my-[20px]">
+        <HighlightCard
+          image={tt[0].image}
+          genres={["sci-fi", "action"]}
+          name={myAnimes[0].name}
+        />
+      </section>
+
       <p className="text-white">Trending Manga</p>
       <div className="flex gap-[10px] overflow-x-auto whitespace-nowrap scrollbar-hide p-[10px]">
         <TrendingCard
