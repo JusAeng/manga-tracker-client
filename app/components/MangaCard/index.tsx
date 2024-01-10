@@ -20,7 +20,7 @@ const MangaCard: React.FC<Iprop> = ({ image, name, author, lastEpisode }) => {
 
   return (
     <main
-      className="flex bg-[#3f3f3f] w-[335px] h-[96px] rounded-xl cursor-pointer"
+      className="flex bg-[#3f3f3f] w-[340px] h-[96px] rounded-xl cursor-pointer"
       onClick={() => handleClick()}
     >
       <section className="m-[10px] grid place-items-center w-[25%]">
@@ -37,19 +37,19 @@ const MangaCard: React.FC<Iprop> = ({ image, name, author, lastEpisode }) => {
           />
         </div>
       </section>
-      <section className="m-[10px] w-[60%]">
+      <section className="m-[10px] flex flex-col justify-evenly w-[60%] items-start">
         <div className="truncate-container">
           <h3
             className={
               "text-[#ffffff]" +
-              (name.length > 30 ? " text-[15px]" : " text-[16px]")
+              (name.length > 32 ? " text-[15px]" : " text-[17px]")
             }
           >
             {name}
           </h3>
         </div>
-        <span className="bg-[#3697f7] rounded-lg px-[5px] text-[12px] text-[#ffffff]">
-          Chapter {lastEpisode} {name.length}
+        <span className="bg-[#3697f7] rounded-lg py-[1px] px-[6px] text-[11px] text-[#ffffff]">
+          Latest vol: {lastEpisode}
         </span>
       </section>
     </main>
