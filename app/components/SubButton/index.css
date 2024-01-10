@@ -1,0 +1,25 @@
+.spin-forward {
+  animation: spin-forward 1s linear infinite; /* You can adjust the animation duration and other properties */
+}
+
+.spin-back {
+  animation: spin-backward 1s linear infinite; /* You can adjust the animation duration and other properties */
+}
+
+@keyframes spin-forward {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(90deg);
+  }
+}
+
+@keyframes spin-backward {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(-90deg);
+  }
+}
