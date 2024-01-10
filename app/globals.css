@@ -31,6 +31,15 @@
   font-family: "sukhumvit", sans-serif;
 }
 
+.fontw-semi {
+  font-family: "sukhumvit-semibold";
+}
+
+h1 {
+  font-family: "sukhumvit-semibold";
+  font-size: 21px;
+}
+
 h3 {
   font-family: "sukhumvit-semibold";
 }
