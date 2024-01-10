@@ -3,7 +3,7 @@ import MenuBar from "./components/MenuBar";
 
 export default function Home() {
   return (
-    <main className="bg-[#ffffff]">
+    <main className="bg-[#1e1e1f]">
       <MenuBar head={"For you"} rank={true} search={true} />
       <HomeContainer />
     </main>

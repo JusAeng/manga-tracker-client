@@ -29,8 +29,8 @@ const TrendingCard: React.FC<IProp> = ({ image, name, author }) => {
           className="rounded-xl"
         />
       </div>
-      <p>{name}</p>
-      <p>{author}</p>
+      <p className="text-white">{name}</p>
+      <p className="text-white">{author}</p>
     </main>
   );
 };

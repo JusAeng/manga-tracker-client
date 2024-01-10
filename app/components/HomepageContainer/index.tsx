@@ -17,8 +17,8 @@ const MainContainer = () => {
         genres={["sci-fi", "action"]}
         name={myAnimes[0].name}
       />
-      <p>Trending Manga</p>
-      <div className="flex gap-[10px] overflow-x-auto whitespace-nowrap scrollbar-hide bg-[#e0e0e0] p-[10px]">
+      <p className="text-white">Trending Manga</p>
+      <div className="flex gap-[10px] overflow-x-auto whitespace-nowrap scrollbar-hide p-[10px]">
         <TrendingCard
           image={myAnimes[1].image}
           name={myAnimes[0].name}
@@ -51,8 +51,8 @@ const MainContainer = () => {
         />
       </div>
       <div>
-        <p className="mb-[10px]">Recommend</p>
-        <div className="flex gap-[10px] overflow-x-auto whitespace-nowrap scrollbar-hide bg-[#e0e0e0] p-[10px]">
+        <p className="mb-[10px] text-white">Recommend</p>
+        <div className="flex gap-[10px] overflow-x-auto whitespace-nowrap scrollbar-hide p-[10px]">
           <TrendingCard
             image={myAnimes[1].image}
             name={myAnimes[0].name}
@@ -86,8 +86,8 @@ const MainContainer = () => {
         </div>
       </div>
       <div className="mb-[30px]">
-        <p className="mb-[10px]">New</p>
-        <div className="flex gap-[10px] overflow-x-auto whitespace-nowrap scrollbar-hide bg-[#e0e0e0] p-[10px]">
+        <p className="mb-[10px] text-white">New</p>
+        <div className="flex gap-[10px] overflow-x-auto whitespace-nowrap scrollbar-hide p-[10px]">
           <TrendingCard
             image={myAnimes[1].image}
             name={myAnimes[0].name}

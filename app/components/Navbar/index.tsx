@@ -21,7 +21,7 @@ const actions: ActionType[] = [
   { icon: <RiHomeFill size={20} />, name: "Home", link: "/" },
   // { icon: <RiSearchFill size={20} />, name: "Search", link: "/search" },
   { icon: <ImBooks size={20} />, name: "Shelf", link: "/shelf" },
-  { icon: <FaUserAlt size={20} />, name: "Profile", link: "/profile" },
+  { icon: <FaUserAlt size={19} />, name: "Profile", link: "/profile" },
 ];
 
 const MenuIcon: React.FC<MenuIconProp> = ({ action, color }) => (
@@ -39,17 +39,25 @@ const Navbar = () => {
   };
 
   return (
-    <main className="flex border justify-around fixed bottom-[0px] w-[100vw] bg-[#ffffff] h-[40px]">
+    <main className="flex justify-around fixed bottom-[0px] w-[100vw] bg-[#2e2e2f] h-[45px]">
       {actions.map((action) => (
         <div
           key={action.name}
-          className="border grid place-items-center cursor-pointer"
+          className="flex flex-col justify-center items-center cursor-pointer mt-[7px]"
           onClick={() => handleSpeedDialAction(action)}
         >
           <MenuIcon
             action={action}
-            color={menu === action.name ? "#0000AA" : "#000000"}
+            color={menu === action.name ? "#ffffff" : "#777777"}
           />
+          <p
+            className={
+              "text-[10px]" +
+              (menu === action.name ? " text-[#ffffff]" : " text-[#777777]")
+            }
+          >
+            {action.name}
+          </p>
         </div>
       ))}
     </main>
