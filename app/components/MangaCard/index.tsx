@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import "./truncate.css";
 
 interface Iprop {
   image: string;
@@ -19,11 +20,11 @@ const MangaCard: React.FC<Iprop> = ({ image, name, author, lastEpisode }) => {
 
   return (
     <main
-      className="flex bg-[#ffffff] w-[335px] h-[96px] rounded-xl cursor-pointer shadow-card"
+      className="flex bg-[#3f3f3f] w-[335px] h-[96px] rounded-xl cursor-pointer"
       onClick={() => handleClick()}
     >
       <section className="m-[10px] grid place-items-center w-[25%]">
-        <div className="relative w-[68px] h-[68px]">
+        <div className="relative w-[74px] h-[74px]">
           <Image
             src={image}
             alt="Picture of the author"
@@ -37,10 +38,18 @@ const MangaCard: React.FC<Iprop> = ({ image, name, author, lastEpisode }) => {
         </div>
       </section>
       <section className="m-[10px] w-[60%]">
-        <h3>{name}</h3>
-        <p className="text-sm text-[#9e9e9e]">{author}</p>
-        <span className="bg-[#fab6b1] rounded-lg px-[3px] text-[11px]">
-          Chapter {lastEpisode}
+        <div className="truncate-container">
+          <h3
+            className={
+              "text-[#ffffff]" +
+              (name.length > 30 ? " text-[15px]" : " text-[16px]")
+            }
+          >
+            {name}
+          </h3>
+        </div>
+        <span className="bg-[#3697f7] rounded-lg px-[5px] text-[12px] text-[#ffffff]">
+          Chapter {lastEpisode} {name.length}
         </span>
       </section>
     </main>
