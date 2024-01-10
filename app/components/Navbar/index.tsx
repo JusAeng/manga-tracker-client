@@ -4,7 +4,7 @@ import { RiHomeFill, RiSearchFill } from "react-icons/ri";
 import { ImBooks } from "react-icons/im";
 import { FaUserAlt } from "react-icons/fa";
 import { useRouter, usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 interface ActionType {
   icon: JSX.Element;
@@ -37,10 +37,6 @@ const Navbar = () => {
     setMenu(action.link);
     router.push(action.link);
   };
-
-  useEffect(() => {
-    console.log(menu);
-  }, [menu]);
 
   return (
     <main className="flex justify-around fixed bottom-[0px] w-[100vw] bg-[#2e2e2f] h-[45px]">
