@@ -3,7 +3,7 @@ import MangaContainer from "./MangaContainer";
 
 const ShelfPage = () => {
   return (
-    <main>
+    <main className="min-h-screen bg-[#1e1e1f]">
       <MenuBar head={"My Manga"} sort={true} search={true} />
       <MangaContainer />
     </main>

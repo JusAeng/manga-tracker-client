@@ -15,7 +15,7 @@ const MangaContainer = () => {
   );
 
   return (
-    <div className="flex flex-col items-center gap-[10px] mt-[10px]">
+    <div className="flex flex-col items-center gap-[10px] mt-[10px] pb-[55px]">
       {filtered.map((data) => {
         return (
           <MangaCard
