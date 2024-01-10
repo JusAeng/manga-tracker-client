@@ -2,6 +2,9 @@
 
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import { IoMdAdd } from "react-icons/io";
+import { FaPlay } from "react-icons/fa";
+import SubButton from "../SubButton";
 
 interface IProp {
   image: string;
@@ -30,7 +33,7 @@ const HighlightCard: React.FC<IProp> = ({ image, genres, name }) => {
         }}
         onClick={handleView}
       ></div> */}
-      <div className="relative w-[350px] h-[400px] cursor-pointer">
+      <div className="relative w-[350px] h-[440px] cursor-pointer">
         <Image
           src={image}
           alt="Picture of the author"
@@ -45,14 +48,24 @@ const HighlightCard: React.FC<IProp> = ({ image, genres, name }) => {
       </div>
       <div className="absolute flex gap-[20px] justify-center bottom-[10px]">
         <button
-          className="bg-[#ff00f0] h-[20px] w-[100px]"
+          className="bg-[#ffffff] h-[40px] w-[150px] rounded-[8px] grid place-items-center"
           onClick={handleView}
         >
-          View
+          <div className="flex gap-[9px] items-center">
+            <FaPlay size={13} />
+            <h3 className="text-[19px]">View</h3>
+          </div>
         </button>
-        <button className="bg-[#f0f0f0] h-[20px] w-[100px]" onClick={handleSub}>
-          Subscribe
+        <button
+          className="bg-[#555555] h-[40px] w-[150px] rounded-[8px] grid place-items-center"
+          onClick={handleSub}
+        >
+          <div className="flex gap-[7px]">
+            <IoMdAdd size={21} color={"#ffffff"} />
+            <span className="text-[#ffffff]">Subscribe</span>
+          </div>
         </button>
+        {/* <SubButton /> */}
       </div>
     </main>
   );
