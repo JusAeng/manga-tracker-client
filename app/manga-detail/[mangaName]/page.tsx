@@ -8,15 +8,20 @@ export default function AnimeDetailPage({
   params: { mangaName: string };
 }) {
   return (
-    <main>
+    <main className="bg-[#1e1e1f] min-h-screen">
       <div
-        className="h-[30vh] bg-[#5c7df7]"
-        // style={{
-        //   background:
-        //     'url("https://st4.depositphotos.com/14953852/22772/v/450/depositphotos_227725020-stock-illustration-image-available-icon-flat-vector.jpg")',
-        // }}
+        className="h-[30vh] bg-[#5c7df7] flex flex-col items-start justify-between"
+        style={{
+          background:
+            'url("https://static1.cbrimages.com/wordpress/wp-content/uploads/2022/09/rent-a-girlfriend-episode-10-season-2-ruka-sarashina-kiss-whenever.jpg")',
+          backgroundPosition: "center",
+          backgroundSize: "cover",
+        }}
       >
         <BackButton />
+        <div className="bg-[#ffffff] rounded-[5px] text-[12px] mb-[10px] ml-[5px] px-[4px]">
+          Comady
+        </div>
       </div>
       <ReadMoreContainer />
       <div className="container flex flex-col gap-[5px] mt-[10px]">
