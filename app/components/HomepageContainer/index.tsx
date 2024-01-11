@@ -19,110 +19,61 @@ const MainContainer = () => {
           name={myAnimes[0].name}
         />
       </section>
-
-      <p className="text-white">Trending Manga</p>
-      <div className="flex gap-[10px] overflow-x-auto whitespace-nowrap scrollbar-hide p-[10px]">
-        <TrendingCard
-          image={myAnimes[1].image}
-          name={myAnimes[0].name}
-          author={myAnimes[0].author}
-        />
-        <TrendingCard
-          image={myAnimes[0].image}
-          name={myAnimes[0].name}
-          author={myAnimes[0].author}
-        />
-        <TrendingCard
-          image={myAnimes[1].image}
-          name={myAnimes[0].name}
-          author={myAnimes[0].author}
-        />
-        <TrendingCard
-          image={myAnimes[0].image}
-          name={myAnimes[0].name}
-          author={myAnimes[0].author}
-        />
-        <TrendingCard
-          image={myAnimes[1].image}
-          name={myAnimes[0].name}
-          author={myAnimes[0].author}
-        />
-        <TrendingCard
-          image={myAnimes[0].image}
-          name={myAnimes[0].name}
-          author={myAnimes[0].author}
-        />
-      </div>
-      <div>
-        <p className="mb-[10px] text-white">Recommend</p>
-        <div className="flex gap-[10px] overflow-x-auto whitespace-nowrap scrollbar-hide p-[10px]">
+      <section>
+        <h3 className="text-white text-[18px] ml-[10px]">Trending Manga</h3>
+        <div className="flex gap-[12px] overflow-x-auto whitespace-nowrap scrollbar-hide p-[10px]">
           <TrendingCard
             image={myAnimes[1].image}
             name={myAnimes[0].name}
-            author={myAnimes[0].author}
-          />
-          <TrendingCard
-            image={myAnimes[0].image}
-            name={myAnimes[0].name}
-            author={myAnimes[0].author}
-          />
-          <TrendingCard
-            image={myAnimes[1].image}
-            name={myAnimes[0].name}
-            author={myAnimes[0].author}
-          />
-          <TrendingCard
-            image={myAnimes[0].image}
-            name={myAnimes[0].name}
-            author={myAnimes[0].author}
-          />
-          <TrendingCard
-            image={myAnimes[1].image}
-            name={myAnimes[0].name}
-            author={myAnimes[0].author}
-          />
-          <TrendingCard
-            image={myAnimes[0].image}
-            name={myAnimes[0].name}
-            author={myAnimes[0].author}
+            publisher={myAnimes[0].publisher}
           />
         </div>
-      </div>
-      <div className="mb-[30px]">
-        <p className="mb-[10px] text-white">New</p>
-        <div className="flex gap-[10px] overflow-x-auto whitespace-nowrap scrollbar-hide p-[10px]">
+      </section>
+      <section className="mt-[5px]">
+        <h3 className="text-white text-[18px] ml-[10px]">Recommend</h3>
+        <div className="flex gap-[12px] overflow-x-auto whitespace-nowrap scrollbar-hide p-[10px]">
           <TrendingCard
             image={myAnimes[1].image}
             name={myAnimes[0].name}
-            author={myAnimes[0].author}
-          />
-          <TrendingCard
-            image={myAnimes[0].image}
-            name={myAnimes[0].name}
-            author={myAnimes[0].author}
-          />
-          <TrendingCard
-            image={myAnimes[1].image}
-            name={myAnimes[0].name}
-            author={myAnimes[0].author}
-          />
-          <TrendingCard
-            image={myAnimes[0].image}
-            name={myAnimes[0].name}
-            author={myAnimes[0].author}
-          />
-          <TrendingCard
-            image={myAnimes[1].image}
-            name={myAnimes[0].name}
-            author={myAnimes[0].author}
-          />
-          <TrendingCard
-            image={myAnimes[0].image}
-            name={myAnimes[0].name}
-            author={myAnimes[0].author}
+            publisher={myAnimes[0].publisher}
           />
         </div>
-      </div>
+      </section>
+      <section className="pb-[50px] mt-[5px]">
+        <h3 className="text-white text-[18px] ml-[10px]">New</h3>
+        <div className="flex gap-[12px] overflow-x-auto whitespace-nowrap scrollbar-hide p-[10px]">
+          <TrendingCard
+            image={myAnimes[1].image}
+            name={myAnimes[0].name}
+            publisher={myAnimes[0].publisher}
+          />
+          <TrendingCard
+            image={myAnimes[0].image}
+            name={myAnimes[0].name}
+            publisher={myAnimes[0].publisher}
+          />
+          <TrendingCard
+            image={myAnimes[1].image}
+            name={myAnimes[0].name}
+            publisher={myAnimes[0].publisher}
+          />
+          <TrendingCard
+            image={myAnimes[0].image}
+            name={myAnimes[0].name}
+            publisher={myAnimes[0].publisher}
+          />
+          <TrendingCard
+            image={myAnimes[1].image}
+            name={myAnimes[0].name}
+            publisher={myAnimes[0].publisher}
+          />
+          <TrendingCard
+            image={myAnimes[0].image}
+            name={myAnimes[0].name}
+            publisher={myAnimes[0].publisher}
+          />
+        </div>
+      </section>
     </main>
   );
 };
