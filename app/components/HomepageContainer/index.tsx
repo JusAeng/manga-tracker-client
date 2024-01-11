@@ -89,8 +89,8 @@ const SearchContainer = () => {
   );
 
   return (
-    <div className="flex justify-center">
-      <div className="flex flex-col gap-[20px]">
+    <div className="flex justify-center mt-[10px]">
+      <div className="flex flex-col gap-[10px]">
         {filtered.map((anime) => (
           <MangaCard
             key={anime.name}
