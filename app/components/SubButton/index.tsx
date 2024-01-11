@@ -14,7 +14,7 @@ const SubButton: React.FC = () => {
     setTimeout(() => {
       setChanged(!changed);
       setSpin(false);
-    }, 1000);
+    }, 500);
   };
 
   return (

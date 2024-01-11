@@ -1,9 +1,9 @@
 .spin-forward {
-  animation: spin-forward 1s linear infinite; /* You can adjust the animation duration and other properties */
+  animation: spin-forward 0.75s linear infinite;
 }
 
 .spin-back {
-  animation: spin-backward 1s linear infinite; /* You can adjust the animation duration and other properties */
+  animation: spin-backward 0.5s linear infinite;
 }
 
 @keyframes spin-forward {
