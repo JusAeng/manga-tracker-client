@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "./components/Navbar";
 import SearchProvider from "./contexts/search/SearchProvider";
+import NavProvider from "./contexts/nav/NavProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,10 +20,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className + " bg-[#ffffff] scrollbar-hide"}>
-        <SearchProvider>
-          {children}
-          <Navbar />
-        </SearchProvider>
+        <NavProvider>
+          <SearchProvider>
+            {children}
+            <Navbar />
+          </SearchProvider>
+        </NavProvider>
       </body>
     </html>
   );
