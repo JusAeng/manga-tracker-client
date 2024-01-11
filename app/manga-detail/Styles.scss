@@ -1,19 +1,22 @@
+$text-color: rgba(135, 135, 135, 1);
+
 .readmore-container-less {
-  width: 100vw;
-  height: 100px;
+  // width: 100vw;
+  height: 80px;
   background: linear-gradient(
     180deg,
-    rgba(0, 0, 0, 1),
-    rgba(0, 0, 0, 1),
-    rgba(0, 0, 0, 0)
+    $text-color,
+    $text-color,
+    rgba(66, 66, 66, 0)
   );
   background-clip: text; /* Standard property */
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 .readmore-container-full {
-  width: 100vw;
-  background: linear-gradient(180deg, rgba(0, 0, 0, 1), rgba(0, 0, 0, 1));
+  padding-bottom: 5px;
+  // width: 100vw;
+  background: linear-gradient(180deg, $text-color, $text-color);
   background-clip: text; /* Standard property */
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
