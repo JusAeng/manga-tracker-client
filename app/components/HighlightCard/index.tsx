@@ -33,7 +33,7 @@ const HighlightCard: React.FC<IProp> = ({ image, genres, name }) => {
         }}
         onClick={handleView}
       ></div> */}
-      <div className="relative w-[350px] h-[440px] cursor-pointer">
+      <div className="relative w-[360px] h-[445px] cursor-pointer">
         <Image
           src={image}
           alt="Picture of the author"
