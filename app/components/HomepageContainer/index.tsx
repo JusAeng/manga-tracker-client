@@ -14,7 +14,10 @@ const MainContainer = () => {
     <main>
       <section className="my-[20px]">
         <HighlightCard
-          image={tt[0].image}
+          // image={tt[0].image}
+          image={
+            "https://static.wikia.nocookie.net/mushokutensei/images/8/80/MT-MN-V19.png/revision/latest?cb=20230819000719"
+          }
           genres={["sci-fi", "action"]}
           name={myAnimes[0].name}
         />

@@ -24,8 +24,8 @@ export default function AnimeDetailPage({
         </div>
       </div>
       <ReadMoreContainer />
-      <div className="container flex flex-col gap-[5px] mt-[10px]">
-        {[1, 2, 3, 4, 5].map((v) => (
+      <div className="container flex flex-col gap-[5px] mt-[10px] pb-[50px]">
+        {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((v) => (
           <VolumnCard key={v} mangaName="Hunter" vol={v} />
         ))}
       </div>
