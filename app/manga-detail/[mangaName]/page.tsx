@@ -18,7 +18,7 @@ export default function AnimeDetailPage({
           backgroundSize: "cover",
         }}
       >
-        <BackButton />
+        <BackButton size={26} color="#ffffff" />
         <div className="bg-[#ffffff] rounded-[5px] text-[12px] mb-[10px] ml-[5px] px-[4px]">
           Comady
         </div>
