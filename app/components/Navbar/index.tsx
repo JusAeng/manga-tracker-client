@@ -49,7 +49,6 @@ const Navbar = () => {
 
   useEffect(() => {
     setNavText(pathname);
-    console.log(pathname);
   }, [pathname, setNavText]);
 
   return (
