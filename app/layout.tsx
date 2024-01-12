@@ -19,7 +19,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className + " bg-[#ffffff] scrollbar-hide"}>
+      <body className={inter.className + " bg-[#1e1e1f] scrollbar-hide"}>
         <NavProvider>
           <SearchProvider>
             {children}
