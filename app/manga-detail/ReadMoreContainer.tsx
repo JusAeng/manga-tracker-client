@@ -15,7 +15,7 @@ const GradientText: React.FC = () => {
           <h3 className="text-[22px] text-[#ffffff]">Rent Girlfriend</h3>
           <div className="flex mr-[10px] items-center gap-[6px] relative">
             <FaStar size={18} color={"#f7bc63"} />
-            <h3 className="text-[18px] text-[#ffffff] mt-[3px]">8.5</h3>
+            <h3 className="text-[18px] text-[#ffffff] mt-[3px]">5</h3>
           </div>
         </div>
         <div className="flex gap-[5px]">
