@@ -48,7 +48,7 @@ const MangaCard: React.FC<Iprop> = ({ image, name, author, lastEpisode }) => {
             {name}
           </h3>
         </div>
-        <span className="bg-[#3697f7] rounded-lg py-[1px] px-[6px] text-[11px] text-[#ffffff]">
+        <span className="bg-[#68de7c] rounded-lg py-[1px] px-[6px] text-[11px] text-[#333333]">
           Latest vol: {lastEpisode}
         </span>
       </section>
