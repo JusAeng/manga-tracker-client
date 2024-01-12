@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { RiSearchFill } from "react-icons/ri";
 import { LuSettings2 } from "react-icons/lu";
+import { FaAngleLeft } from "react-icons/fa";
 
 interface Iprop {
   head: string;
@@ -53,7 +54,12 @@ const MenuBar: React.FC<Iprop> = ({ head, rank, sort, search }) => {
       <div className="bg-[#2e2e2f] h-[45px] grid place-items-center w-[100%]">
         {isSearch ? (
           <div className="flex justify-between px-[10px] w-[100%]">
-            <div onClick={handleSearch}>back</div>
+            <div
+              onClick={handleSearch}
+              className="grid place-items-center cursor-pointer"
+            >
+              <FaAngleLeft size={25} color={"#bbbbbb"} />
+            </div>
             <div className="flex gap-[10px] items-center">
               <LuSettings2 size={20} />
               <input
