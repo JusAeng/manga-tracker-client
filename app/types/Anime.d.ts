@@ -8,13 +8,13 @@ export type AnimeType = {
 export type MangaType = {
   id: string;
   name: string;
-  otherNames: string[];
+  otherNames?: string[];
   image: string;
   author: string;
   publisher: string;
-  introduction: string;
+  introduction?: string;
   genre: string;
-  otherGenres: string[];
+  otherGenres?: string[];
   vols: number[];
   volImages: string[];
   subscribers: number;

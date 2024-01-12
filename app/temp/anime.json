@@ -4,35 +4,45 @@
     "image": "https://wafuu.com/cdn/shop/products/bocchi-the-rock-kessoku-band-1st-album-ltd-ed-cd-blu-ray-254212.jpg?v=1695254729",
     "author": "Edo",
     "lastEpisode": 17,
-    "publisher": "Siam"
+    "publisher": "Siam",
+    "subscriber": 123,
+    "score": 4.5
   },
   {
     "name": "Kaguya",
     "image": "https://static.wikia.nocookie.net/rehero/images/4/44/Megumin.jpg/revision/latest/scale-to-width-down/1200?cb=20180330001646",
     "author": "Edo",
     "lastEpisode": 17,
-    "publisher": "Siam"
+    "publisher": "Siam",
+    "subscriber": 123,
+    "score": 4.5
   },
   {
     "name": "Hunter X Hunter",
     "image": "https://static.wikia.nocookie.net/rehero/images/4/44/Megumin.jpg/revision/latest/scale-to-width-down/1200?cb=20180330001646",
     "author": "Edo",
     "lastEpisode": 17,
-    "publisher": "Siam"
+    "publisher": "Siam",
+    "subscriber": 123,
+    "score": 4.5
   },
   {
     "name": "Ultraman",
     "image": "https://static.wikia.nocookie.net/rehero/images/4/44/Megumin.jpg/revision/latest/scale-to-width-down/1200?cb=20180330001646",
     "author": "Edo",
     "lastEpisode": 17,
-    "publisher": "Siam"
+    "publisher": "Siam",
+    "subscriber": 123,
+    "score": 4.5
   },
   {
     "name": "Mushoku Tensei",
     "image": "https://static.wikia.nocookie.net/rehero/images/4/44/Megumin.jpg/revision/latest/scale-to-width-down/1200?cb=20180330001646",
     "author": "Edo",
     "lastEpisode": 17,
-    "publisher": "Siam"
+    "publisher": "Siam",
+    "subscriber": 123,
+    "score": 4.5
   },
   {
     "name": "a",
@@ -46,20 +56,26 @@
     "image": "https://static.wikia.nocookie.net/rehero/images/4/44/Megumin.jpg/revision/latest/scale-to-width-down/1200?cb=20180330001646",
     "author": "Edo",
     "lastEpisode": 17,
-    "publisher": "Siam"
+    "publisher": "Siam",
+    "subscriber": 123,
+    "score": 4.5
   },
   {
     "name": "I'm the Villainess, So I'm Taming the Final Boss Makes the Bad Girl the Best Girl",
     "image": "https://static.wikia.nocookie.net/rehero/images/4/44/Megumin.jpg/revision/latest/scale-to-width-down/1200?cb=20180330001646",
     "author": "Edo",
     "lastEpisode": 17,
-    "publisher": "Siam"
+    "publisher": "Siam",
+    "subscriber": 123,
+    "score": 4.5
   },
   {
     "name": "Bochi The Rock",
     "image": "https://static.wikia.nocookie.net/rehero/images/4/44/Megumin.jpg/revision/latest/scale-to-width-down/1200?cb=20180330001646",
     "author": "Edo",
     "lastEpisode": 17,
-    "publisher": "Siam"
+    "publisher": "Siam",
+    "subscriber": 123,
+    "score": 4.5
   }
 ]
