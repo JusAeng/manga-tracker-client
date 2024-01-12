@@ -2,9 +2,12 @@
 
 import { RiHomeFill, RiSearchFill } from "react-icons/ri";
 import { ImBooks } from "react-icons/im";
-import { FaUserAlt } from "react-icons/fa";
+import { FaUserAlt, FaRegStar } from "react-icons/fa";
+import { FaStar } from "react-icons/fa6";
 import { useRouter, usePathname } from "next/navigation";
-import { useState } from "react";
+import UseNav from "@/app/hooks/UseNav";
+import { useEffect, useState } from "react";
+import { IoMdAdd } from "react-icons/io";
 
 interface ActionType {
   icon: JSX.Element;
@@ -31,35 +34,76 @@ const MenuIcon: React.FC<MenuIconProp> = ({ action, color }) => (
 const Navbar = () => {
   const router = useRouter();
   const pathname = usePathname();
-  const [menu, setMenu] = useState(pathname);
+  const { navText, setNavText } = UseNav();
+  const [vote, setVote] = useState(0);
 
   const handleSpeedDialAction = (action: ActionType) => {
-    setMenu(action.link);
+    setNavText(action.link);
     router.push(action.link);
   };
 
+  const handleVote = () => {
+    setVote((vote + 1) % 6);
+    console.log(vote);
+  };
+
+  useEffect(() => {
+    setNavText(pathname);
+    console.log(pathname);
+  }, [pathname, setNavText]);
+
   return (
-    <main className="flex justify-around fixed bottom-[0px] w-[100vw] bg-[#2e2e2f] h-[45px]">
-      {actions.map((action) => (
-        <div
-          key={action.name}
-          className="flex flex-col justify-center items-center cursor-pointer mt-[7px]"
-          onClick={() => handleSpeedDialAction(action)}
-        >
-          <MenuIcon
-            action={action}
-            color={menu === action.link ? "#ffffff" : "#777777"}
-          />
-          <p
-            className={
-              "text-[10px]" +
-              (menu === action.link ? " text-[#ffffff]" : " text-[#777777]")
-            }
+    <main className={"fixed bottom-[0px] w-[100vw] bg-[#2e2e2f] min-h-[45px]"}>
+      {navText.includes("manga-detail") ? (
+        <div className="flex justify-evenly items-center h-[65px]">
+          <button
+            onClick={handleVote}
+            className="w-[130px] h-[70%] bg-[#fce6b6] rounded-[10px] grid place-items-center"
           >
-            {action.name}
-          </p>
+            {vote ? (
+              <div className="relative">
+                <FaStar size={28} color={"#f7bc63"} />
+                <h3 className="absolute top-[8px] left-[11px] text-[10px] text-[#555555]">
+                  {vote}
+                </h3>
+              </div>
+            ) : (
+              <FaRegStar size={28} color={"#f7bc63"} />
+            )}
+          </button>
+          <button className="w-[240px] h-[70%] bg-[#555555] rounded-[10px] grid place-items-center">
+            <div className="flex gap-[7px] items-center">
+              <IoMdAdd size={18} color={"#ffffff"} />
+              <h3 className="text-[#eeeeee] text-[18px]">Subcribe</h3>
+            </div>
+          </button>
         </div>
-      ))}
+      ) : (
+        <div className="flex justify-around">
+          {actions.map((action) => (
+            <div
+              key={action.name}
+              className="flex flex-col justify-center items-center cursor-pointer mt-[7px]"
+              onClick={() => handleSpeedDialAction(action)}
+            >
+              <MenuIcon
+                action={action}
+                color={navText === action.link ? "#ffffff" : "#777777"}
+              />
+              <p
+                className={
+                  "text-[10px]" +
+                  (navText === action.link
+                    ? " text-[#ffffff]"
+                    : " text-[#777777]")
+                }
+              >
+                {action.name}
+              </p>
+            </div>
+          ))}
+        </div>
+      )}
     </main>
   );
 };

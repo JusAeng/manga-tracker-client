@@ -1,12 +1,20 @@
+"use client";
+
 import BackButton from "@/app/components/BackButton";
 import VolumnCard from "../VolumnCard";
 import ReadMoreContainer from "../ReadMoreContainer";
+import UseNav from "@/app/hooks/UseNav";
+import { useEffect } from "react";
 
 export default function AnimeDetailPage({
   params,
 }: {
   params: { mangaName: string };
 }) {
+  const { setNavText } = UseNav();
+  useEffect(() => {
+    setNavText("manga-detail");
+  }, [setNavText]);
   return (
     <main className="bg-[#1e1e1f] min-h-screen">
       <div
