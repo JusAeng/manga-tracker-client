@@ -4,7 +4,8 @@ import "./globals.css";
 import Navbar from "./components/Navbar";
 import SearchProvider from "./contexts/search/SearchProvider";
 import NavProvider from "./contexts/nav/NavProvider";
-import LiffProvider from "./components/HomepageContainer/LiffProvider";
+import LiffProvider from "./contexts/auth/LiffProvider";
+import AuthProvider from "./contexts/auth/AuthProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,12 +23,14 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className + " bg-[#1e1e1f] scrollbar-hide"}>
         <LiffProvider>
-          <NavProvider>
-            <SearchProvider>
-              {children}
-              <Navbar />
-            </SearchProvider>
-          </NavProvider>
+          <AuthProvider>
+            <NavProvider>
+              <SearchProvider>
+                {children}
+                <Navbar />
+              </SearchProvider>
+            </NavProvider>
+          </AuthProvider>
         </LiffProvider>
       </body>
     </html>
