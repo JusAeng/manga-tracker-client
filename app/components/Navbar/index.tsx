@@ -52,7 +52,11 @@ const Navbar = () => {
   }, [pathname, setNavText]);
 
   return (
-    <main className={"fixed bottom-[0px] w-[100vw] bg-[#2e2e2f] min-h-[45px]"}>
+    <main
+      className={
+        "fixed bottom-[0px] w-[100vw] bg-[#2e2e2f] min-h-[45px] pb-[20px]"
+      }
+    >
       {navText.includes("manga-detail") ? (
         <div className="flex justify-evenly items-center h-[65px]">
           <button
