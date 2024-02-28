@@ -1,34 +1,49 @@
 "use client";
 
-import { RiHomeFill, RiSearchFill } from "react-icons/ri";
-import { ImBooks } from "react-icons/im";
-import { FaUserAlt, FaRegStar } from "react-icons/fa";
-import { FaStar } from "react-icons/fa6";
+import { FaRegStar, FaStar } from "react-icons/fa6";
 import { useRouter, usePathname } from "next/navigation";
 import UseNav from "@/app/hooks/UseNav";
 import { useEffect, useState } from "react";
 import { IoMdAdd } from "react-icons/io";
+import { ImBooks } from "react-icons/im";
+import { FaUserAlt } from "react-icons/fa";
+import { RiHomeFill } from "react-icons/ri";
 
 interface ActionType {
   icon: JSX.Element;
-  name: string;
+  keyAccess: string;
+  header: string;
   link: string;
 }
 
-interface MenuIconProp {
-  action: ActionType;
+const actions: ActionType[] = [
+  {
+    icon: <RiHomeFill size={24} />,
+    header: "Home",
+    keyAccess: "home",
+    link: "/",
+  },
+  {
+    icon: <ImBooks size={24} />,
+    header: "Shelf",
+    keyAccess: "shelf",
+    link: "/shelf",
+  },
+  {
+    icon: <FaUserAlt size={22} />,
+    header: "Profile",
+    keyAccess: "profile",
+    link: "/profile",
+  },
+];
+
+interface IMenuIcon {
+  icon: JSX.Element;
   color: string;
 }
 
-const actions: ActionType[] = [
-  { icon: <RiHomeFill size={20} />, name: "home", link: "/" },
-  // { icon: <RiSearchFill size={20} />, name: "Search", link: "/search" },
-  { icon: <ImBooks size={20} />, name: "shelf", link: "/shelf" },
-  { icon: <FaUserAlt size={19} />, name: "profile", link: "/profile" },
-];
-
-const MenuIcon: React.FC<MenuIconProp> = ({ action, color }) => (
-  <div style={{ color }}>{action.icon}</div>
+const MenuIcon: React.FC<IMenuIcon> = ({ icon, color }) => (
+  <div style={{ color }}>{icon}</div>
 );
 
 const Navbar = () => {
@@ -37,7 +52,7 @@ const Navbar = () => {
   const { navText, setNavText } = UseNav();
   const [vote, setVote] = useState(0);
 
-  const handleSpeedDialAction = (action: ActionType) => {
+  const handleAction = (action: ActionType) => {
     setNavText(action.link);
     router.push(action.link);
   };
@@ -54,7 +69,7 @@ const Navbar = () => {
   return (
     <main
       className={
-        "fixed bottom-[0px] w-[100vw] bg-[#2e2e2f] min-h-[45px] pb-[20px]"
+        "fixed bottom-[0px] w-[100vw] bg-[#2e2e2f] min-h-[45px] pb-[5px] pt-[2px]"
       }
     >
       {navText.includes("manga-detail") ? (
@@ -85,24 +100,14 @@ const Navbar = () => {
         <div className="flex justify-around">
           {actions.map((action) => (
             <div
-              key={action.name}
-              className="flex flex-col justify-center items-center cursor-pointer mt-[7px]"
-              onClick={() => handleSpeedDialAction(action)}
+              key={action.keyAccess}
+              className="flex flex-col justify-center items-center cursor-pointer mt-[7px] px-[7px] pb-[5px]"
+              onClick={() => handleAction(action)}
             >
               <MenuIcon
-                action={action}
+                icon={action.icon}
                 color={navText === action.link ? "#ffffff" : "#777777"}
               />
-              <p
-                className={
-                  "text-[10px]" +
-                  (navText === action.link
-                    ? " text-[#ffffff]"
-                    : " text-[#777777]")
-                }
-              >
-                {action.name}
-              </p>
             </div>
           ))}
         </div>
