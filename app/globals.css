@@ -22,6 +22,12 @@
     format("truetype");
 }
 
+@font-face {
+  font-family: "sukhumvit-light";
+  src: url("assets/fonts/sukhumvit-set/SukhumvitSet-Light.ttf")
+    format("truetype");
+}
+
 /* Default Setup */
 
 * {
@@ -31,17 +37,30 @@
   font-family: "sukhumvit", sans-serif;
 }
 
-.fontw-semi {
-  font-family: "sukhumvit-semibold";
+.main-page {
+  /* background-color: #1e1e1f; */
+  background-color: #d6d6d6;
+  min-height: 100vh;
 }
 
 h1 {
   font-family: "sukhumvit-bold";
-  font-size: 21px;
+  font-size: 24px;
+}
+
+h2 {
+  font-family: "sukhumvit-bold";
+  font-size: 22px;
 }
 
 h3 {
+  font-size: 18px;
   font-family: "sukhumvit-semibold";
+}
+
+p {
+  font-size: 16px;
+  font-family: "sukhumvit-light";
 }
 
 .shadow-card {
