@@ -1,13 +1,23 @@
-import MenuBar from "../components/MenuBar";
-import ProfileCard from "./ProfileCard";
+import ImageUtil from "../components/ImageUtil";
+import tt from "@/app/temp/tt.png";
 
 const ProfilePage = () => {
   return (
-    <main className="bg-[#1e1e1f] min-h-screen">
-      <MenuBar head={"My Profile"} />
-      <div className="flex flex-col items-center mt-[20px]">
-        <ProfileCard subscribe={12} books={144} />
-      </div>
+    <main className="main-page">
+      <section className="flex flex-col justify-center items-center h-[260px] bg-[#555555]">
+        <ImageUtil image={tt} w={160} h={160} imageClass="rounded-[50%]" />
+        <h2 className="text-center text-[24px]">JusAeng</h2>
+        <p className="text-center text-[12px] relative bottom-[3px]">
+          @123345567890
+        </p>
+      </section>
+      <section>
+        <div>
+          <h3>Personal Infomation</h3>
+          <p>All manga: </p>
+          <p>Total vols: </p>
+        </div>
+      </section>
     </main>
   );
 };
