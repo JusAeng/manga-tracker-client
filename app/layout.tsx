@@ -23,14 +23,14 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className + " bg-[#1e1e1f] scrollbar-hide"}>
         <LiffProvider>
-          <AuthProvider>
-            <NavProvider>
-              <SearchProvider>
-                {children}
-                <Navbar />
-              </SearchProvider>
-            </NavProvider>
-          </AuthProvider>
+          {/* <AuthProvider> */}
+          <NavProvider>
+            <SearchProvider>
+              {children}
+              <Navbar />
+            </SearchProvider>
+          </NavProvider>
+          {/* </AuthProvider> */}
         </LiffProvider>
       </body>
     </html>
