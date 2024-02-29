@@ -16,12 +16,12 @@ const MangaContainer = () => {
   );
 
   return (
-    <div className="grid grid-cols-2 place-items-center gap-[18px] mt-[10px] pb-[55px] px-[5vw]">
+    <div className="grid grid-cols-2 place-items-center gap-[18px] pb-[55px] px-[5vw]">
       {filtered.map((data) => {
         return (
           <MangaCard
             key={data.name}
-            image={tempCover}
+            image={data.image}
             name={data.name}
             author={data.author}
             lastVol={data.lastEpisode}
