@@ -1,0 +1,15 @@
+.navbar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100vw;
+  background-color: #2e2e2f;
+  min-height: 45px;
+  padding: 2px 0 15px 0;
+  color: white;
+  transition: transform 0.3s ease;
+}
+
+.navbar.hidden {
+  transform: translateY(100%);
+}
