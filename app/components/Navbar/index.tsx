@@ -1,5 +1,6 @@
 "use client";
 
+import "./index.css";
 import { FaRegStar, FaStar } from "react-icons/fa6";
 import { useRouter, usePathname } from "next/navigation";
 import UseNav from "@/app/hooks/UseNav";
@@ -66,12 +67,22 @@ const Navbar = () => {
     setNavText(pathname);
   }, [pathname, setNavText]);
 
+  const [prevScrollPos, setPrevScrollPos] = useState<number>(0);
+  const [visible, setVisible] = useState<boolean>(true);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollPos = window.pageYOffset;
+      setVisible(prevScrollPos > currentScrollPos || currentScrollPos < 10);
+      setPrevScrollPos(currentScrollPos);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [prevScrollPos]);
+
   return (
-    <main
-      className={
-        "fixed bottom-[0px] w-[100vw] bg-[#2e2e2f] min-h-[45px] pb-[5px] pt-[2px]"
-      }
-    >
+    <main className={`navbar ${visible ? "" : "hidden"}`}>
       {navText.includes("manga-detail") ? (
         <div className="flex justify-evenly items-center h-[65px]">
           <button
