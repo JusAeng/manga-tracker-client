@@ -1,18 +1,46 @@
 "use client";
 
+import "./index.css";
 import testData from "@/app/temp/anime.json";
-import tt from "@/app/temp/tt.json";
 import TrendingCard from "../TrendingCard";
 import HighlightCard from "../HighlightCard";
 import MangaCard from "../MangaCard";
 import useSearch from "@/app/hooks/UseSearch";
+import { useLiff } from "react-liff";
+import { useEffect } from "react";
 
 const MainContainer = () => {
   const myAnimes = testData;
+  const { error, isLoggedIn, isReady, liff } = useLiff();
 
+  // useEffect(() => {
+  //   if (!isLoggedIn) return;
+  // }, [liff, isLoggedIn, isReady]);
+
+  // if (!isReady) {
+  //   return <h1>Loading</h1>;
+  // }
+  const handleCopyClick = () => {
+    // Create a temporary textarea element
+    const textarea = document.createElement("textarea");
+    textarea.value = liff.getIDToken() || "nani";
+
+    // Append the textarea to the DOM
+    document.body.appendChild(textarea);
+
+    // Select the text in the textarea
+    textarea.select();
+    textarea.setSelectionRange(0, 99999);
+
+    // Copy the selected text to the clipboard using the Clipboard API
+    document.execCommand("copy");
+
+    // Remove the temporary textarea from the DOM
+    document.body.removeChild(textarea);
+  };
   return (
     <main>
-      <section className="my-[20px]">
+      <section className="py-[20px]">
         <HighlightCard
           // image={tt[0].image}
           image={
@@ -22,9 +50,10 @@ const MainContainer = () => {
           name={myAnimes[0].name}
         />
       </section>
+      <button onClick={handleCopyClick}>Click</button>
       <section>
         <h3 className="text-white text-[18px] ml-[10px]">Trending Manga</h3>
-        <div className="flex gap-[12px] overflow-x-auto whitespace-nowrap scrollbar-hide p-[10px]">
+        <div className="content-x-scroll scrollbar-hide">
           <TrendingCard
             image={myAnimes[1].image}
             name={myAnimes[0].name}
@@ -34,47 +63,32 @@ const MainContainer = () => {
       </section>
       <section className="mt-[5px]">
         <h3 className="text-white text-[18px] ml-[10px]">Recommend</h3>
-        <div className="flex gap-[12px] overflow-x-auto whitespace-nowrap scrollbar-hide p-[10px]">
-          <TrendingCard
-            image={myAnimes[1].image}
-            name={myAnimes[0].name}
-            publisher={myAnimes[0].publisher}
-          />
+        <div className="content-x-scroll scrollbar-hide">
+          {myAnimes.map((anime) => (
+            <TrendingCard
+              key={anime.name}
+              image={anime.image}
+              name={anime.name}
+              publisher={anime.publisher}
+            />
+          ))}
         </div>
       </section>
       <section className="pb-[50px] mt-[5px]">
         <h3 className="text-white text-[18px] ml-[10px]">New</h3>
-        <div className="flex gap-[12px] overflow-x-auto whitespace-nowrap scrollbar-hide p-[10px]">
-          <TrendingCard
-            image={myAnimes[1].image}
-            name={myAnimes[0].name}
-            publisher={myAnimes[0].publisher}
-          />
-          <TrendingCard
-            image={myAnimes[0].image}
-            name={myAnimes[0].name}
-            publisher={myAnimes[0].publisher}
-          />
-          <TrendingCard
-            image={myAnimes[1].image}
-            name={myAnimes[0].name}
-            publisher={myAnimes[0].publisher}
-          />
-          <TrendingCard
-            image={myAnimes[0].image}
-            name={myAnimes[0].name}
-            publisher={myAnimes[0].publisher}
-          />
-          <TrendingCard
-            image={myAnimes[1].image}
-            name={myAnimes[0].name}
-            publisher={myAnimes[0].publisher}
-          />
-          <TrendingCard
-            image={myAnimes[0].image}
-            name={myAnimes[0].name}
-            publisher={myAnimes[0].publisher}
-          />
+        <div className="content-x-scroll scrollbar-hide">
+          {myAnimes.map((anime, idx) => {
+            if (idx > 3) {
+              return (
+                <TrendingCard
+                  key={anime.name}
+                  image={anime.image}
+                  name={anime.name}
+                  publisher={anime.publisher}
+                />
+              );
+            }
+          })}
         </div>
       </section>
     </main>
@@ -100,7 +114,7 @@ const SearchContainer = () => {
             image={anime.image}
             name={anime.name}
             author={anime.author}
-            lastEpisode={anime.lastEpisode}
+            lastVol={anime.lastEpisode}
           />
         ))}
       </div>
@@ -109,9 +123,10 @@ const SearchContainer = () => {
 };
 
 const HomeContainer = () => {
-  const { searchText } = useSearch();
   return (
-    <main>{searchText === "" ? <MainContainer /> : <SearchContainer />}</main>
+    <main className="main-page">
+      <MainContainer />
+    </main>
   );
 };
 
