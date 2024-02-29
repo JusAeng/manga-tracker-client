@@ -3,6 +3,7 @@
 import MangaCard from "../components/MangaCard";
 import useSearch from "../hooks/UseSearch";
 import testData from "../temp/anime.json";
+import tempCover from "../temp/mangacover19.jpeg";
 
 const MangaContainer = () => {
   const myAnimes = testData;
@@ -15,15 +16,15 @@ const MangaContainer = () => {
   );
 
   return (
-    <div className="flex flex-col items-center gap-[10px] mt-[10px] pb-[55px]">
+    <div className="grid grid-cols-2 place-items-center gap-[18px] mt-[10px] pb-[55px] px-[5vw]">
       {filtered.map((data) => {
         return (
           <MangaCard
             key={data.name}
-            image={data.image}
+            image={tempCover}
             name={data.name}
             author={data.author}
-            lastEpisode={data.lastEpisode}
+            lastVol={data.lastEpisode}
           />
         );
       })}
