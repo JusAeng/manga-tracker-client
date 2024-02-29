@@ -28,7 +28,7 @@ const MangaCardNew: React.FC<IMangaCard> = ({
       <ImageUtil
         image={image}
         w={150}
-        h={222}
+        h={225}
         objectFit="cover"
         imageClass="rounded-[10px] cursor-pointer"
       />
