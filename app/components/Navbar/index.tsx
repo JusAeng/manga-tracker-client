@@ -9,6 +9,7 @@ import { IoMdAdd } from "react-icons/io";
 import { ImBooks } from "react-icons/im";
 import { FaUserAlt } from "react-icons/fa";
 import { RiHomeFill } from "react-icons/ri";
+import { BiSolidSearch } from "react-icons/bi";
 
 interface ActionType {
   icon: JSX.Element;
@@ -23,6 +24,12 @@ const actions: ActionType[] = [
     header: "Home",
     keyAccess: "home",
     link: "/",
+  },
+  {
+    icon: <BiSolidSearch size={26} />,
+    header: "Search",
+    keyAccess: "search",
+    link: "/search",
   },
   {
     icon: <ImBooks size={24} />,
