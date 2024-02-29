@@ -1,6 +1,5 @@
 "use client";
 
-import "./index.css";
 import { motion, useMotionValueEvent, useScroll } from "framer-motion";
 import { FaRegStar, FaStar } from "react-icons/fa6";
 import { useRouter, usePathname } from "next/navigation";
@@ -96,7 +95,7 @@ const Navbar = () => {
       }}
       animate={visible ? "visible" : "hidden"}
       transition={{ duration: 0.3, ease: "easeInOut" }}
-      className={`navbar`}
+      className="fixed bottom-[-1px] left-[0px] w-[100vw] bg-[#2e2e2f] min-h-[45px] pt-[2px] pb-[22px] text-white rounded-t-[20px]"
     >
       {navText.includes("manga-detail") ? (
         <div className="flex justify-evenly items-center h-[65px]">

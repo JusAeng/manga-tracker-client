@@ -37,7 +37,7 @@ const TrendingCard: React.FC<IProp> = ({ image, name, publisher, w, h }) => {
       <ImageUtil image={image} w={tempW} h={tempH} imageClass="rounded-xl" />
       <div className="flex items-center gap-[5px] mt-[2px]">
         <div className="w-[3px] bg-[#444444] h-[32px] rounded-[1px]"></div>
-        <div className={`w-[${tempW - 10}px]`}>
+        <div style={{ width: tempW - 10 }}>
           <p className="text-white text-[14px] truncate">{name}</p>
           <p className="text-[#777777] text-[11px] truncate">{publisher}</p>
         </div>

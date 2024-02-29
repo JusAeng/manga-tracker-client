@@ -74,7 +74,7 @@ const MainContainer = () => {
           ))}
         </div>
       </section>
-      <section className="pb-[50px] mt-[5px]">
+      <section className="mt-[5px]">
         <h3 className="text-white text-[18px] ml-[10px]">New</h3>
         <div className="content-x-scroll scrollbar-hide">
           {myAnimes.map((anime, idx) => {

@@ -16,7 +16,7 @@ const MangaContainer = () => {
   );
 
   return (
-    <div className="grid grid-cols-2 place-items-center gap-[18px] pb-[55px] px-[5vw]">
+    <div className="grid grid-cols-2 place-items-center gap-[18px] px-[5vw]">
       {filtered.map((data) => {
         return (
           <MangaCard
