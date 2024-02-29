@@ -33,7 +33,7 @@ const MangaCardNew: React.FC<IMangaCard> = ({
         imageClass="rounded-[10px] cursor-pointer"
       />
       <h3 className="text-white text-center px-[3px] truncate">{name}</h3>
-      <p className="relative bottom-[3px] text-white text-center text-[12px]">
+      <p className="relative bottom-[3px] text-white text-center text-[11px]">
         lastest vol: {lastVol}
       </p>
     </div>
