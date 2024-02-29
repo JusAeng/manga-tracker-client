@@ -1,6 +1,7 @@
 "use client";
 
 import "./index.css";
+import { motion, useMotionValueEvent, useScroll } from "framer-motion";
 import { FaRegStar, FaStar } from "react-icons/fa6";
 import { useRouter, usePathname } from "next/navigation";
 import UseNav from "@/app/hooks/UseNav";
@@ -74,22 +75,29 @@ const Navbar = () => {
     setNavText(pathname);
   }, [pathname, setNavText]);
 
-  const [prevScrollPos, setPrevScrollPos] = useState<number>(0);
   const [visible, setVisible] = useState<boolean>(true);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      const currentScrollPos = window.pageYOffset;
-      setVisible(prevScrollPos > currentScrollPos || currentScrollPos < 10);
-      setPrevScrollPos(currentScrollPos);
-    };
+  const { scrollY } = useScroll();
 
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [prevScrollPos]);
+  useMotionValueEvent(scrollY, "change", (latest) => {
+    const prev = scrollY.getPrevious() || 0;
+    if (latest > prev && latest > 20) {
+      setVisible(false);
+    } else {
+      setVisible(true);
+    }
+  });
 
   return (
-    <main className={`navbar ${visible ? "" : "hidden"}`}>
+    <motion.nav
+      variants={{
+        visible: { y: 0 },
+        hidden: { y: "100%" },
+      }}
+      animate={visible ? "visible" : "hidden"}
+      transition={{ duration: 0.3, ease: "easeInOut" }}
+      className={`navbar`}
+    >
       {navText.includes("manga-detail") ? (
         <div className="flex justify-evenly items-center h-[65px]">
           <button
@@ -130,7 +138,7 @@ const Navbar = () => {
           ))}
         </div>
       )}
-    </main>
+    </motion.nav>
   );
 };
 
