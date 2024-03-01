@@ -1,7 +1,3 @@
-.scrollbar-hide::-webkit-scrollbar {
-  display: none;
-}
-
 .content-x-scroll {
   display: flex;
   overflow-x: auto;
