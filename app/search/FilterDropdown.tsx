@@ -1,3 +1,5 @@
+import { motion } from "framer-motion";
+
 interface IProp {
   option: string;
   added: string[];
@@ -49,26 +51,39 @@ const FilterDropdown: React.FC<IProp> = ({ option, added, callback }) => {
     (item) => !added.includes(item)
   );
   return (
-    <div
-      className="flex flex-wrap gap-x-[18px] px-[5px] pt-[5px] pb-[16px] gap-y-[10px] bg-primaryx 
+    <motion.div
+      initial={{ height: "5vh" }}
+      animate={{
+        height: "35vh",
+        transition: {
+          //   delay: 0.1,
+          duration: 0.2,
+        },
+      }}
+      exit={{
+        opacity: 0,
+        height: "5vh",
+      }}
+      className="flex flex-wrap gap-x-[18px] gap-y-[10px] px-[5px] pt-[5px] pb-[16px] bg-[#aaffaa] 
     absolute top-[35px] left-0 w-[100vw] h-[35vh] overflow-auto rounded-b-[8px]"
     >
       {optionMenus.length !== 0 ? (
         optionMenus.map((optionMenu) => (
-          <button
+          <motion.button
+            exit={{ opacity: 0 }}
             key={optionMenu}
             onClick={() => callback(option, optionMenu)}
             className="py-[2px] px-[10px] h-fit rounded-[15px] bg-[#232323] text-[#bbbbbb]"
           >
             {optionMenu}
-          </button>
+          </motion.button>
         ))
       ) : (
         <div className="text-center text-[#bbbbbb] h-fit w-[100%]">
           No more {option} !
         </div>
       )}
-    </div>
+    </motion.div>
   );
 };
 

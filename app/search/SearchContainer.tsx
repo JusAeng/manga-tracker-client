@@ -4,7 +4,7 @@ import testData from "@/app/temp/anime.json";
 import { MdFilterAlt } from "react-icons/md";
 import { IoChevronBackOutline, IoChevronDownOutline } from "react-icons/io5";
 import MangaCardMini from "./MangaCardMini";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import FilterDropdown from "./FilterDropdown";
 
@@ -156,15 +156,16 @@ const SearchContainer = () => {
                 {filterItems[element.accessKey].map((item) => (
                   <div key={item}>{item}</div>
                 ))}
-                {filterOption === element.accessKey ? (
-                  <FilterDropdown
-                    option={element.accessKey}
-                    added={filterItems[element.accessKey]}
-                    callback={handleOptionManuSelect}
-                  />
-                ) : (
-                  <></>
-                )}
+
+                <AnimatePresence>
+                  {filterOption === element.accessKey && (
+                    <FilterDropdown
+                      option={element.accessKey}
+                      added={filterItems[element.accessKey]}
+                      callback={handleOptionManuSelect}
+                    />
+                  )}
+                </AnimatePresence>
               </div>
             ))}
           </motion.section>
