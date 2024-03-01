@@ -136,7 +136,7 @@ const SearchContainer = () => {
           <motion.section
             className="bg-primaryx absolute w-[100%] z-20 pb-[16px] rounded-b-[8px] text-white grid grid-cols-3"
             animate={{ y: 0, opacity: 1 }}
-            initial={{ y: "-30%", opacity: 0 }}
+            initial={{ y: "-20%", opacity: 0 }}
             transition={{ duration: 0.2 }}
           >
             {allFilterElements.map((element) => (
