@@ -134,38 +134,39 @@ const SearchContainer = () => {
         </section>
         {isFilter ? (
           <motion.section
-            className="bg-primaryx absolute w-[100%] z-20 pb-[16px] rounded-b-[8px]"
+            className="bg-primaryx absolute w-[100%] z-20 pb-[16px] rounded-b-[8px] text-white grid grid-cols-3"
             animate={{ y: 0, opacity: 1 }}
             initial={{ y: "-30%", opacity: 0 }}
             transition={{ duration: 0.2 }}
           >
-            <div className="text-white grid grid-cols-3 relative">
-              {allFilterElements.map((element) => (
-                <div
-                  key={element.accessKey}
-                  className="flex flex-col border border-[#555555] items-center"
+            {allFilterElements.map((element) => (
+              <div
+                key={element.accessKey}
+                className="flex flex-col border border-[#555555] items-center"
+              >
+                <button
+                  onClick={() => handleFilterOption(element.accessKey)}
+                  className={`flex items-center gap-[4px] w-fit py-[2px] px-[10px] rounded-[15px] mb-[5px] ${
+                    element.accessKey === filterOption ? "bg-[#ffaaaa]" : ""
+                  }`}
                 >
-                  <button
-                    onClick={() => handleFilterOption(element.accessKey)}
-                    className={`flex items-center gap-[4px] w-fit py-[2px] px-[10px] rounded-[15px] ${
-                      element.accessKey === filterOption ? "bg-[#ffaaaa]" : ""
-                    }`}
-                  >
-                    <p>{element.header}</p>
-                    <IoChevronDownOutline size={12} />
-                  </button>
-                  {filterOption === element.accessKey ? (
-                    <FilterDropdown
-                      option={element.accessKey}
-                      added={filterItems[element.accessKey]}
-                      callback={handleOptionManuSelect}
-                    />
-                  ) : (
-                    <></>
-                  )}
-                </div>
-              ))}
-            </div>
+                  <p>{element.header}</p>
+                  <IoChevronDownOutline size={12} />
+                </button>
+                {filterItems[element.accessKey].map((item) => (
+                  <div key={item}>{item}</div>
+                ))}
+                {filterOption === element.accessKey ? (
+                  <FilterDropdown
+                    option={element.accessKey}
+                    added={filterItems[element.accessKey]}
+                    callback={handleOptionManuSelect}
+                  />
+                ) : (
+                  <></>
+                )}
+              </div>
+            ))}
           </motion.section>
         ) : (
           <></>
