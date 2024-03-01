@@ -5,7 +5,7 @@ import { MdFilterAlt } from "react-icons/md";
 import { IoChevronBackOutline, IoChevronDownOutline } from "react-icons/io5";
 import MangaCardMini from "./MangaCardMini";
 import { motion } from "framer-motion";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import FilterDropdown from "./FilterDropdown";
 
 interface FilterElementsType {
@@ -52,6 +52,17 @@ const SearchContainer = () => {
     setSearchText(textSearchRef);
   };
 
+  const handleInputFocus = () => {
+    setIsSearching(true);
+    setIsFilter(false);
+    setFilterOption("");
+  };
+
+  const toggleFilter = () => {
+    setIsFilter(!isFilter);
+    setFilterOption("");
+  };
+
   const handleFilterOption = (option: string) => {
     if (option === filterOption) {
       setFilterOption("");
@@ -59,20 +70,23 @@ const SearchContainer = () => {
       setFilterOption(option);
     }
   };
-  const toggleFilter = () => {
-    setIsFilter(!isFilter);
-    setFilterOption("");
-  };
 
-  const handleInputFocus = () => {
-    setIsSearching(true);
-    setIsFilter(false);
+  const handleOptionManuSelect = (option: string, optionMenu: string) => {
+    console.log(optionMenu);
     setFilterOption("");
+    setFilterItems((prevState) => ({
+      ...prevState,
+      [option]: [...prevState[option], optionMenu],
+    }));
   };
 
   let filteredMyManga = myManga?.filter((manga) =>
     manga.name.toLowerCase().includes(searchText.toLowerCase())
   );
+
+  useEffect(() => {
+    console.log(filterItems);
+  }, [filterItems]);
 
   return (
     <main className="pb-[10px]">
@@ -134,8 +148,8 @@ const SearchContainer = () => {
                   {filterOption === element.accessKey ? (
                     <FilterDropdown
                       option={element.accessKey}
-                      added={[]}
-                      callback={(optionMenu: string) => console.log(optionMenu)}
+                      added={filterItems[element.accessKey]}
+                      callback={handleOptionManuSelect}
                     />
                   ) : (
                     <></>
