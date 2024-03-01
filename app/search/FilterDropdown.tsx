@@ -51,7 +51,7 @@ const FilterDropdown: React.FC<IProp> = ({ option, added, callback }) => {
   return (
     <div
       className="flex flex-wrap gap-x-[18px] px-[5px] pt-[5px] pb-[16px] gap-y-[10px] bg-primaryx 
-    absolute top-[100%] left-0 w-[100vw] min-h-[10vh] max-h-[30vh] overflow-auto mt-[5px] rounded-b-[8px]"
+    absolute top-[35px] left-0 w-[100vw] h-[35vh] overflow-auto rounded-b-[8px]"
     >
       {optionMenus.length !== 0 ? (
         optionMenus.map((optionMenu) => (
