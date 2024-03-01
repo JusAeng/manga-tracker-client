@@ -74,6 +74,15 @@ const SearchContainer = () => {
   const handleOptionManuSelect = (option: string, optionMenu: string) => {
     console.log(optionMenu);
     setFilterOption("");
+
+    if (option === "sort") {
+      setFilterItems((prevState) => ({
+        ...prevState,
+        sort: [optionMenu],
+      }));
+      return;
+    }
+
     setFilterItems((prevState) => ({
       ...prevState,
       [option]: [...prevState[option], optionMenu],
