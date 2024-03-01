@@ -95,7 +95,7 @@ const Navbar = () => {
       }}
       animate={visible ? "visible" : "hidden"}
       transition={{ duration: 0.3, ease: "easeInOut" }}
-      className="fixed bottom-[-1px] left-[0px] w-[100vw] bg-[#2e2e2f] min-h-[45px] pt-[2px] pb-[22px] text-white rounded-t-[20px]"
+      className="fixed bottom-[-1px] left-[0px] w-[100vw] bg-primaryx min-h-[45px] pt-[2px] pb-[22px] text-white rounded-t-[20px]"
     >
       {navText.includes("manga-detail") ? (
         <div className="flex justify-evenly items-center h-[65px]">
