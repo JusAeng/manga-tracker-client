@@ -54,7 +54,7 @@ const FilterDropdown: React.FC<IProp> = ({ option, added, callback }) => {
     <motion.div
       initial={{ height: "5vh" }}
       animate={{
-        height: "35vh",
+        height: "30vh",
         transition: {
           //   delay: 0.1,
           duration: 0.2,
@@ -65,7 +65,7 @@ const FilterDropdown: React.FC<IProp> = ({ option, added, callback }) => {
         height: "5vh",
       }}
       className="flex flex-wrap content-start gap-x-[18px] gap-y-[10px] px-[5px] pt-[5px] pb-[16px] bg-primaryx 
-    absolute top-[35px] left-0 w-[100vw] h-[35vh] overflow-auto rounded-b-[8px]"
+    absolute top-[35px] left-0 w-[100vw] overflow-auto rounded-b-[8px]"
     >
       {optionMenus.length !== 0 ? (
         optionMenus.map((optionMenu) => (

@@ -11,6 +11,7 @@ import FilterDropdown from "./FilterDropdown";
 interface FilterElementsType {
   accessKey: string;
   header: string;
+  color?: string;
 }
 
 interface AddedType {
@@ -21,14 +22,17 @@ const allFilterElements: FilterElementsType[] = [
   {
     accessKey: "publishers",
     header: "Publishers",
+    color: "#ffaaaa",
   },
   {
     accessKey: "genres",
     header: "Genres",
+    color: "#aaffaa",
   },
   {
     accessKey: "sort",
     header: "Sort",
+    color: "#aaaaff",
   },
 ];
 
@@ -93,10 +97,6 @@ const SearchContainer = () => {
     manga.name.toLowerCase().includes(searchText.toLowerCase())
   );
 
-  useEffect(() => {
-    console.log(filterItems);
-  }, [filterItems]);
-
   return (
     <main className="pb-[10px]">
       <section className="sticky top-[0px] z-20 bg-primaryx">
@@ -134,40 +134,61 @@ const SearchContainer = () => {
         </section>
         {isFilter ? (
           <motion.section
-            className="bg-primaryx absolute w-[100%] z-20 pb-[16px] rounded-b-[8px] text-white grid grid-cols-3"
+            className="bg-primaryx absolute w-[100%] z-20 pb-[16px] rounded-b-[8px] max-h-[35vh]"
             animate={{ y: 0, opacity: 1 }}
             initial={{ y: "-20%", opacity: 0 }}
             transition={{ duration: 0.2 }}
           >
-            {allFilterElements.map((element) => (
-              <div
-                key={element.accessKey}
-                className="flex flex-col border border-[#555555] items-center"
-              >
-                <button
-                  onClick={() => handleFilterOption(element.accessKey)}
-                  className={`flex items-center gap-[4px] w-fit py-[2px] px-[10px] rounded-[15px] mb-[5px] ${
-                    element.accessKey === filterOption ? "bg-[#ffaaaa]" : ""
-                  }`}
+            <div className="text-white flex justify-around">
+              {allFilterElements.map((element) => (
+                <div
+                  key={element.accessKey}
+                  className="flex flex-col items-center"
                 >
-                  <p>{element.header}</p>
-                  <IoChevronDownOutline size={12} />
-                </button>
-                {filterItems[element.accessKey].map((item) => (
-                  <div key={item}>{item}</div>
-                ))}
+                  <button
+                    onClick={() => handleFilterOption(element.accessKey)}
+                    className={`flex items-center gap-[4px] w-fit py-[2px] px-[10px] rounded-[15px] mb-[5px] ${
+                      element.accessKey === filterOption ? "bg-[#ffaaaa]" : ""
+                    }`}
+                  >
+                    <p>{element.header}</p>
+                    <IoChevronDownOutline size={12} />
+                  </button>
 
-                <AnimatePresence>
-                  {filterOption === element.accessKey && (
-                    <FilterDropdown
-                      option={element.accessKey}
-                      added={filterItems[element.accessKey]}
-                      callback={handleOptionManuSelect}
-                    />
-                  )}
-                </AnimatePresence>
-              </div>
-            ))}
+                  <AnimatePresence>
+                    {filterOption === element.accessKey && (
+                      <FilterDropdown
+                        option={element.accessKey}
+                        added={filterItems[element.accessKey]}
+                        callback={handleOptionManuSelect}
+                      />
+                    )}
+                  </AnimatePresence>
+                </div>
+              ))}
+            </div>
+
+            {allFilterElements.map(
+              (element) =>
+                filterItems[element.accessKey].length > 0 &&
+                element.accessKey !== "sort" && (
+                  <div
+                    key={element.accessKey}
+                    className="flex flex-wrap pt-[10px] gap-[8px]"
+                  >
+                    {filterItems[element.accessKey].map((item) => (
+                      <div
+                        key={item}
+                        className="text-black py-[1px] px-[8px] rounded-[15px]"
+                        style={{ backgroundColor: element.color }}
+                      >
+                        {item}
+                      </div>
+                    ))}
+                  </div>
+                )
+            )}
+            <div></div>
           </motion.section>
         ) : (
           <></>
