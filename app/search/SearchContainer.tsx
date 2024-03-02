@@ -134,8 +134,8 @@ const SearchContainer = () => {
         </section>
         {isFilter ? (
           <motion.section
-            className="bg-primaryx absolute w-[100%] z-20 pb-[16px] rounded-b-[8px] max-h-[35vh]"
-            animate={{ y: 0, opacity: 1 }}
+            className="bg-primaryx absolute  w-[100%] z-20 pb-[16px] rounded-b-[8px] max-h-[35vh]"
+            animate={{ y: "-1px", opacity: 1 }}
             initial={{ y: "-20%", opacity: 0 }}
             transition={{ duration: 0.2 }}
           >
@@ -170,8 +170,7 @@ const SearchContainer = () => {
 
             {allFilterElements.map(
               (element) =>
-                filterItems[element.accessKey].length > 0 &&
-                element.accessKey !== "sort" && (
+                filterItems[element.accessKey].length > 0 && (
                   <div
                     key={element.accessKey}
                     className="flex flex-wrap pt-[10px] gap-[8px]"
@@ -188,7 +187,6 @@ const SearchContainer = () => {
                   </div>
                 )
             )}
-            <div></div>
           </motion.section>
         ) : (
           <></>
