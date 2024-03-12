@@ -51,7 +51,7 @@ const MenuBar: React.FC<Iprop> = ({ head, rank, sort, search }) => {
 
   return (
     <main className="sticky top-[0px] z-20">
-      <div className="bg-[#212121] h-[45px] grid place-items-center w-[100%] border-b-[0.5px] border-[#444444]">
+      <div className="bg-[#212121] h-[54px] grid place-items-center w-[100%] border-b-[0.5px] border-[#444444]">
         {isSearch ? (
           <div className="flex justify-between px-[10px] w-[100%]">
             <div
