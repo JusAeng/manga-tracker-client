@@ -15,7 +15,7 @@ const ProfilePage = () => {
         <div className="px-[10px] flex flex-col gap-[10px]">
           <section>
             <h3 className="text-[#dddddd]">Personal Infomation</h3>
-            <div className="text-[#aaaaaa] mt-[6px]">
+            <div className="text-[#aaaaaa]">
               <span>Total subscribe: </span>
               <span className="ml-[14px]">10</span>
               <br />
@@ -26,9 +26,28 @@ const ProfilePage = () => {
           <section>
             <h3 className="text-[#dddddd]">Top 3 Manga</h3>
             <div className="text-[#aaaaaa] mt-[6px] flex justify-center gap-[20px]">
-              <div className="w-[100px] h-[150px] bg-white rounded-[10px]"></div>
-              <div className="w-[100px] h-[150px] bg-white rounded-[10px]"></div>
-              <div className="w-[100px] h-[150px] bg-white rounded-[10px]"></div>
+              <ImageUtil
+                image={
+                  "https://m.media-amazon.com/images/I/71E9tSzhrYL._AC_UF1000,1000_QL80_.jpg"
+                }
+                w={100}
+                h={150}
+                imageClass="rounded-xl"
+              />
+              <ImageUtil
+                image={
+                  "https://cdn-local.mebmarket.com/meb/server1/234997/Thumbnail/book_detail_large.gif?2"
+                }
+                w={100}
+                h={150}
+                imageClass="rounded-xl"
+              />
+              <ImageUtil
+                image={"https://pbs.twimg.com/media/FjDxH69VsAE0Myc.jpg:large"}
+                w={100}
+                h={150}
+                imageClass="rounded-xl"
+              />
             </div>
           </section>
         </div>
