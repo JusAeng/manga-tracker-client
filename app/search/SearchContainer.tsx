@@ -100,7 +100,7 @@ const SearchContainer = () => {
   return (
     <main className="pb-[10px]">
       <section className="sticky top-[0px] z-20 bg-primaryx">
-        <section className="pt-[20px] pb-[10px] px-[10px] flex justify-around items-center relative">
+        <section className="pt-[10px] pb-[10px] px-[10px] flex justify-around items-center relative">
           {isSearching && (
             <div
               onClick={() => setIsSearching(false)}
