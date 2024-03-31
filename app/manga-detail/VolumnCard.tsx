@@ -29,7 +29,7 @@ const VolumnCard: React.FC<Iprop> = ({ mangaName, vol }) => {
             className="rounded-[4px]"
           />
         </div> */}
-        <div className="relative w-[44px] h-[54px] bg-[#333333] rounded-[4px] grid place-items-center text-[#4c4c4c]">
+        <div className="relative w-[40px] h-[60px] bg-[#333333] rounded-[4px] grid place-items-center text-[#4c4c4c]">
           {vol > 9 ? vol : "0" + vol}
         </div>
         <div className="text-[#dddddd]">Vol. {vol}</div>
