@@ -3,12 +3,13 @@
 import ImageUtil from "../ImageUtil";
 import { useRouter } from "next/navigation";
 import { StaticImageData } from "next/image";
+import noimage from "@/app/assets/pictures/noimage.jpg";
 
 interface IMangaCard {
   image: string | StaticImageData;
   name: string;
   author: string;
-  lastVol: number;
+  lastVol: string;
 }
 
 const MangaCardNew: React.FC<IMangaCard> = ({
@@ -18,7 +19,7 @@ const MangaCardNew: React.FC<IMangaCard> = ({
   lastVol,
 }) => {
   const router = useRouter();
-  const handleClick = () => {
+  const handleClick = async () => {
     let temp = name.replace(/\s+/g, "-");
     router.push(`/manga-detail/${temp}`);
   };
@@ -26,7 +27,7 @@ const MangaCardNew: React.FC<IMangaCard> = ({
   return (
     <div className="w-[150px]" onClick={handleClick}>
       <ImageUtil
-        image={image}
+        image={image || noimage}
         w={150}
         h={225}
         objectFit="cover"
