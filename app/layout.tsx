@@ -6,6 +6,7 @@ import SearchProvider from "./contexts/search/SearchProvider";
 import NavProvider from "./contexts/nav/NavProvider";
 import LiffProvider from "./contexts/auth/LiffProvider";
 import AuthProvider from "./contexts/auth/AuthProvider";
+import ProfileProvider from "./contexts/profile/ProfileProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,12 +25,15 @@ export default function RootLayout({
       <body className={inter.className + " bg-[#1e1e1f] scrollbar-hide"}>
         <LiffProvider>
           {/* <AuthProvider> */}
-          <NavProvider>
-            <SearchProvider>
-              {children}
-              <Navbar />
-            </SearchProvider>
-          </NavProvider>
+          <ProfileProvider>
+            <NavProvider>
+              <SearchProvider>
+                {children}
+                <Navbar />
+              </SearchProvider>
+            </NavProvider>
+          </ProfileProvider>
+
           {/* </AuthProvider> */}
         </LiffProvider>
       </body>
