@@ -1,11 +1,15 @@
 import MenuBar from "../components/MenuBar";
-import MangaContainer from "./MangaContainer";
+import axiosInstance from "../utils/axios";
+import ShelfContainer from "./ShelfContainer";
 
-const ShelfPage = () => {
+const ShelfPage = async () => {
+  const res = await axiosInstance.get("/user/subscribelist");
+  const myManga = res.data;
+
   return (
     <main className="main-page flex flex-col gap-[20px]">
       <MenuBar head={"My Manga"} sort={false} search={false} />
-      <MangaContainer />
+      <ShelfContainer MangaOnShelf={myManga} />
     </main>
   );
 };
