@@ -9,7 +9,7 @@ interface IMangaCard {
   image: string | StaticImageData;
   name: string;
   author: string;
-  lastVol: string;
+  lastVol: number;
 }
 
 const MangaCardNew: React.FC<IMangaCard> = ({
