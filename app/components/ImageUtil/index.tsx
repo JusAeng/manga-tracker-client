@@ -1,4 +1,5 @@
 import Image, { StaticImageData } from "next/image";
+import noimage from "@/app/assets/pictures/noimage.jpg";
 
 interface IProp {
   image: string | StaticImageData;
@@ -20,7 +21,7 @@ const ImageUtil: React.FC<IProp> = ({
   return (
     <div className={`relative`} style={{ height: `${h}px`, width: `${w}px` }}>
       <Image
-        src={image}
+        src={image || noimage}
         alt="Picture of the author"
         fill
         sizes="100%"
