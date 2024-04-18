@@ -7,6 +7,7 @@ import MangaCardMini from "./MangaCardMini";
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import FilterDropdown from "./FilterDropdown";
+import { MangaType } from "../types/Manga";
 
 interface FilterElementsType {
   accessKey: string;
@@ -36,9 +37,11 @@ const allFilterElements: FilterElementsType[] = [
   },
 ];
 
-const SearchContainer = () => {
-  const myManga = testData;
+interface IProp {
+  allManga: MangaType[];
+}
 
+const SearchContainer: React.FC<IProp> = ({ allManga }) => {
   const searchRef = useRef<HTMLInputElement>(null);
   const [isSearching, setIsSearching] = useState(false);
   const [searchText, setSearchText] = useState("");
@@ -93,8 +96,8 @@ const SearchContainer = () => {
     }));
   };
 
-  let filteredMyManga = myManga?.filter((manga) =>
-    manga.name.toLowerCase().includes(searchText.toLowerCase())
+  let filteredMyManga = allManga?.filter((manga) =>
+    manga.title.toLowerCase().includes(searchText.toLowerCase())
   );
 
   return (
@@ -194,20 +197,20 @@ const SearchContainer = () => {
       </section>
 
       <section className="grid grid-cols-3 place-items-center gap-y-[10px] px-[4px] pt-[10px]">
-        {filteredMyManga.map((anime) => (
+        {filteredMyManga.map((manga) => (
           <MangaCardMini
-            key={anime.name}
+            key={manga.title}
             id={""}
-            image={anime.image}
-            name={anime.name}
+            image={manga.image}
+            name={manga.title}
           />
         ))}
-        {myManga.map((anime) => (
+        {allManga.map((manga) => (
           <MangaCardMini
-            key={anime.name}
+            key={manga.title}
             id={""}
-            image={anime.image}
-            name={anime.name}
+            image={manga.image}
+            name={manga.title}
           />
         ))}
       </section>
