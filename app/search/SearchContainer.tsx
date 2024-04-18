@@ -200,7 +200,7 @@ const SearchContainer: React.FC<IProp> = ({ allManga }) => {
         {filteredMyManga.map((manga) => (
           <MangaCardMini
             key={manga.title}
-            id={""}
+            id={manga._id}
             image={manga.image}
             name={manga.title}
           />
@@ -208,7 +208,7 @@ const SearchContainer: React.FC<IProp> = ({ allManga }) => {
         {allManga.map((manga) => (
           <MangaCardMini
             key={manga.title}
-            id={""}
+            id={manga._id}
             image={manga.image}
             name={manga.title}
           />

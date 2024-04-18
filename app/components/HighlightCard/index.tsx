@@ -7,17 +7,18 @@ import { FaPlay } from "react-icons/fa";
 import SubButton from "../SubButton";
 
 interface IProp {
+  id: string;
   image: string;
   genres: string[];
   name: string;
 }
 
-const HighlightCard: React.FC<IProp> = ({ image, genres, name }) => {
+const HighlightCard: React.FC<IProp> = ({ id, image, genres, name }) => {
   const router = useRouter();
 
   const handleView = () => {
-    let temp = name.replace(/\s+/g, "-");
-    router.push(`/manga-detail/${temp}`);
+    // let temp = name.replace(/\s+/g, "-");
+    router.push(`/manga-detail/${id}`);
   };
   const handleSub = () => {
     console.log("subscribe");

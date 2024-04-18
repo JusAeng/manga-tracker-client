@@ -6,6 +6,7 @@ import { StaticImageData } from "next/image";
 import noimage from "@/app/assets/pictures/noimage.jpg";
 
 interface IMangaCard {
+  id: string;
   image: string | StaticImageData;
   name: string;
   author: string;
@@ -13,6 +14,7 @@ interface IMangaCard {
 }
 
 const MangaCardNew: React.FC<IMangaCard> = ({
+  id,
   image,
   name,
   author,
@@ -20,8 +22,7 @@ const MangaCardNew: React.FC<IMangaCard> = ({
 }) => {
   const router = useRouter();
   const handleClick = async () => {
-    let temp = name.replace(/\s+/g, "-");
-    router.push(`/manga-detail/${temp}`);
+    router.push(`/manga-detail/${id}`);
   };
 
   return (

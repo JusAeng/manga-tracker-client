@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 interface Iprop {
+  id: string;
   image: string;
   name: string;
   subscriber: number;
@@ -12,6 +13,7 @@ interface Iprop {
 }
 
 const RankCard: React.FC<Iprop> = ({
+  id,
   image,
   name,
   subscriber,
@@ -20,8 +22,7 @@ const RankCard: React.FC<Iprop> = ({
 }) => {
   const router = useRouter();
   const handleClick = () => {
-    let temp = name.replace(/\s+/g, "-");
-    router.push(`/manga-detail/${temp}`);
+    router.push(`/manga-detail/${id}`);
   };
 
   return (

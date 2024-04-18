@@ -55,6 +55,7 @@ const MainContainer = () => {
         <h3 className="text-white text-[18px] ml-[10px]">Trending Manga</h3>
         <div className="content-x-scroll scrollbar-hide">
           <TrendingCard
+            id={myAnimes[0]._id}
             image={myAnimes[1].image}
             name={myAnimes[0].name}
             publisher={myAnimes[0].publisher}
@@ -66,6 +67,7 @@ const MainContainer = () => {
         <div className="content-x-scroll scrollbar-hide">
           {myAnimes.map((anime) => (
             <TrendingCard
+              id={anime._id}
               key={anime.name}
               image={anime.image}
               name={anime.name}
@@ -81,6 +83,7 @@ const MainContainer = () => {
             if (idx > 3) {
               return (
                 <TrendingCard
+                  id={anime._id}
                   key={anime.name}
                   image={anime.image}
                   name={anime.name}

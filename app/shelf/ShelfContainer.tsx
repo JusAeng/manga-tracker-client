@@ -26,6 +26,7 @@ const ShelfContainer: React.FC<IProp> = ({ MangaOnShelf }) => {
       {filtered.map((data, idx) => {
         return (
           <MangaCard
+            id={data._id}
             key={idx}
             image={data.image}
             name={data.title}

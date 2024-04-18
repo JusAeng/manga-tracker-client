@@ -21,6 +21,7 @@ const RankPage = () => {
               {mangas.map((m) => {
                 return (
                   <RankCard
+                    id={m._id}
                     key={m.name}
                     image={m.image}
                     name={m.name}

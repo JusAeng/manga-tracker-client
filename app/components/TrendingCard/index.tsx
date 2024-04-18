@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import ImageUtil from "../ImageUtil";
 
 interface IProp {
+  id: string;
   image: string;
   name: string;
   publisher: string;
@@ -12,11 +13,17 @@ interface IProp {
   h?: number;
 }
 
-const TrendingCard: React.FC<IProp> = ({ image, name, publisher, w, h }) => {
+const TrendingCard: React.FC<IProp> = ({
+  id,
+  image,
+  name,
+  publisher,
+  w,
+  h,
+}) => {
   const router = useRouter();
   const handleView = () => {
-    let temp = name.replace(/\s+/g, "-");
-    router.push(`/manga-detail/${temp}`);
+    router.push(`/manga-detail/${id}`);
   };
   const tempW = w || 120;
   const tempH = h || 180;
