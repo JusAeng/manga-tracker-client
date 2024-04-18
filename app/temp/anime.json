@@ -1,5 +1,6 @@
 [
   {
+    "_id": "1",
     "name": "One Piece",
     "image": "https://du.lnwfile.com/1ohb42.jpg",
     "author": "Edo",
@@ -9,6 +10,7 @@
     "score": 4.5
   },
   {
+    "_id": "2",
     "name": "Kaguya-sama",
     "image": "https://m.media-amazon.com/images/I/71E9tSzhrYL._AC_UF1000,1000_QL80_.jpg",
     "author": "Edo",
@@ -18,6 +20,7 @@
     "score": 4.5
   },
   {
+    "_id": "3",
     "name": "Real Account",
     "image": "https://cdn-local.mebmarket.com/meb/server1/126277/Thumbnail/book_detail_large.gif?2",
     "author": "Edo",
@@ -27,6 +30,7 @@
     "score": 4.5
   },
   {
+    "_id": "4",
     "name": "Blue Lock",
     "image": "https://cdn-local.mebmarket.com/meb/server1/234997/Thumbnail/book_detail_large.gif?2",
     "author": "Edo",
@@ -36,6 +40,7 @@
     "score": 4.5
   },
   {
+    "_id": "5",
     "name": "Mushoku Tensei",
     "image": "https://pbs.twimg.com/media/FjDxH69VsAE0Myc.jpg:large",
     "author": "Edo",
@@ -45,6 +50,7 @@
     "score": 4.5
   },
   {
+    "_id": "6",
     "name": "สะดุดรักยัยแฟนเช่า",
     "image": "https://cdn-local.mebmarket.com/meb/server1/162675/Thumbnail/book_detail_large.gif?2",
     "author": "Edo",
@@ -52,6 +58,7 @@
     "publisher": "Siam"
   },
   {
+    "_id": "7",
     "name": "Spy X Family",
     "image": "https://img.lazcdn.com/g/p/2d829e8b14335e92f8dad6255d9e2f28.jpg_720x720q80.jpg",
     "author": "Edo",
@@ -61,6 +68,7 @@
     "score": 4.5
   },
   {
+    "_id": "8",
     "name": "รักรักรักรักรักเธอหมดหัวใจจากแฟนสาว 100 คน",
     "image": "https://c.bookwalker.jp/9930127/t_700x780.jpg",
     "author": "Edo",
@@ -70,6 +78,7 @@
     "score": 4.5
   },
   {
+    "_id": "9",
     "name": "Granblue",
     "image": "https://cdn-local.mebmarket.com/meb/server1/220251/Thumbnail/book_detail_large.gif?2",
     "author": "Edo",
