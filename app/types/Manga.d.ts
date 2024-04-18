@@ -18,7 +18,7 @@ export type MangaType = {
   publisher: string;
   firstDateJP: string;
   firstDateTH: string;
-  vols: { [key: string]: Vol };
+  vols: Vol[];
   lastVol: number;
   subscribers: number;
   score: number;
