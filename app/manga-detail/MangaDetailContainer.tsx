@@ -24,9 +24,7 @@ const MangaDetailContainer: React.FC<IProp> = ({ manga }) => {
       <section
         className="h-[32vh] bg-[#5c7df7] flex flex-col items-start justify-between pb-[15px]"
         style={{
-          background:
-            // 'url("https://static1.cbrimages.com/wordpress/wp-content/uploads/2022/09/rent-a-girlfriend-episode-10-season-2-ruka-sarashina-kiss-whenever.jpg")',
-            `url("${manga.image}")`,
+          background: manga.image ? `url("${manga.image}")` : "gray",
           backgroundPosition: "center",
           backgroundSize: "cover",
         }}
