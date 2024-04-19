@@ -6,10 +6,13 @@ import { useRouter, usePathname } from "next/navigation";
 import UseNav from "@/app/hooks/UseNav";
 import { useEffect, useState } from "react";
 import { IoMdAdd } from "react-icons/io";
+import { IoCheckmarkOutline } from "react-icons/io5";
 import { ImBooks } from "react-icons/im";
 import { FaUserAlt } from "react-icons/fa";
 import { RiHomeFill } from "react-icons/ri";
 import { BiSolidSearch } from "react-icons/bi";
+import axiosInstance from "@/app/utils/axios";
+import UseProfile from "@/app/hooks/UseProfile";
 
 interface ActionType {
   icon: JSX.Element;
@@ -59,6 +62,10 @@ const Navbar = () => {
   const pathname = usePathname();
   const { navText, setNavText } = UseNav();
   const [vote, setVote] = useState(0);
+  const { profile, setProfile } = UseProfile();
+
+  const pathParts = navText.split("/");
+  const mangaId = pathParts[pathParts.length - 1];
 
   const handleAction = (action: ActionType) => {
     setNavText(action.link);
@@ -68,6 +75,19 @@ const Navbar = () => {
   const handleVote = () => {
     setVote((vote + 1) % 6);
     console.log(vote);
+  };
+
+  const handleSubscribe = async () => {
+    try {
+      const res = await axiosInstance.put(`/user/subscribe/${mangaId}`, null);
+      const subList = res.data as string[];
+      setProfile((prevProfile) => ({
+        ...prevProfile,
+        subscribeList: subList,
+      }));
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   useEffect(() => {
@@ -114,10 +134,24 @@ const Navbar = () => {
               <FaRegStar size={28} color={"#f7bc63"} />
             )}
           </button>
-          <button className="w-[240px] h-[70%] bg-[#555555] rounded-[10px] grid place-items-center">
+          <button
+            className="w-[240px] h-[70%] bg-[#555555] rounded-[10px] grid place-items-center"
+            onClick={handleSubscribe}
+          >
             <div className="flex gap-[7px] items-center">
-              <IoMdAdd size={18} color={"#ffffff"} />
-              <h3 className="text-[#eeeeee] text-[18px]">Subcribe</h3>
+              {profile.subscribeList &&
+              profile.subscribeList.includes(mangaId) ? (
+                <IoCheckmarkOutline />
+              ) : (
+                <IoMdAdd size={18} color={"#ffffff"} />
+              )}
+
+              <h3 className="text-[#eeeeee] text-[18px]">
+                {profile.subscribeList &&
+                profile.subscribeList.includes(mangaId)
+                  ? "Subcribed"
+                  : "Subscribe"}
+              </h3>
             </div>
           </button>
         </div>
