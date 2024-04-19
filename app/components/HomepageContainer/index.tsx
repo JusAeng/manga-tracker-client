@@ -48,6 +48,7 @@ const MainContainer = () => {
           }
           genres={["sci-fi", "action"]}
           name={myAnimes[0].name}
+          id={myAnimes[0]._id}
         />
       </section>
       <button onClick={handleCopyClick}>Click</button>
@@ -118,6 +119,7 @@ const SearchContainer = () => {
             name={anime.name}
             author={anime.author}
             lastVol={anime.lastEpisode}
+            id={anime._id}
           />
         ))}
       </div>
