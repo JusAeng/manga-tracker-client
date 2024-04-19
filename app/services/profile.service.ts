@@ -27,14 +27,13 @@ interface ITop3Manga {
 }
 
 export async function top3Manga(
-  ownerList: { [key: string]: number } | null
+  rateList: { [key: string]: number } | null
 ): Promise<ITop3Manga[]> {
-  if (!ownerList) {
+  if (!rateList) {
     return [];
   }
-
   let result: ITop3Manga[] = [];
-  const entries = Object.entries(ownerList);
+  const entries = Object.entries(rateList);
   entries.sort((a, b) => b[1] - a[1]);
 
   // Map each entry to a promise that fetches manga information
