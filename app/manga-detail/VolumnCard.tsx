@@ -1,25 +1,44 @@
 "use client";
+
 import Image from "next/image";
 import { useState } from "react";
 import { IoBook } from "react-icons/io5";
+import axiosInstance from "../utils/axios";
+import UseProfile from "../hooks/UseProfile";
 
 interface Iprop {
-  mangaName: string;
+  mangaId: string;
+  image: string;
   vol: number;
+  own: boolean;
 }
 
-const VolumnCard: React.FC<Iprop> = ({ mangaName, vol }) => {
-  const [isBuy, setIsBuy] = useState(false);
-  const handleClick = () => {
-    setIsBuy(!isBuy);
+const VolumnCard: React.FC<Iprop> = ({ mangaId, image, vol, own }) => {
+  const { setProfile } = UseProfile();
+  const [isBuy, setIsBuy] = useState(own);
+  const handleClick = async () => {
+    try {
+      const res = await axiosInstance.put(`/user/ownerlist/${mangaId}/${vol}`);
+      const myList = res.data;
+      setIsBuy(!isBuy);
+      setProfile((prevProfile) => ({
+        ...prevProfile,
+        ownerList: {
+          ...prevProfile.ownerList,
+          [mangaId]: [...myList],
+        },
+      }));
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   return (
-    <div className="flex justify-between h-[60px] items-center px-[20px] border-b-[1px] border-[#303030] pb-[5px]">
+    <div className="flex justify-between h-[72px] items-center px-[20px] border-b-[1px] border-[#303030] pb-[10px]">
       <section className="flex items-center gap-[20px]">
-        {/* <div className="relative w-[44px] h-[54px]">
+        <div className="relative w-[40px] h-[60px]">
           <Image
-            src={"/tt.png"}
+            src={image}
             alt="Picture of the author"
             fill
             sizes="100%"
@@ -28,10 +47,10 @@ const VolumnCard: React.FC<Iprop> = ({ mangaName, vol }) => {
             }}
             className="rounded-[4px]"
           />
-        </div> */}
-        <div className="relative w-[40px] h-[60px] bg-[#333333] rounded-[4px] grid place-items-center text-[#4c4c4c]">
-          {vol > 9 ? vol : "0" + vol}
         </div>
+        {/* <div className="relative w-[40px] h-[60px] bg-[#333333] rounded-[4px] grid place-items-center text-[#4c4c4c]">
+          {vol > 9 ? vol : "0" + vol}
+        </div> */}
         <div className="text-[#dddddd]">Vol. {vol}</div>
       </section>
       <section>
