@@ -61,7 +61,8 @@ const Navbar = () => {
   const router = useRouter();
   const pathname = usePathname();
   const { navText, setNavText } = UseNav();
-  const [vote, setVote] = useState(0);
+  const [isVote, setIsVote] = useState(false);
+  const [voteClick, setVoteClick] = useState(false);
   const { profile, setProfile } = UseProfile();
 
   const pathParts = navText.split("/");
@@ -73,8 +74,8 @@ const Navbar = () => {
   };
 
   const handleVote = () => {
-    setVote((vote + 1) % 6);
-    console.log(vote);
+    setVoteClick(!voteClick);
+    // setIsVote(!isVote);
   };
 
   const handleSubscribe = async () => {
@@ -102,8 +103,10 @@ const Navbar = () => {
     const prev = scrollY.getPrevious() || 0;
     if (latest > prev && latest > 20) {
       setVisible(false);
+      setVoteClick(false);
     } else {
       setVisible(true);
+      setVoteClick(false);
     }
   });
 
@@ -118,44 +121,65 @@ const Navbar = () => {
       className="fixed bottom-[-1px] left-[0px] w-[100vw] bg-primaryx min-h-[45px] pt-[2px] pb-[22px] text-white rounded-t-[20px]"
     >
       {navText.includes("manga-detail") ? (
-        <div className="flex justify-evenly items-center h-[65px]">
-          <button
-            onClick={handleVote}
-            className="w-[130px] h-[70%] bg-[#fce6b6] rounded-[10px] grid place-items-center"
-          >
-            {vote ? (
-              <div className="relative">
-                <FaStar size={28} color={"#f7bc63"} />
-                <h3 className="absolute top-[8px] left-[11px] text-[10px] text-[#555555]">
-                  {vote}
+        // In Manga Detail Page
+        <div>
+          {voteClick && (
+            <div className="flex justify-evenly h-[50px] items-center pt-[5px]">
+              {[0, 1, 2, 3, 4, 5].map((ele) => (
+                <button
+                  key={ele}
+                  className="text-white h-[26px] flex items-center gap-[3px] border border-[#444444] px-[15px] py-[5px] rounded-lg"
+                >
+                  <span className="mt-[3px]">{ele !== 0 && ele}</span>
+                  {ele !== 0 ? (
+                    <FaStar size={15} color={"#f7bc63"} />
+                  ) : (
+                    <FaRegStar size={18} color={"#f7bc63"} />
+                  )}
+                </button>
+              ))}
+            </div>
+          )}
+          <div className="flex justify-evenly items-center h-[65px]">
+            <button
+              onClick={handleVote}
+              className="w-[130px] h-[70%] bg-[#fce6b6] rounded-[10px] grid place-items-center"
+            >
+              {isVote ? (
+                <div className="relative">
+                  <FaStar size={28} color={"#f7bc63"} />
+                  <h3 className="absolute top-[8px] left-[11px] text-[10px] text-[#555555]">
+                    {isVote}
+                  </h3>
+                </div>
+              ) : (
+                <FaRegStar size={28} color={"#f7bc63"} />
+              )}
+            </button>
+            <button
+              className="w-[240px] h-[70%] bg-[#555555] rounded-[10px] grid place-items-center"
+              onClick={handleSubscribe}
+            >
+              <div className="flex gap-[7px] items-center">
+                {profile.subscribeList &&
+                profile.subscribeList.includes(mangaId) ? (
+                  <IoCheckmarkOutline />
+                ) : (
+                  <IoMdAdd size={18} color={"#ffffff"} />
+                )}
+
+                <h3 className="text-[#eeeeee] text-[18px]">
+                  {profile.subscribeList &&
+                  profile.subscribeList.includes(mangaId)
+                    ? "Subcribed"
+                    : "Subscribe"}
                 </h3>
               </div>
-            ) : (
-              <FaRegStar size={28} color={"#f7bc63"} />
-            )}
-          </button>
-          <button
-            className="w-[240px] h-[70%] bg-[#555555] rounded-[10px] grid place-items-center"
-            onClick={handleSubscribe}
-          >
-            <div className="flex gap-[7px] items-center">
-              {profile.subscribeList &&
-              profile.subscribeList.includes(mangaId) ? (
-                <IoCheckmarkOutline />
-              ) : (
-                <IoMdAdd size={18} color={"#ffffff"} />
-              )}
-
-              <h3 className="text-[#eeeeee] text-[18px]">
-                {profile.subscribeList &&
-                profile.subscribeList.includes(mangaId)
-                  ? "Subcribed"
-                  : "Subscribe"}
-              </h3>
-            </div>
-          </button>
+            </button>
+          </div>
         </div>
       ) : (
+        // Navbar Default
         <div className="flex justify-around">
           {actions.map((action) => (
             <div
