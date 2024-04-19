@@ -1,9 +1,12 @@
-import axiosInstance from "../utils/axios";
+import { ProfileType } from "../types/Profile";
+import { fetchUtil } from "../utils/fetch";
 import ProfileContainer from "./ProfileContainer";
 
 const ProfilePage = async () => {
-  const res = await axiosInstance.get("user/profile");
-  const profile = res.data;
+  const profile =
+    (await fetchUtil("/user/profile", {
+      cache: "no-store",
+    })) || ({} as ProfileType);
 
   return <ProfileContainer profile={profile} />;
 };
