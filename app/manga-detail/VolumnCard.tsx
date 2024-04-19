@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { IoBook } from "react-icons/io5";
 import axiosInstance from "../utils/axios";
 import UseProfile from "../hooks/UseProfile";
@@ -33,6 +33,10 @@ const VolumnCard: React.FC<Iprop> = ({ mangaId, image, vol, own }) => {
       console.log(e);
     }
   };
+
+  useEffect(() => {
+    setIsBuy(own);
+  }, [own]);
 
   return (
     <div className="flex justify-between h-[72px] items-center px-[20px] border-b-[1px] border-[#303030]">
