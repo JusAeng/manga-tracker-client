@@ -21,7 +21,7 @@ const GradientText: React.FC<IProp> = ({ manga }) => {
           <div className="flex items-center gap-[6px] relative">
             <FaStar size={18} color={"#f7bc63"} />
             <h3 className="text-[18px] text-[#ffffff] mt-[3px]">
-              {manga.score}
+              {manga.score.toFixed(1)}
             </h3>
           </div>
         </div>

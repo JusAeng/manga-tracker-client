@@ -62,11 +62,19 @@ const Navbar = () => {
   const pathname = usePathname();
   const { navText, setNavText } = UseNav();
   const [isVote, setIsVote] = useState(false);
-  const [voteClick, setVoteClick] = useState(false);
-  const { profile, setProfile } = UseProfile();
 
   const pathParts = navText.split("/");
   const mangaId = pathParts[pathParts.length - 1];
+
+  const [voteClick, setVoteClick] = useState(false);
+  const { profile, setProfile } = UseProfile();
+  let score = 0;
+  if (profile.rateList !== null && typeof profile.rateList !== "undefined") {
+    if (profile.rateList.hasOwnProperty(mangaId)) {
+      score = profile.rateList[mangaId];
+    }
+  }
+  const [rateScore, setRateScore] = useState(score);
 
   const handleAction = (action: ActionType) => {
     setNavText(action.link);
@@ -75,7 +83,22 @@ const Navbar = () => {
 
   const handleVote = () => {
     setVoteClick(!voteClick);
-    // setIsVote(!isVote);
+  };
+
+  const handleScoring = async (score: number) => {
+    try {
+      const res = await axiosInstance.put(`/user/rating/${mangaId}/${score}`);
+      setProfile((prevProfile) => ({
+        ...prevProfile,
+        rateList: {
+          ...prevProfile.rateList,
+          [mangaId]: score,
+        },
+      }));
+    } catch (e) {
+      console.log(e);
+    }
+    setRateScore(score);
   };
 
   const handleSubscribe = async () => {
@@ -94,6 +117,10 @@ const Navbar = () => {
   useEffect(() => {
     setNavText(pathname);
   }, [pathname, setNavText]);
+
+  useEffect(() => {
+    setRateScore(score);
+  }, [score]);
 
   const [visible, setVisible] = useState<boolean>(true);
 
@@ -128,9 +155,14 @@ const Navbar = () => {
               {[0, 1, 2, 3, 4, 5].map((ele) => (
                 <button
                   key={ele}
-                  className="text-white h-[26px] flex items-center gap-[3px] border border-[#444444] px-[15px] py-[5px] rounded-lg"
+                  className={`text-white h-[26px] flex items-center gap-[3px] border border-[#444444] px-[15px] py-[5px] rounded-lg ${
+                    rateScore === ele && "bg-[#fff6e3]"
+                  }`}
+                  onClick={() => handleScoring(ele)}
                 >
-                  <span className="mt-[3px]">{ele !== 0 && ele}</span>
+                  <span className="mt-[3px] text-[#777777]">
+                    {ele !== 0 && ele}
+                  </span>
                   {ele !== 0 ? (
                     <FaStar size={15} color={"#f7bc63"} />
                   ) : (
@@ -143,14 +175,11 @@ const Navbar = () => {
           <div className="flex justify-evenly items-center h-[65px]">
             <button
               onClick={handleVote}
-              className="w-[130px] h-[70%] bg-[#fce6b6] rounded-[10px] grid place-items-center"
+              className="w-[130px] h-[70%] bg-[#fff6e3] rounded-[10px] grid place-items-center"
             >
-              {isVote ? (
-                <div className="relative">
+              {rateScore !== 0 ? (
+                <div className="relative flex items-center">
                   <FaStar size={28} color={"#f7bc63"} />
-                  <h3 className="absolute top-[8px] left-[11px] text-[10px] text-[#555555]">
-                    {isVote}
-                  </h3>
                 </div>
               ) : (
                 <FaRegStar size={28} color={"#f7bc63"} />
