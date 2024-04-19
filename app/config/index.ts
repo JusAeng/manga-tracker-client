@@ -7,10 +7,10 @@ interface ProcessEnv {
   BASE_URL?: string;
 }
 
-const config: ProcessEnv = {
+const configEnv: ProcessEnv = {
   LINE_CHANNEL_ACCESS_TOKEN: process.env.LINE_CHANNEL_ACCESS_TOKEN,
   LIFF_ID: process.env.LIFF_ID,
   BASE_URL: process.env.BASE_URL,
 };
 
-export default config;
+export default configEnv;
