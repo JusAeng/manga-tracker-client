@@ -6,7 +6,7 @@ export type ProfileType = {
   image: string;
   totalSubscribe: number;
   totalBooks: number;
-  subscribeList: MangaType[];
+  subscribeList: string[];
   ownerList: { [key: string]: number[] } | null;
   rateList: { [key: string]: number } | null;
 };
