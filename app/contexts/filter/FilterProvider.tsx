@@ -1,13 +1,13 @@
 "use client";
 
 import { PropsWithChildren, useState } from "react";
-import FilterContext from "./FilterContext";
+import FilterContext, { FilterType } from "./FilterContext";
 
 const FilterProvider = ({ children }: PropsWithChildren) => {
-  const [filterText, setFilterText] = useState("");
+  const [filterObject, setFilterObject] = useState({} as FilterType);
 
   return (
-    <FilterContext.Provider value={{ filterText, setFilterText }}>
+    <FilterContext.Provider value={{ filterObject, setFilterObject }}>
       {children}
     </FilterContext.Provider>
   );

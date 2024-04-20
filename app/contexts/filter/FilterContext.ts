@@ -1,8 +1,13 @@
 import { Dispatch, SetStateAction, createContext } from "react";
 
+export interface FilterType {
+  genres: string[];
+  publishers: string[];
+}
+
 interface IFilterContext {
-  filterText: string;
-  setFilterText: Dispatch<SetStateAction<string>>;
+  filterObject: FilterType;
+  setFilterObject: Dispatch<SetStateAction<FilterType>>;
 }
 
 const FilterContext = createContext({} as IFilterContext);
