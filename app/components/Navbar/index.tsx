@@ -200,7 +200,7 @@ const Navbar = () => {
                 <h3 className="text-[#eeeeee] text-[18px]">
                   {profile.subscribeList &&
                   profile.subscribeList.includes(mangaId)
-                    ? "Subcribed"
+                    ? "Subscribed"
                     : "Subscribe"}
                 </h3>
               </div>
