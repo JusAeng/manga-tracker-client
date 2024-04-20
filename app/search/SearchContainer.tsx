@@ -8,6 +8,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import FilterDropdown from "./FilterDropdown";
 import { MangaType } from "../types/Manga";
+import { sortingManga } from "../services/manga.service";
+import { VscDebugRestart } from "react-icons/vsc";
 
 interface FilterElementsType {
   accessKey: string;
@@ -23,7 +25,7 @@ const allFilterElements: FilterElementsType[] = [
   {
     accessKey: "publishers",
     header: "Publishers",
-    color: "#ffaaaa",
+    color: "#fff6e3",
   },
   {
     accessKey: "genres",
@@ -33,7 +35,7 @@ const allFilterElements: FilterElementsType[] = [
   {
     accessKey: "sort",
     header: "Sort",
-    color: "#aaaaff",
+    color: "#666666",
   },
 ];
 
@@ -79,7 +81,7 @@ const SearchContainer: React.FC<IProp> = ({ allManga }) => {
   };
 
   const handleOptionManuSelect = (option: string, optionMenu: string) => {
-    console.log(optionMenu);
+    // console.log(filterItems);
     setFilterOption("");
 
     if (option === "sort") {
@@ -90,15 +92,46 @@ const SearchContainer: React.FC<IProp> = ({ allManga }) => {
       return;
     }
 
+    if (option === "genres") {
+      if (filterItems.genres.length > 7) {
+        alert("Can't add more than 8 genres");
+        return;
+      }
+    }
+
     setFilterItems((prevState) => ({
       ...prevState,
       [option]: [...prevState[option], optionMenu],
     }));
   };
 
-  let filteredMyManga = allManga?.filter((manga) =>
-    manga.title.toLowerCase().includes(searchText.toLowerCase())
-  );
+  const handleReset = () => {
+    setFilterItems({
+      publishers: [],
+      genres: [],
+      sort: [],
+    });
+  };
+
+  let filteredMyManga = allManga?.filter((manga) => {
+    const mangaAllGenres = [...manga.otherGenres, manga.genre];
+    return (
+      manga.title.toLowerCase().includes(searchText.toLowerCase()) &&
+      (filterItems.genres.every((element) =>
+        mangaAllGenres.includes(element)
+      ) ||
+        filterItems.genres.length === 0) &&
+      (filterItems.publishers.includes(manga.publisher) ||
+        filterItems.publishers.length === 0)
+    );
+  });
+  if (filterItems.sort.length > 0) {
+    if (filterItems.sort[0] === "A -> Z") {
+      filteredMyManga.sort((a, b) => sortingManga(a, b, "asc"));
+    } else {
+      filteredMyManga.sort((a, b) => sortingManga(a, b, "desc"));
+    }
+  }
 
   return (
     <main className="pb-[10px]">
@@ -137,7 +170,7 @@ const SearchContainer: React.FC<IProp> = ({ allManga }) => {
         </section>
         {isFilter ? (
           <motion.section
-            className="bg-primaryx absolute  w-[100%] z-20 pb-[16px] rounded-b-[8px] max-h-[35vh]"
+            className="bg-primaryx absolute w-[100%] z-20 pb-[12px] rounded-b-[8px] max-h-[35vh]"
             animate={{ y: "-1px", opacity: 1 }}
             initial={{ y: "-20%", opacity: 0 }}
             transition={{ duration: 0.2 }}
@@ -151,7 +184,7 @@ const SearchContainer: React.FC<IProp> = ({ allManga }) => {
                   <button
                     onClick={() => handleFilterOption(element.accessKey)}
                     className={`flex items-center gap-[4px] w-fit py-[2px] px-[10px] rounded-[15px] mb-[5px] ${
-                      element.accessKey === filterOption ? "bg-[#ffaaaa]" : ""
+                      element.accessKey === filterOption ? "bg-[#68de7c]" : ""
                     }`}
                   >
                     <p>{element.header}</p>
@@ -170,25 +203,40 @@ const SearchContainer: React.FC<IProp> = ({ allManga }) => {
                 </div>
               ))}
             </div>
-
-            {allFilterElements.map(
-              (element) =>
-                filterItems[element.accessKey].length > 0 && (
-                  <div
-                    key={element.accessKey}
-                    className="flex flex-wrap pt-[10px] gap-[8px]"
-                  >
-                    {filterItems[element.accessKey].map((item) => (
-                      <div
-                        key={item}
-                        className="text-black py-[1px] px-[8px] rounded-[15px]"
-                        style={{ backgroundColor: element.color }}
-                      >
-                        {item}
-                      </div>
-                    ))}
-                  </div>
-                )
+            <div className="pl-[10px]">
+              {allFilterElements.map(
+                (element) =>
+                  filterItems[element.accessKey].length > 0 && (
+                    <div
+                      key={element.accessKey}
+                      className="flex flex-wrap pt-[10px] gap-[8px]"
+                    >
+                      {filterItems[element.accessKey].map((item) => (
+                        <div
+                          key={item}
+                          className="text-black py-[1px] px-[8px] rounded-[15px]"
+                          style={{ backgroundColor: element.color }}
+                        >
+                          {item}
+                        </div>
+                      ))}
+                    </div>
+                  )
+              )}
+            </div>
+            {filterItems.genres.length +
+              filterItems.publishers.length +
+              filterItems.sort.length !==
+              0 && (
+              <div className="mt-[5px] flex justify-end pr-[4px]">
+                <button
+                  className="flex gap-[5px] cursor-pointer px-[5px] py-[3px]"
+                  onClick={handleReset}
+                >
+                  <span className="text-sm text-white">reset</span>
+                  <VscDebugRestart size={20} color={"#ffffff"} />
+                </button>
+              </div>
             )}
           </motion.section>
         ) : (
@@ -196,16 +244,8 @@ const SearchContainer: React.FC<IProp> = ({ allManga }) => {
         )}
       </section>
 
-      <section className="grid grid-cols-3 place-items-center gap-y-[10px] px-[4px] pt-[10px]">
+      <section className="grid grid-cols-3 place-items-center gap-y-[10px] px-[4px] pt-[20px]">
         {filteredMyManga.map((manga) => (
-          <MangaCardMini
-            key={manga.title}
-            id={manga._id}
-            image={manga.image}
-            name={manga.title}
-          />
-        ))}
-        {allManga.map((manga) => (
           <MangaCardMini
             key={manga.title}
             id={manga._id}
