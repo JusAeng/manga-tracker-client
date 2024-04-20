@@ -1,3 +1,5 @@
+"use client";
+
 import { motion } from "framer-motion";
 
 interface IProp {
@@ -11,6 +13,28 @@ interface DropdownMenuType {
 }
 
 const FilterDropdown: React.FC<IProp> = ({ option, added, callback }) => {
+  const handleSelect = (option: string, optionMenu: string) => {
+    callback(option, optionMenu);
+    // toggleItem(option, optionMenu);
+  };
+
+  // const toggleItem = (type: "genres" | "publishers", item: string) => {
+  //   setFilterObject((prevFilter) => {
+  //     const updatedFilter = { ...prevFilter };
+  //     const index = updatedFilter[type].indexOf(item);
+
+  //     if (index !== -1) {
+  //       // If item exists, remove it
+  //       updatedFilter[type].splice(index, 1);
+  //     } else {
+  //       // If item doesn't exist, add it
+  //       updatedFilter[type].push(item);
+  //     }
+
+  //     return updatedFilter;
+  //   });
+  // };
+
   const dropdownMenu: DropdownMenuType = {
     genres: [
       "Action",
@@ -72,7 +96,7 @@ const FilterDropdown: React.FC<IProp> = ({ option, added, callback }) => {
           <motion.button
             exit={{ opacity: 0 }}
             key={optionMenu}
-            onClick={() => callback(option, optionMenu)}
+            onClick={() => handleSelect(option, optionMenu)}
             className="py-[2px] px-[10px] h-fit rounded-[15px] bg-[#232323] text-[#bbbbbb]"
           >
             {optionMenu}
