@@ -192,7 +192,7 @@ const Navbar = () => {
               <div className="flex gap-[7px] items-center">
                 {profile.subscribeList &&
                 profile.subscribeList.includes(mangaId) ? (
-                  <IoCheckmarkOutline />
+                  <IoCheckmarkOutline size={18} />
                 ) : (
                   <IoMdAdd size={18} color={"#ffffff"} />
                 )}
