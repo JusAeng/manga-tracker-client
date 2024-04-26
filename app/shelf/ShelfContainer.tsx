@@ -5,17 +5,31 @@ import useSearch from "../hooks/UseSearch";
 import useProfile from "../hooks/UseProfile";
 // import testData from "../temp/anime.json";
 import { MangaType } from "../types/Manga";
+import { useEffect, useState } from "react";
+import axiosInstance from "../utils/axios";
+import { fetchUtil } from "../utils/fetch";
 
-interface IProp {
-  MangaOnShelf: MangaType[];
-}
-
-const ShelfContainer: React.FC<IProp> = ({ MangaOnShelf }) => {
+const ShelfContainer = () => {
   // const myManga = testData;
   const { profile } = useProfile();
   const { searchText } = useSearch();
 
-  let filtered = MangaOnShelf?.filter(
+  const [MangaOnShelf, setMangaOnShelf] = useState([] as MangaType[]);
+
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+        const res = await fetch("/api/subscribelist");
+        const data = (await res.json()).data;
+        setMangaOnShelf(data);
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    loadData();
+  }, [profile]);
+
+  let filtered = MangaOnShelf.filter(
     (manga) =>
       manga.title.toLowerCase().includes(searchText.toLowerCase()) ||
       manga.author.toLowerCase().includes(searchText.toLowerCase())
