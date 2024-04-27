@@ -9,7 +9,7 @@ export async function fetchUtil(
   const url = baseUrl + endpoint;
 
   const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MjIwMTg2MDAsInJvbGUiOiJ1c2VyIiwidXNlcklkIjoiOGE5OTRiNzYyYzM4OGRhOTM0YWI0NzM2In0.FZHRYu06uBkpgn_pvkOmGLcFKVgGpxSlSdY1pBuTubo";
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MTQyNzYxNTUsInJvbGUiOiJ1c2VyIiwidXNlcklkIjoiOGE5OTRiNzYyYzM4OGRhOTM0YWI0NzM2In0.qhkUCrYsJ4WdS_450myn2C6nuwD_SEcf2_7zD8FkQto";
 
   const headers = {
     ...options.headers,
