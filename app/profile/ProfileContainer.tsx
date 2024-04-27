@@ -37,12 +37,10 @@ const ProfileContainer: React.FC<IProp> = async ({ profile }) => {
             <h3 className="text-[#dddddd]">Personal Infomation</h3>
             <div className="text-[#aaaaaa]">
               <span>Total subscribe: </span>
-              <span className="ml-[14px]">{profile.subscribeList.length}</span>
+              <span className="ml-[14px]">{profile.totalSubscribe}</span>
               <br />
               <span>Total manga book: </span>
-              <span className="ml-[14px]">
-                {sumArrayLengths(profile.ownerList)}
-              </span>
+              <span className="ml-[14px]">{profile.totalBooks}</span>
             </div>
           </section>
           <section>

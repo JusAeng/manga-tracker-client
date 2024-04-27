@@ -21,7 +21,9 @@ const ShelfContainer = () => {
       try {
         const res = await fetch("/api/subscribelist");
         const data = (await res.json()).data;
-        setMangaOnShelf(data);
+        if (data) {
+          setMangaOnShelf(data);
+        }
       } catch (e) {
         console.log(e);
       }
