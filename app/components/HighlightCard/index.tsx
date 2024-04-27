@@ -4,7 +4,11 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { IoMdAdd } from "react-icons/io";
 import { FaPlay } from "react-icons/fa";
-import SubButton from "../SubButton";
+import { useState } from "react";
+import { subscribe } from "diagnostics_channel";
+import { IoCheckmarkOutline } from "react-icons/io5";
+import UseProfile from "@/app/hooks/UseProfile";
+import { useEffect } from "react";
 
 interface IProp {
   id: string;
@@ -15,14 +19,27 @@ interface IProp {
 
 const HighlightCard: React.FC<IProp> = ({ id, image, genres, name }) => {
   const router = useRouter();
+  const { profile } = UseProfile();
+  const [isSubscribe, setIsSubscribe] = useState(false);
 
   const handleView = () => {
-    // let temp = name.replace(/\s+/g, "-");
     router.push(`/manga-detail/${id}`);
   };
   const handleSub = () => {
+    setIsSubscribe((prev) => !prev);
     console.log("subscribe");
   };
+
+  useEffect(() => {
+    if (profile) {
+      if (profile.subscribeList) {
+        if (profile.subscribeList.includes(id)) {
+          setIsSubscribe(true);
+        }
+      }
+    }
+  }, [id, profile]);
+
   return (
     <main className="flex flex-col items-center relative">
       {/* <div
@@ -61,12 +78,18 @@ const HighlightCard: React.FC<IProp> = ({ id, image, genres, name }) => {
           className="bg-[#555555] h-[40px] w-[150px] rounded-[8px] grid place-items-center"
           onClick={handleSub}
         >
-          <div className="flex gap-[7px]">
-            <IoMdAdd size={21} color={"#ffffff"} />
-            <span className="text-[#ffffff]">Subscribe</span>
-          </div>
+          {isSubscribe ? (
+            <div className="flex gap-[6px] items-center">
+              <IoCheckmarkOutline size={18} color={"#ffffff"} />
+              <span className="text-[#ffffff]">Subscribed</span>
+            </div>
+          ) : (
+            <div className="flex gap-[7px]">
+              <IoMdAdd size={21} color={"#ffffff"} />
+              <span className="text-[#ffffff]">Subscribe</span>
+            </div>
+          )}
         </button>
-        {/* <SubButton /> */}
       </div>
     </main>
   );

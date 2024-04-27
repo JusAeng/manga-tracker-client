@@ -7,10 +7,14 @@ import HighlightCard from "../HighlightCard";
 import MangaCard from "../MangaCard";
 import useSearch from "@/app/hooks/UseSearch";
 import { useLiff } from "react-liff";
-import { useEffect } from "react";
 
 const MainContainer = () => {
   const myAnimes = testData;
+
+  const highlightManga = [1];
+  const trendingManga = [1];
+  const recommendManga = [1];
+  const newManga = [1];
   const { error, isLoggedIn, isReady, liff } = useLiff();
 
   // useEffect(() => {
@@ -42,88 +46,66 @@ const MainContainer = () => {
     <main>
       <section className="py-[20px]">
         <HighlightCard
-          // image={tt[0].image}
           image={
             "https://static.wikia.nocookie.net/mushokutensei/images/8/80/MT-MN-V19.png/revision/latest?cb=20230819000719"
           }
           genres={["sci-fi", "action"]}
           name={myAnimes[0].name}
-          id={myAnimes[0]._id}
+          id={"660d975d9fb2c1bc731793fa"}
         />
       </section>
       <button onClick={handleCopyClick}>Click</button>
-      <section>
-        <h3 className="text-white text-[18px] ml-[10px]">Trending Manga</h3>
-        <div className="content-x-scroll scrollbar-hide">
-          <TrendingCard
-            id={myAnimes[0]._id}
-            image={myAnimes[1].image}
-            name={myAnimes[0].name}
-            publisher={myAnimes[0].publisher}
-          />
-        </div>
-      </section>
-      <section className="mt-[5px]">
-        <h3 className="text-white text-[18px] ml-[10px]">Recommend</h3>
-        <div className="content-x-scroll scrollbar-hide">
-          {myAnimes.map((anime) => (
+      {trendingManga.length > 0 && (
+        <section>
+          <h3 className="text-white text-[18px] ml-[10px]">Trending Manga</h3>
+          <div className="content-x-scroll scrollbar-hide">
             <TrendingCard
-              id={anime._id}
-              key={anime.name}
-              image={anime.image}
-              name={anime.name}
-              publisher={anime.publisher}
+              id={myAnimes[0]._id}
+              image={myAnimes[1].image}
+              name={myAnimes[0].name}
+              publisher={myAnimes[0].publisher}
             />
-          ))}
-        </div>
-      </section>
-      <section className="mt-[5px]">
-        <h3 className="text-white text-[18px] ml-[10px]">New</h3>
-        <div className="content-x-scroll scrollbar-hide">
-          {myAnimes.map((anime, idx) => {
-            if (idx > 3) {
-              return (
-                <TrendingCard
-                  id={anime._id}
-                  key={anime.name}
-                  image={anime.image}
-                  name={anime.name}
-                  publisher={anime.publisher}
-                />
-              );
-            }
-          })}
-        </div>
-      </section>
+          </div>
+        </section>
+      )}
+      {recommendManga.length > 0 && (
+        <section className="mt-[5px]">
+          <h3 className="text-white text-[18px] ml-[10px]">Recommend</h3>
+          <div className="content-x-scroll scrollbar-hide">
+            {myAnimes.map((anime) => (
+              <TrendingCard
+                id={anime._id}
+                key={anime.name}
+                image={anime.image}
+                name={anime.name}
+                publisher={anime.publisher}
+              />
+            ))}
+          </div>
+        </section>
+      )}
+
+      {newManga.length > 0 && (
+        <section className="mt-[5px]">
+          <h3 className="text-white text-[18px] ml-[10px]">New</h3>
+          <div className="content-x-scroll scrollbar-hide">
+            {myAnimes.map((anime, idx) => {
+              if (idx > 3) {
+                return (
+                  <TrendingCard
+                    id={anime._id}
+                    key={anime.name}
+                    image={anime.image}
+                    name={anime.name}
+                    publisher={anime.publisher}
+                  />
+                );
+              }
+            })}
+          </div>
+        </section>
+      )}
     </main>
-  );
-};
-
-const SearchContainer = () => {
-  const myAnimes = testData;
-  const { searchText } = useSearch();
-
-  let filtered = myAnimes?.filter(
-    (manga) =>
-      manga.name.toLowerCase().includes(searchText.toLowerCase()) ||
-      manga.author.toLowerCase().includes(searchText.toLowerCase())
-  );
-
-  return (
-    <div className="flex justify-center mt-[10px]">
-      <div className="flex flex-col gap-[10px]">
-        {filtered.map((anime) => (
-          <MangaCard
-            key={anime.name}
-            image={anime.image}
-            name={anime.name}
-            author={anime.author}
-            lastVol={anime.lastEpisode}
-            id={anime._id}
-          />
-        ))}
-      </div>
-    </div>
   );
 };
 

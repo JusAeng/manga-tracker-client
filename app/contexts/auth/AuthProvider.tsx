@@ -12,11 +12,13 @@ const AuthProvider = ({ children }: PropsWithChildren): JSX.Element => {
   const [loadingToken, setLoadingToken] = useState(true);
   const { error, isLoggedIn, isReady, liff } = useLiff();
 
-  useEffect(() => {
-    if (!isLoggedIn) return;
+  // useEffect(() => {
+  //   if (!isLoggedIn) return;
+  // }, [liff, isLoggedIn, isReady]);
 
-    initApp();
-  }, [liff, isLoggedIn]);
+  // if (!isReady) {
+  //   return <h1>Loading</h1>;
+  // }
 
   const initApp = async () => {
     const tokenId = liff.getIDToken();

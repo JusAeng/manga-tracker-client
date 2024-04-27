@@ -6,7 +6,16 @@ import { ProfileType } from "@/app/types/Profile";
 import axiosInstance from "@/app/utils/axios";
 
 const ProfileProvider = ({ children }: PropsWithChildren) => {
-  const [profile, setProfile] = useState({} as ProfileType);
+  const [profile, setProfile] = useState({
+    _id: "",
+    name: "",
+    image: "",
+    totalSubscribe: 0,
+    totalBooks: 0,
+    subscribeList: [],
+    ownerList: {},
+    rateList: {},
+  } as ProfileType);
 
   useEffect(() => {
     const fetchData = async () => {

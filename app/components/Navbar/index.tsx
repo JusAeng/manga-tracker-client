@@ -69,8 +69,8 @@ const Navbar = () => {
   const [voteClick, setVoteClick] = useState(false);
   const { profile, setProfile } = UseProfile();
   let score = 0;
-  if (profile.rateList !== null && typeof profile.rateList !== "undefined") {
-    if (profile.rateList.hasOwnProperty(mangaId)) {
+  if (profile) {
+    if (profile.rateList?.hasOwnProperty(mangaId)) {
       score = profile.rateList[mangaId];
     }
   }
