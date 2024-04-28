@@ -1,22 +1,35 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import ImageUtil from "../components/ImageUtil";
 import { sumArrayLengths, top3Manga } from "../services/profile.service";
+import { MangaType } from "../types/Manga";
 import { ProfileType } from "../types/Profile";
-
-interface IProp {
-  profile: ProfileType;
-}
+import axiosInstance from "../utils/axios";
+import UseProfile from "../hooks/UseProfile";
 
 interface ITop3Manga {
   title: string;
   image: string;
 }
 
-const ProfileContainer: React.FC<IProp> = async ({ profile }) => {
-  const favManga = await top3Manga(profile.rateList);
-  const favMangaEmpty: ITop3Manga[] = Array.from(
-    { length: 3 - favManga.length },
-    () => ({ title: "", image: "" })
-  );
+const ProfileContainer = () => {
+  const { profile, token } = UseProfile();
+  const [favManga, setFavManga] = useState([] as ITop3Manga[]);
+  // const favManga = await top3Manga(profile.rateList);
+  // const favMangaEmpty: ITop3Manga[] = Array.from(
+  //   { length: 3 - favManga.length },
+  //   () => ({ title: "", image: "" })
+  // );
+
+  useEffect(() => {
+    const getTop3 = async () => {
+      let temp = await top3Manga(profile.rateList, token);
+      setFavManga(temp);
+    };
+    getTop3();
+  }, [profile, profile.rateList]);
+
   return (
     <main className="main-page">
       <section className="flex flex-col justify-center items-center h-[260px]">
@@ -55,17 +68,19 @@ const ProfileContainer: React.FC<IProp> = async ({ profile }) => {
                   imageClass="rounded-xl"
                 />
               ))}
-              {favMangaEmpty.map((fav, idx) => {
-                // let temp = favManga.length + 1;
-                return (
-                  <div
-                    key={idx}
-                    className="w-[100px] h-[150px] bg-[#555555] rounded-xl text-[#999999] text-xl grid place-items-center"
-                  >
-                    {/* temp+idx */}
-                  </div>
-                );
-              })}
+              {Array.from({ length: 3 - favManga.length }, () => 0).map(
+                (fav, idx) => {
+                  // let temp = favManga.length + 1;
+                  return (
+                    <div
+                      key={idx}
+                      className="w-[100px] h-[150px] bg-[#555555] rounded-xl text-[#999999] text-xl grid place-items-center"
+                    >
+                      {/* temp+idx */}
+                    </div>
+                  );
+                }
+              )}
             </div>
           </section>
         </div>

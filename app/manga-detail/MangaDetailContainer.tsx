@@ -7,27 +7,42 @@ import UseNav from "@/app/hooks/UseNav";
 import { useEffect, useState } from "react";
 import { MangaType } from "../types/Manga";
 import UseProfile from "../hooks/UseProfile";
+import axiosInstance from "../utils/axios";
+import ImageUtil from "../components/ImageUtil";
 
 interface IProp {
-  manga: MangaType;
+  mangaId: string;
 }
 
-const MangaDetailContainer: React.FC<IProp> = ({ manga }) => {
+const MangaDetailContainer: React.FC<IProp> = ({ mangaId }) => {
+  const [manga, setManga] = useState({} as MangaType);
+  const { token } = UseProfile();
   const { setNavText } = UseNav();
   const { profile } = UseProfile();
 
   useEffect(() => {
+    const loadData = async () => {
+      try {
+        const response = await axiosInstance.get(`/manga/${mangaId}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        if (response.data) {
+          setManga(response.data[0]);
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    };
     setNavText("manga-detail");
-  }, [setNavText]);
+    loadData();
+  }, [mangaId, setNavText, token]);
+
   return (
     <main className="bg-[#1e1e1f] min-h-screen">
       <section
-        className="h-[32vh] bg-[#5c7df7] flex flex-col items-start justify-between pb-[15px]"
-        style={{
-          background: manga.image ? `url("${manga.image}")` : "gray",
-          backgroundPosition: "center",
-          backgroundSize: "cover",
-        }}
+        className={`h-[32vh] bg-[#5c7df7] flex flex-col items-start justify-between pb-[15px]`}
       >
         <BackButton size={26} color="#ffffff" />
         <div className="bg-[#ffffff] rounded-[5px] text-[12px] mb-[10px] ml-[5px] px-[4px]">
