@@ -28,7 +28,7 @@ const ProfileContainer = () => {
       setFavManga(temp);
     };
     getTop3();
-  }, [profile, profile.rateList]);
+  }, [profile, profile.rateList, token]);
 
   return (
     <main className="main-page">
