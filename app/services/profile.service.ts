@@ -27,7 +27,8 @@ interface ITop3Manga {
 }
 
 export async function top3Manga(
-  rateList: { [key: string]: number } | null
+  rateList: { [key: string]: number } | null,
+  token: string
 ): Promise<ITop3Manga[]> {
   if (!rateList) {
     return [];
@@ -38,7 +39,11 @@ export async function top3Manga(
 
   // Map each entry to a promise that fetches manga information
   const promises = entries.slice(0, 3).map(async (entry) => {
-    const res = await axiosInstance.get(`/manga/${entry[0]}`);
+    const res = await axiosInstance.get(`/manga/${entry[0]}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     const { title, image } = res.data[0] as MangaType;
     return { title, image };
   });

@@ -7,11 +7,10 @@ import useProfile from "../hooks/UseProfile";
 import { MangaType } from "../types/Manga";
 import { useEffect, useState } from "react";
 import axiosInstance from "../utils/axios";
-import { fetchUtil } from "../utils/fetch";
 
 const ShelfContainer = () => {
   // const myManga = testData;
-  const { profile } = useProfile();
+  const { profile, token } = useProfile();
   const { searchText } = useSearch();
 
   const [MangaOnShelf, setMangaOnShelf] = useState([] as MangaType[]);
@@ -19,17 +18,21 @@ const ShelfContainer = () => {
   useEffect(() => {
     const loadData = async () => {
       try {
-        const res = await fetch("/api/subscribelist");
-        const data = (await res.json()).data;
-        if (data) {
-          setMangaOnShelf(data);
+        const res = await axiosInstance("/user/subscribelist", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        if (res.data) {
+          setMangaOnShelf(res.data);
         }
       } catch (e) {
         console.log(e);
       }
     };
     loadData();
-  }, [profile]);
+  }, [profile, token]);
 
   let filtered = MangaOnShelf.filter(
     (manga) =>

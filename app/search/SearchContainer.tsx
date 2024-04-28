@@ -10,6 +10,8 @@ import FilterDropdown from "./FilterDropdown";
 import { MangaType } from "../types/Manga";
 import { sortingManga } from "../services/manga.service";
 import { VscDebugRestart } from "react-icons/vsc";
+import axiosInstance from "../utils/axios";
+import UseProfile from "../hooks/UseProfile";
 
 interface FilterElementsType {
   accessKey: string;
@@ -43,7 +45,9 @@ interface IProp {
   allManga: MangaType[];
 }
 
-const SearchContainer: React.FC<IProp> = ({ allManga }) => {
+const SearchContainer = () => {
+  const [allManga, setAllManga] = useState([] as MangaType[]);
+  const { token } = UseProfile();
   const searchRef = useRef<HTMLInputElement>(null);
   const [isSearching, setIsSearching] = useState(false);
   const [searchText, setSearchText] = useState("");
@@ -132,6 +136,25 @@ const SearchContainer: React.FC<IProp> = ({ allManga }) => {
       filteredMyManga.sort((a, b) => sortingManga(a, b, "desc"));
     }
   }
+
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+        const response = await axiosInstance.get("/manga", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        const man = response.data;
+        if (man) {
+          setAllManga(man);
+        }
+      } catch (e) {
+        alert(`catch,${e}`);
+      }
+    };
+    loadData();
+  }, [token]);
 
   return (
     <main className="pb-[10px]">
