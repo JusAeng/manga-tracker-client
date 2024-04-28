@@ -16,28 +16,29 @@ const ProfileProvider = ({ children }: PropsWithChildren) => {
     ownerList: {},
     rateList: {},
   } as ProfileType);
+  const [token, setToken] = useState("");
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axiosInstance.get("/user/profile");
-        if (response.status != 200) {
-          throw new Error("Failed to fetch data");
-        }
-        setProfile(response.data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const response = await axiosInstance.get("/user/profile");
+  //       if (response.status != 200) {
+  //         throw new Error("Failed to fetch data");
+  //       }
+  //       setProfile(response.data);
+  //     } catch (error) {
+  //       console.error("Error fetching data:", error);
+  //     }
+  //   };
 
-    fetchData();
+  //   fetchData();
 
-    // Clean-up function
-    return () => {};
-  }, []);
+  //   // Clean-up function
+  //   return () => {};
+  // }, []);
 
   return (
-    <ProfileContext.Provider value={{ profile, setProfile }}>
+    <ProfileContext.Provider value={{ profile, setProfile, token, setToken }}>
       {children}
     </ProfileContext.Provider>
   );
