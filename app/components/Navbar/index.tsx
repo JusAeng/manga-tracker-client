@@ -188,7 +188,7 @@ const Navbar = () => {
           <div className="flex justify-evenly items-center h-[65px]">
             <button
               onClick={handleVote}
-              className="w-[130px] h-[70%] bg-[#fff6e3] rounded-[10px] grid place-items-center"
+              className="w-[110px] h-[70%] bg-[#fff6e3] rounded-[10px] grid place-items-center"
             >
               {rateScore !== 0 ? (
                 <div className="relative flex items-center">
@@ -199,7 +199,7 @@ const Navbar = () => {
               )}
             </button>
             <button
-              className="w-[240px] h-[70%] bg-[#555555] rounded-[10px] grid place-items-center"
+              className="w-[220px] h-[70%] bg-[#555555] rounded-[10px] grid place-items-center"
               onClick={handleSubscribe}
             >
               <div className="flex gap-[7px] items-center">
