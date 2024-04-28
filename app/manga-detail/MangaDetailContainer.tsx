@@ -1,6 +1,7 @@
 "use client";
 
 import BackButton from "@/app/components/BackButton";
+import Image from "next/image";
 import VolumnCard from "./VolumnCard";
 import ReadMoreContainer from "./ReadMoreContainer";
 import UseNav from "@/app/hooks/UseNav";
@@ -41,15 +42,35 @@ const MangaDetailContainer: React.FC<IProp> = ({ mangaId }) => {
 
   return (
     <main className="bg-[#1e1e1f] min-h-screen">
-      <section
+      {/* <section
         className={`h-[32vh] bg-[#5c7df7] flex flex-col items-start justify-between pb-[15px]`}
       >
         <BackButton size={26} color="#ffffff" />
         <div className="bg-[#ffffff] rounded-[5px] text-[12px] mb-[10px] ml-[5px] px-[4px]">
           {manga.genre}
         </div>
+      </section> */}
+      <section className="h-[32vh] bg-[#ffaaff]">
+        <div className={`relative`} style={{ height: `100%`, width: `100%` }}>
+          <Image
+            src={manga.image}
+            className="z-10"
+            alt="Picture of the author"
+            fill
+            sizes="100%"
+            style={{
+              objectFit: "cover",
+            }}
+          />
+          <div className="relative z-20">
+            <BackButton size={26} color="#ffffff" />
+          </div>
+        </div>
+        <div className="bg-[#ffffff] rounded-[5px] text-[12px] w-fit px-[4px] ml-[10px] bottom-[44px] relative z-20">
+          {manga.genre}
+        </div>
       </section>
-      <section className="relative bottom-[15px]">
+      <section className="relative bottom-[15px] z-20">
         <ReadMoreContainer manga={manga} />
         <div className="container flex flex-col gap-[5px] mt-[10px] pb-[50px]">
           {manga.vols &&
