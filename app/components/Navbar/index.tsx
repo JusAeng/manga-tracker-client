@@ -67,7 +67,7 @@ const Navbar = () => {
   const mangaId = pathParts[pathParts.length - 1];
 
   const [voteClick, setVoteClick] = useState(false);
-  const { profile, setProfile } = UseProfile();
+  const { profile, setProfile, token } = UseProfile();
   let score = 0;
   if (profile) {
     if (profile.rateList?.hasOwnProperty(mangaId)) {
@@ -87,7 +87,15 @@ const Navbar = () => {
 
   const handleScoring = async (score: number) => {
     try {
-      const res = await axiosInstance.put(`/user/rating/${mangaId}/${score}`);
+      const res = await axiosInstance.put(
+        `/user/rating/${mangaId}/${score}`,
+        null,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       setProfile((prevProfile) => ({
         ...prevProfile,
         rateList: {
@@ -103,13 +111,18 @@ const Navbar = () => {
 
   const handleSubscribe = async () => {
     try {
-      const res = await axiosInstance.put(`/user/subscribe/${mangaId}`, null);
+      const res = await axiosInstance.put(`/user/subscribe/${mangaId}`, null, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       const subList = res.data as string[];
       setProfile((prevProfile) => ({
         ...prevProfile,
         subscribeList: subList,
       }));
     } catch (e) {
+      alert(e);
       console.log(e);
     }
   };
