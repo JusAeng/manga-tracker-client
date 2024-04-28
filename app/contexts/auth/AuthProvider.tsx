@@ -1,48 +1,65 @@
 "use client";
-// import Welcome from 'components/welcome';
+
 import { PropsWithChildren, useEffect, useState } from "react";
 import { useLiff } from "react-liff";
-// import axios from 'utils/axios';
+import axiosInstance from "@/app/utils/axios";
+import UseProfile from "@/app/hooks/UseProfile";
+import { ProfileType } from "@/app/types/Profile";
 
 interface IToken {
   token: string;
+  profile: ProfileType;
 }
 
 const AuthProvider = ({ children }: PropsWithChildren): JSX.Element => {
   const [loadingToken, setLoadingToken] = useState(true);
   const { error, isLoggedIn, isReady, liff } = useLiff();
+  const { setProfile, setToken } = UseProfile();
 
-  // useEffect(() => {
-  //   if (!isLoggedIn) return;
-  // }, [liff, isLoggedIn, isReady]);
+  useEffect(() => {
+    const initApp = async () => {
+      const lineToken = liff.getIDToken();
+      if (!lineToken) return;
+      const response = await getUserData(lineToken);
+      if (!response) return;
 
-  // if (!isReady) {
-  //   return <h1>Loading</h1>;
-  // }
+      const { token, profile } = response;
+      setProfile(profile);
+      setToken(token);
+      // setLoadingToken(false);
+    };
 
-  const initApp = async () => {
-    const tokenId = liff.getIDToken();
-    if (!tokenId) return;
-    alert(tokenId);
-    // const response = await getUserData(tokenId);
-    // if (!response) return;
+    if (!isLoggedIn) return;
+    initApp();
+  }, [liff, isLoggedIn, isReady, setProfile, setToken]);
 
-    // const { token } = response;
+  if (!isReady) {
+    return <h1>Loading</h1>;
+  }
 
-    // axios.defaults.headers.common.Authorization = `Bearer ${token}`;
-    // setLoadingToken(false);
-  };
+  const getUserData = async (lineToken: string) => {
+    try {
+      // const response = await fetch(
+      //   "https://mgt-backend-deploy-spk23ljzqq-as.a.run.app/auth",
+      //   {
+      //     method: "POST",
+      //     body: JSON.stringify({
+      //       token: lineToken,
+      //     }),
+      //   }
+      // );
+      // let res = await response.json();
+      // return res;
 
-  const getUserData = async (userId: string) => {
-    //     try {
-    //       const response = await axios.post<IToken>('/auth', {
-    //         userId,
-    //       });
-    //       return response.data;
-    //     } catch (error) {
-    //       return null;
-    //     }
-    return null;
+      const response = await axiosInstance.post<IToken>("/auth", {
+        token: lineToken,
+      });
+      return response.data;
+    } catch (error) {
+      alert(error);
+      alert("catch");
+      return null;
+    }
   };
 
   //   if (!isReady || loadingToken) return <Welcome />;
