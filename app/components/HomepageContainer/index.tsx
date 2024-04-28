@@ -17,13 +17,6 @@ const MainContainer = () => {
   const newManga = [1];
   const { error, isLoggedIn, isReady, liff } = useLiff();
 
-  // useEffect(() => {
-  //   if (!isLoggedIn) return;
-  // }, [liff, isLoggedIn, isReady]);
-
-  // if (!isReady) {
-  //   return <h1>Loading</h1>;
-  // }
   const handleCopyClick = () => {
     // Create a temporary textarea element
     const textarea = document.createElement("textarea");
@@ -54,7 +47,7 @@ const MainContainer = () => {
           id={"660d975d9fb2c1bc731793fa"}
         />
       </section>
-      <button onClick={handleCopyClick}>Click</button>
+      {/* <button onClick={handleCopyClick}>Click</button> */}
       {trendingManga.length > 0 && (
         <section>
           <h3 className="text-white text-[18px] ml-[10px]">Trending Manga</h3>
