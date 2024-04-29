@@ -8,7 +8,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import FilterDropdown from "./FilterDropdown";
 import { MangaType } from "../types/Manga";
-import { sortingManga } from "../services/manga.service";
+import { getLatestVolImage, sortingManga } from "../services/manga.service";
 import { VscDebugRestart } from "react-icons/vsc";
 import axiosInstance from "../utils/axios";
 import UseProfile from "../hooks/UseProfile";
@@ -272,7 +272,7 @@ const SearchContainer = () => {
           <MangaCardMini
             key={manga.title}
             id={manga._id}
-            image={manga.image}
+            image={getLatestVolImage(manga)}
             name={manga.title}
           />
         ))}
