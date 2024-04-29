@@ -7,6 +7,7 @@ import useProfile from "../hooks/UseProfile";
 import { MangaType } from "../types/Manga";
 import { useEffect, useState } from "react";
 import axiosInstance from "../utils/axios";
+import { getLatestVolImage } from "../services/manga.service";
 
 const ShelfContainer = () => {
   // const myManga = testData;
@@ -47,7 +48,7 @@ const ShelfContainer = () => {
           <MangaCard
             id={data._id}
             key={idx}
-            image={data.image}
+            image={getLatestVolImage(data)}
             name={data.title}
             author={data.author}
             lastVol={data.lastVol}
