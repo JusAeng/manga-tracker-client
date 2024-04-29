@@ -9,7 +9,6 @@ import { useEffect, useState } from "react";
 import { MangaType } from "../types/Manga";
 import UseProfile from "../hooks/UseProfile";
 import axiosInstance from "../utils/axios";
-import ImageUtil from "../components/ImageUtil";
 
 interface IProp {
   mangaId: string;
