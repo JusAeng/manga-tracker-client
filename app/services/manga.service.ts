@@ -17,3 +17,16 @@ export function sortingManga(
 
   return sortOrder === "asc" ? comparison : -comparison;
 }
+
+export function getLatestVolImage(manga: MangaType): string {
+  if (manga.vols) {
+    if (
+      // manga.vols.length === manga.lastVol &&
+      manga.vols[manga.vols.length - 1].image
+    ) {
+      return manga.vols[manga.vols.length - 1].image;
+    }
+  }
+
+  return manga.image;
+}
