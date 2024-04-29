@@ -1,5 +1,6 @@
 import { MangaType } from "../types/Manga";
 import axiosInstance from "../utils/axios";
+import { getLatestVolImage } from "./manga.service";
 
 export function sumArrayLengths(
   ownerList: { [key: string]: number[] } | null
@@ -44,8 +45,9 @@ export async function top3Manga(
         Authorization: `Bearer ${token}`,
       },
     });
-    const { title, image } = res.data[0] as MangaType;
-    return { title, image };
+    const manga = res.data[0] as MangaType;
+    const image = getLatestVolImage(manga);
+    return { title: manga.title, image };
   });
   const mangaInfoArray = await Promise.all(promises);
 
