@@ -157,8 +157,8 @@ const Navbar = () => {
         hidden: { y: "100%" },
       }}
       animate={visible ? "visible" : "hidden"}
-      transition={{ duration: 0.3, ease: "easeInOut" }}
-      className="fixed bottom-[-1px] left-[0px] w-[100vw] bg-primaryx min-h-[45px] pt-[2px] pb-[22px] text-white rounded-t-[20px]"
+      transition={{ duration: 0.1, ease: "easeInOut" }}
+      className="fixed bottom-[-1px] left-[0px] w-[100vw] bg-primaryx min-h-[45px] pt-[2px] pb-[22px] text-white rounded-t-[20px] z-50"
     >
       {navText.includes("manga-detail") ? (
         // In Manga Detail Page
