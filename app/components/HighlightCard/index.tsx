@@ -9,6 +9,7 @@ import { subscribe } from "diagnostics_channel";
 import { IoCheckmarkOutline } from "react-icons/io5";
 import UseProfile from "@/app/hooks/UseProfile";
 import { useEffect } from "react";
+import axiosInstance from "@/app/utils/axios";
 
 interface IProp {
   id: string;
@@ -19,15 +20,29 @@ interface IProp {
 
 const HighlightCard: React.FC<IProp> = ({ id, image, genres, name }) => {
   const router = useRouter();
-  const { profile } = UseProfile();
+  const { profile, setProfile, token } = UseProfile();
   const [isSubscribe, setIsSubscribe] = useState(false);
 
   const handleView = () => {
     router.push(`/manga-detail/${id}`);
   };
-  const handleSub = () => {
-    setIsSubscribe((prev) => !prev);
-    console.log("subscribe");
+  const handleSub = async () => {
+    try {
+      const res = await axiosInstance.put(`/user/subscribe/${id}`, null, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const subList = res.data as string[];
+      setIsSubscribe(!isSubscribe);
+      setProfile((prevProfile) => ({
+        ...prevProfile,
+        subscribeList: subList,
+      }));
+    } catch (e) {
+      alert(e);
+      console.log(e);
+    }
   };
 
   useEffect(() => {
@@ -79,12 +94,12 @@ const HighlightCard: React.FC<IProp> = ({ id, image, genres, name }) => {
           onClick={handleSub}
         >
           {isSubscribe ? (
-            <div className="flex gap-[6px] items-center">
+            <div className="flex gap-[6px] items-center" onClick={handleSub}>
               <IoCheckmarkOutline size={18} color={"#ffffff"} />
               <span className="text-[#ffffff]">Subscribed</span>
             </div>
           ) : (
-            <div className="flex gap-[7px]">
+            <div className="flex gap-[7px]" onClick={handleSub}>
               <IoMdAdd size={21} color={"#ffffff"} />
               <span className="text-[#ffffff]">Subscribe</span>
             </div>
