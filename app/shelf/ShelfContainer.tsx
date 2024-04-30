@@ -41,7 +41,7 @@ const ShelfContainer = () => {
       manga.author.toLowerCase().includes(searchText.toLowerCase())
   );
 
-  return (
+  return filtered ? (
     <div className="grid grid-cols-2 place-items-center gap-[18px] px-[5vw]">
       {filtered.map((data, idx) => {
         return (
@@ -55,6 +55,10 @@ const ShelfContainer = () => {
           />
         );
       })}
+    </div>
+  ) : (
+    <div className="flex h-[30vh] flex-col justify-end bg-[#1e1e1f] text-center text-[#777777]">
+      your shelf is empty
     </div>
   );
 };
