@@ -1,10 +1,13 @@
 "use client";
 
 import { PropsWithChildren, useEffect, useState } from "react";
+import Image from "next/image";
 import { useLiff } from "react-liff";
 import axiosInstance from "@/app/utils/axios";
 import UseProfile from "@/app/hooks/UseProfile";
 import { ProfileType } from "@/app/types/Profile";
+
+import gif from "@/app/assets/pictures/dont-care-idc.gif";
 
 interface IToken {
   token: string;
@@ -34,7 +37,14 @@ const AuthProvider = ({ children }: PropsWithChildren): JSX.Element => {
   }, [liff, isLoggedIn, isReady, setProfile, setToken]);
 
   if (!isReady) {
-    return <h1>Loading</h1>;
+    return (
+      <div className="w-[100vw] h-[800vh] grid place-items-center">
+        <div className="flex flex-col justify-center">
+          <Image src={gif} alt="Picture of the author" />
+          <div className="text-[#777777]">Loading</div>
+        </div>
+      </div>
+    );
   }
 
   const getUserData = async (lineToken: string) => {
