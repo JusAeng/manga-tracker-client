@@ -7,15 +7,21 @@ import HighlightCard from "../HighlightCard";
 import MangaCard from "../MangaCard";
 import useSearch from "@/app/hooks/UseSearch";
 import { useLiff } from "react-liff";
+import axiosInstance from "@/app/utils/axios";
+import UseProfile from "@/app/hooks/UseProfile";
+import { MangaType } from "@/app/types/Manga";
+import { useEffect, useState } from "react";
+import { getLatestVolImage } from "@/app/services/manga.service";
 
 const MainContainer = () => {
   const myAnimes = testData;
 
-  const highlightManga = [1];
-  const trendingManga = [1];
-  const recommendManga = [1];
-  const newManga = [1];
-  const { error, isLoggedIn, isReady, liff } = useLiff();
+  const { token } = UseProfile();
+  const [highlightManga, setHighlihgtManga] = useState({} as MangaType);
+  const [trendingManga, setTrendingManga] = useState([] as MangaType[]);
+  const [recommendManga, setRecommendManga] = useState([] as MangaType[]);
+  const [newManga, setNewManga] = useState([] as MangaType[]);
+  const { liff } = useLiff();
 
   const handleCopyClick = () => {
     // Create a temporary textarea element
@@ -35,42 +41,79 @@ const MainContainer = () => {
     // Remove the temporary textarea from the DOM
     document.body.removeChild(textarea);
   };
+
+  useEffect(() => {
+    const loadData = async (mode: string) => {
+      try {
+        const response = await axiosInstance.get(`/manga/${mode}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        const data = response.data;
+        switch (mode) {
+          case "highlight":
+            setHighlihgtManga(data[0]);
+            break;
+          case "trending":
+            setTrendingManga(data);
+            break;
+          case "recommend":
+            setRecommendManga(data);
+            break;
+          case "new":
+            setNewManga(data);
+            break;
+          default:
+            console.log("not in case");
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    loadData("highlight");
+    loadData("trending");
+    loadData("recommend");
+    loadData("new");
+  }, [token]);
+
   return (
     <main>
       <section className="py-[20px]">
         <HighlightCard
-          image={
-            "https://static.wikia.nocookie.net/mushokutensei/images/8/80/MT-MN-V19.png/revision/latest?cb=20230819000719"
-          }
-          genres={["sci-fi", "action"]}
-          name={myAnimes[0].name}
-          id={"660d975d9fb2c1bc731793fa"}
+          image={getLatestVolImage(highlightManga)}
+          genres={highlightManga.otherGenres}
+          name={highlightManga.title}
+          id={highlightManga._id}
         />
       </section>
       {/* <button onClick={handleCopyClick}>Click</button> */}
-      {trendingManga.length > 0 && (
+      {trendingManga && (
         <section>
           <h3 className="text-white text-[18px] ml-[10px]">Trending Manga</h3>
           <div className="content-x-scroll scrollbar-hide">
-            <TrendingCard
-              id={myAnimes[0]._id}
-              image={myAnimes[1].image}
-              name={myAnimes[0].name}
-              publisher={myAnimes[0].publisher}
-            />
+            {trendingManga.map((elem, idx) => (
+              <TrendingCard
+                key={elem.title}
+                id={elem._id}
+                image={elem.image}
+                name={elem.title}
+                publisher={elem.publisher}
+              />
+            ))}
           </div>
         </section>
       )}
-      {recommendManga.length > 0 && (
+      {recommendManga && (
         <section className="mt-[5px]">
           <h3 className="text-white text-[18px] ml-[10px]">Recommend</h3>
           <div className="content-x-scroll scrollbar-hide">
-            {myAnimes.map((anime) => (
+            {recommendManga.map((anime) => (
               <TrendingCard
                 id={anime._id}
-                key={anime.name}
+                key={anime.title}
                 image={anime.image}
-                name={anime.name}
+                name={anime.title}
                 publisher={anime.publisher}
               />
             ))}
@@ -78,22 +121,20 @@ const MainContainer = () => {
         </section>
       )}
 
-      {newManga.length > 0 && (
+      {newManga && (
         <section className="mt-[5px]">
           <h3 className="text-white text-[18px] ml-[10px]">New</h3>
           <div className="content-x-scroll scrollbar-hide">
-            {myAnimes.map((anime, idx) => {
-              if (idx > 3) {
-                return (
-                  <TrendingCard
-                    id={anime._id}
-                    key={anime.name}
-                    image={anime.image}
-                    name={anime.name}
-                    publisher={anime.publisher}
-                  />
-                );
-              }
+            {newManga.map((anime, idx) => {
+              return (
+                <TrendingCard
+                  id={anime._id}
+                  key={anime.title}
+                  image={anime.image}
+                  name={anime.title}
+                  publisher={anime.publisher}
+                />
+              );
             })}
           </div>
         </section>
