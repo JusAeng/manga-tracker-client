@@ -22,7 +22,7 @@ const ImageUtil: React.FC<IProp> = ({
     <div className={`relative`} style={{ height: `${h}px`, width: `${w}px` }}>
       <Image
         src={image || noimage}
-        alt="Picture of the author"
+        alt=""
         fill
         sizes="100%"
         style={{
