@@ -75,7 +75,7 @@ const MainContainer = () => {
     loadData("trending");
     loadData("recommend");
     loadData("new");
-  }, [token]);
+  }, []);
 
   return (
     <main>
