@@ -15,11 +15,19 @@ interface Iprop {
 }
 
 const VolumnCard: React.FC<Iprop> = ({ mangaId, image, vol, own }) => {
-  const { setProfile } = UseProfile();
+  const { setProfile, token } = UseProfile();
   const [isBuy, setIsBuy] = useState(own);
   const handleClick = async () => {
     try {
-      const res = await axiosInstance.put(`/user/ownerlist/${mangaId}/${vol}`);
+      const res = await axiosInstance.put(
+        `/user/ownerlist/${mangaId}/${vol}`,
+        null,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       const myList = res.data;
       setIsBuy(!isBuy);
       setProfile((prevProfile) => ({
