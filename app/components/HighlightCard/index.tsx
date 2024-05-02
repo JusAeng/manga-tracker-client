@@ -69,7 +69,7 @@ const HighlightCard: React.FC<IProp> = ({ id, image, genres, name }) => {
       <div className="relative w-[340px] h-[510px] cursor-pointer">
         <Image
           src={image}
-          alt="Picture of the author"
+          alt=""
           fill
           sizes="100%"
           style={{
