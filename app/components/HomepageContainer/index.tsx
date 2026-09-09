@@ -1,62 +1,91 @@
 "use client";
 
 import "./index.css";
-import testData from "@/app/temp/anime.json";
 import TrendingCard from "../TrendingCard";
-import HighlightCard from "../HighlightCard";
-import MangaCard from "../MangaCard";
-import useSearch from "@/app/hooks/UseSearch";
-import { useLiff } from "react-liff";
+import HighlightHero from "../HighlightHero";
 import axiosInstance from "@/app/utils/axios";
 import UseProfile from "@/app/hooks/UseProfile";
-import { MangaType } from "@/app/types/Manga";
+import { MangaDetailType, MangaType } from "@/app/types/Manga";
 import { useEffect, useState } from "react";
-import { getLatestVolImage } from "@/app/services/manga.service";
+import configEnv from "@/app/config";
+import { mockGetSection, mockGetMangaById } from "@/app/mock/api";
+
+const Section = ({
+  title,
+  manga,
+}: {
+  title: string;
+  manga: MangaType[];
+}) => {
+  if (manga.length === 0) return null;
+  return (
+    <section className="mt-6 first:mt-2">
+      <h3 className="text-ink text-[17px] font-semibold px-5 mb-1">
+        {title}
+      </h3>
+      <div className="content-x-scroll scrollbar-hide">
+        {manga.map((elem) => (
+          <TrendingCard
+            key={elem.id}
+            id={elem.id}
+            image={elem.imageUrl}
+            name={elem.titleEn || elem.titleOriginal}
+          />
+        ))}
+      </div>
+    </section>
+  );
+};
 
 const MainContainer = () => {
-  const myAnimes = testData;
-
   const { token } = UseProfile();
-  const [highlightManga, setHighlihgtManga] = useState({} as MangaType);
+  const [highlight, setHighlight] = useState<MangaDetailType | null>(null);
   const [trendingManga, setTrendingManga] = useState([] as MangaType[]);
   const [recommendManga, setRecommendManga] = useState([] as MangaType[]);
   const [newManga, setNewManga] = useState([] as MangaType[]);
-  const { liff } = useLiff();
-
-  const handleCopyClick = () => {
-    // Create a temporary textarea element
-    const textarea = document.createElement("textarea");
-    textarea.value = liff.getIDToken() || "nani";
-
-    // Append the textarea to the DOM
-    document.body.appendChild(textarea);
-
-    // Select the text in the textarea
-    textarea.select();
-    textarea.setSelectionRange(0, 99999);
-
-    // Copy the selected text to the clipboard using the Clipboard API
-    document.execCommand("copy");
-
-    // Remove the temporary textarea from the DOM
-    document.body.removeChild(textarea);
-  };
 
   useEffect(() => {
-    const loadData = async (mode: string) => {
+    // Fills in genres on top of a highlight that's already on screen —
+    // never blocks the initial render, so a slow /manga/:id response
+    // just means the pills pop in a beat later, not a blank hero.
+    const enrichHighlight = async (id: string) => {
       try {
-        const response = await axiosInstance.get(`/manga/${mode}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        const data = response.data;
+        const detail = configEnv.USE_MOCK_DATA
+          ? await mockGetMangaById(id)
+          : (
+              await axiosInstance.get<MangaDetailType>(`/manga/${id}`, {
+                headers: { Authorization: `Bearer ${token}` },
+              })
+            ).data;
+        if (detail) setHighlight(detail);
+      } catch (e) {
+        console.log(e);
+      }
+    };
+
+    const loadData = async (mode: "trending" | "recommend" | "new") => {
+      try {
+        const data = configEnv.USE_MOCK_DATA
+          ? await mockGetSection(mode)
+          : (
+              await axiosInstance.get<MangaType[]>(`/manga/${mode}`, {
+                headers: { Authorization: `Bearer ${token}` },
+              })
+            ).data;
         switch (mode) {
-          case "highlight":
-            setHighlihgtManga(data[0]);
-            break;
           case "trending":
             setTrendingManga(data);
+            // Pick the first trending title to feature as the hero — no
+            // dedicated "highlight" concept on the backend, just a pick
+            // from data that's already there. Show it right away with
+            // what this response already has (title/image/intro), then
+            // fetch genres in the background instead of making the hero
+            // wait on a second round-trip before it can render at all.
+            if (data.length > 0) {
+              const pick = data[0];
+              setHighlight({ ...pick, authors: null, genres: null });
+              enrichHighlight(pick.id);
+            }
             break;
           case "recommend":
             setRecommendManga(data);
@@ -71,73 +100,30 @@ const MainContainer = () => {
         console.log(e);
       }
     };
-    loadData("highlight");
     loadData("trending");
     loadData("recommend");
     loadData("new");
   }, [token]);
 
-  return (
-    <main>
-      <section className="py-[20px]">
-        <HighlightCard
-          image={getLatestVolImage(highlightManga)}
-          genres={highlightManga.otherGenres}
-          name={highlightManga.title}
-          id={highlightManga._id}
-        />
-      </section>
-      {/* <button onClick={handleCopyClick}>Click</button> */}
-      {trendingManga && (
-        <section>
-          <h3 className="text-white text-[18px] ml-[10px]">Trending Manga</h3>
-          <div className="content-x-scroll scrollbar-hide">
-            {trendingManga.map((elem, idx) => (
-              <TrendingCard
-                key={elem.title}
-                id={elem._id}
-                image={elem.image}
-                name={elem.title}
-                publisher={elem.publisher}
-              />
-            ))}
-          </div>
-        </section>
-      )}
-      {recommendManga && (
-        <section className="mt-[5px]">
-          <h3 className="text-white text-[18px] ml-[10px]">Recommend</h3>
-          <div className="content-x-scroll scrollbar-hide">
-            {recommendManga.map((anime) => (
-              <TrendingCard
-                id={anime._id}
-                key={anime.title}
-                image={anime.image}
-                name={anime.title}
-                publisher={anime.publisher}
-              />
-            ))}
-          </div>
-        </section>
-      )}
+  // Don't show the featured pick a second time in the Trending row.
+  const trendingRest = trendingManga.slice(1);
 
-      {newManga && (
-        <section className="mt-[5px]">
-          <h3 className="text-white text-[18px] ml-[10px]">New</h3>
-          <div className="content-x-scroll scrollbar-hide">
-            {newManga.map((anime, idx) => {
-              return (
-                <TrendingCard
-                  id={anime._id}
-                  key={anime.title}
-                  image={anime.image}
-                  name={anime.title}
-                  publisher={anime.publisher}
-                />
-              );
-            })}
-          </div>
-        </section>
+  const isEmpty =
+    !highlight &&
+    trendingRest.length === 0 &&
+    recommendManga.length === 0 &&
+    newManga.length === 0;
+
+  return (
+    <main className="pb-6">
+      {highlight && <HighlightHero manga={highlight} />}
+      <Section title="Trending" manga={trendingRest} />
+      <Section title="Recommended for you" manga={recommendManga} />
+      <Section title="New" manga={newManga} />
+      {isEmpty && (
+        <div className="px-5 pt-10 text-center text-ink-faint text-[14px]">
+          No manga yet — check back soon.
+        </div>
       )}
     </main>
   );

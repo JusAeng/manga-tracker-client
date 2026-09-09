@@ -15,9 +15,7 @@ const BackButton: React.FC<IBackButton> = ({ size, color, classAdd }) => {
   return (
     <button
       onClick={() => router.back()}
-      className={
-        classAdd ? classAdd : "p-[2px] m-[5px] rounded-[50%] bg-[#444444]"
-      }
+      className={classAdd ? classAdd : "p-2 rounded-full bg-surface-2 border border-border"}
     >
       <FaAngleLeft size={size} color={color} />
     </button>

@@ -5,7 +5,7 @@ const UseNav = () => {
   const context = useContext(NavContext);
 
   if (!context) {
-    throw new Error("useFilter must be used within a FilterProvider");
+    throw new Error("UseNav must be used within a NavProvider");
   }
 
   return context;

@@ -1,5 +1,6 @@
 "use client";
 
+import { motion } from "framer-motion";
 import ImageUtil from "../components/ImageUtil";
 import { useRouter } from "next/navigation";
 
@@ -16,12 +17,16 @@ const MangaCardMini: React.FC<IProp> = ({ id, image, name }) => {
   };
 
   return (
-    <main className="w-[100px] cursor-pointer" onClick={handleClick}>
-      <ImageUtil image={image} w={100} h={150} imageClass="rounded-[5px]" />
-      <p className="truncate text-white text-[12px] text-center mt-[4px] px-[2px]">
+    <motion.div
+      whileTap={{ scale: 0.94 }}
+      className="w-full cursor-pointer"
+      onClick={handleClick}
+    >
+      <ImageUtil image={image} w={110} h={158} imageClass="rounded-xl shadow-card" />
+      <p className="truncate text-ink text-[12.5px] text-center mt-1.5 px-0.5 font-medium">
         {name}
       </p>
-    </main>
+    </motion.div>
   );
 };
 

@@ -1,5 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // Standalone output: needed so the Docker image only ships the
+  // built server + its pruned node_modules, instead of the whole
+  // source tree + full node_modules.
+  output: "standalone",
   async headers() {
     return [
       {
