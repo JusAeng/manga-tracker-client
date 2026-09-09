@@ -1,7 +1,8 @@
 import axios from "axios";
+import configEnv from "../config";
 
 const axiosInstance = axios.create({
-  baseURL: "https://mgt-backend-deploy-spk23ljzqq-as.a.run.app",
+  baseURL: configEnv.API_BASE_URL,
 });
 
 export default axiosInstance;

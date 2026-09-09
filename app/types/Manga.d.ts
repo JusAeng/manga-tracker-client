@@ -1,34 +1,45 @@
-export type AnimeType = {
-  name: string;
-  author: string;
-  image: string;
-  lastEpisode: number;
-};
-
 export type MangaType = {
-  _id: string;
-  title: string;
-  otherTitles: string[];
-  author: string;
-  otherParticipate: string[];
-  genre: string;
-  otherGenres: string[];
-  image: string;
+  id: string;
+  titleOriginal: string;
+  titleEn: string;
   introduction: string;
-  publisher: string;
-  firstDateJP: string;
-  firstDateTH: string;
-  vols: Vol[];
-  lastVol: number;
-  subscribers: number;
-  score: number;
-  totalVoters: number;
+  imageUrl: string;
+  firstDateJp: string | null;
+  status: string;
 };
 
-export type VolType = {
+export type MangaAuthorType = {
+  authorId: string;
+  name: string;
+  role: string;
+};
+
+export type GenreType = {
+  id: string;
+  name: string;
+};
+
+// What GET /manga/:id actually returns.
+export type MangaDetailType = MangaType & {
+  authors: MangaAuthorType[] | null;
+  genres: GenreType[] | null;
+};
+
+export type ThaiEditionType = {
+  id: string;
   mangaId: string;
-  vol: number;
-  image: string;
-  publishDate: string;
-  totalOwner: number;
+  publisherId: string;
+  titleTh: string;
+  firstDateTh: string | null;
+};
+
+export type VolumeType = {
+  id: string;
+  thaiEditionId: string;
+  volumeNumber: number;
+  isbn: string | null;
+  publishDate: string | null;
+  price: number | null;
+  imageUrl: string;
+  status: string;
 };

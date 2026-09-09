@@ -3,39 +3,42 @@
 import { PropsWithChildren, useEffect, useState } from "react";
 import ProfileContext from "./ProfileContext";
 import { ProfileType } from "@/app/types/Profile";
+import { MangaType } from "@/app/types/Manga";
 import axiosInstance from "@/app/utils/axios";
+import configEnv from "@/app/config";
 
 const ProfileProvider = ({ children }: PropsWithChildren) => {
   const [profile, setProfile] = useState({
-    _id: "",
-    name: "",
-    image: "",
-    totalSubscribe: 0,
-    totalBooks: 0,
-    subscribeList: [],
-    ownerList: {},
-    rateList: {},
+    id: "",
+    displayName: "",
+    pictureUrl: "",
+    followedMangaIds: [],
   } as ProfileType);
   const [token, setToken] = useState("");
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const response = await axiosInstance.get("/user/profile");
-  //       if (response.status != 200) {
-  //         throw new Error("Failed to fetch data");
-  //       }
-  //       setProfile(response.data);
-  //     } catch (error) {
-  //       console.error("Error fetching data:", error);
-  //     }
-  //   };
-
-  //   fetchData();
-
-  //   // Clean-up function
-  //   return () => {};
-  // }, []);
+  // Loaded once per login so follow buttons across the app can check
+  // membership locally instead of a round-trip per card.
+  useEffect(() => {
+    if (!token) return;
+    // DevAuthProvider's mock branch and Navbar's follow toggle both
+    // already handle followedMangaIds locally in mock mode — this
+    // effect is the real-backend path only.
+    if (configEnv.USE_MOCK_DATA) return;
+    const loadFollowing = async () => {
+      try {
+        const res = await axiosInstance.get<MangaType[]>("/user/following", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        setProfile((prev) => ({
+          ...prev,
+          followedMangaIds: res.data.map((m) => m.id),
+        }));
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    loadFollowing();
+  }, [token]);
 
   return (
     <ProfileContext.Provider value={{ profile, setProfile, token, setToken }}>

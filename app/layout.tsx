@@ -1,14 +1,13 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "./components/Navbar";
 import SearchProvider from "./contexts/search/SearchProvider";
 import NavProvider from "./contexts/nav/NavProvider";
 import LiffProvider from "./contexts/auth/LiffProvider";
 import AuthProvider from "./contexts/auth/AuthProvider";
+import DevAuthProvider from "./contexts/auth/DevAuthProvider";
 import ProfileProvider from "./contexts/profile/ProfileProvider";
-
-const inter = Inter({ subsets: ["latin"] });
+import configEnv from "./config";
 
 export const metadata: Metadata = {
   title: "Manga Tracker App",
@@ -20,21 +19,34 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  // NEXT_PUBLIC_DEV_TOKEN or NEXT_PUBLIC_USE_MOCK_DATA set → skip LIFF/
+  // LINE entirely for local dev. Unset (the normal/production case) →
+  // the real flow, untouched.
+  const useDevAuth = Boolean(configEnv.DEV_TOKEN) || configEnv.USE_MOCK_DATA;
+
+  const app = (
+    <NavProvider>
+      <SearchProvider>
+        {children}
+        <Navbar />
+      </SearchProvider>
+    </NavProvider>
+  );
+
   return (
     <html lang="en">
-      <body className={inter.className + " bg-[#1e1e1f] scrollbar-hide"}>
-        <LiffProvider>
+      <body className="bg-bg text-ink scrollbar-hide">
+        {useDevAuth ? (
           <ProfileProvider>
-            <AuthProvider>
-              <NavProvider>
-                <SearchProvider>
-                  {children}
-                  <Navbar />
-                </SearchProvider>
-              </NavProvider>
-            </AuthProvider>
+            <DevAuthProvider>{app}</DevAuthProvider>
           </ProfileProvider>
-        </LiffProvider>
+        ) : (
+          <LiffProvider>
+            <ProfileProvider>
+              <AuthProvider>{app}</AuthProvider>
+            </ProfileProvider>
+          </LiffProvider>
+        )}
       </body>
     </html>
   );

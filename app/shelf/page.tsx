@@ -4,7 +4,7 @@ import ShelfContainer from "./ShelfContainer";
 const ShelfPage = async () => {
   return (
     <main className="main-page flex flex-col gap-[20px]">
-      <MenuBar head={"My Manga"} sort={false} search={false} />
+      <MenuBar head={"My Manga"} />
       <ShelfContainer />
     </main>
   );

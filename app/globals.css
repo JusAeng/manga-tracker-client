@@ -2,44 +2,64 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Fonts */
+/* Fonts — Sukhumvit Set, chosen because this is a Thai-market app (same
+   family LINE itself uses) and reads well for both Thai and Latin text
+   in the same UI. font-display: swap so the page paints with a fallback
+   font immediately instead of holding text invisible until each weight
+   finishes loading (the default is effectively FOIT, and this app uses
+   six separate weight files, so that was blocking a lot more than the
+   old design's two). */
 
 @font-face {
-  font-family: "sukhumvit";
-  src: url("assets/fonts/sukhumvit-set/SukhumvitSet-Text.ttf")
-    format("truetype");
+  font-family: "sukhumvit-thin";
+  src: url("assets/fonts/sukhumvit-set/SukhumvitSet-Thin.ttf") format("truetype");
+  font-display: swap;
 }
-
-@font-face {
-  font-family: "sukhumvit-semibold";
-  src: url("assets/fonts/sukhumvit-set/SukhumvitSet-SemiBold.ttf")
-    format("truetype");
-}
-
-@font-face {
-  font-family: "sukhumvit-bold";
-  src: url("assets/fonts/sukhumvit-set/SukhumvitSet-Bold.ttf")
-    format("truetype");
-}
-
 @font-face {
   font-family: "sukhumvit-light";
-  src: url("assets/fonts/sukhumvit-set/SukhumvitSet-Light.ttf")
-    format("truetype");
+  src: url("assets/fonts/sukhumvit-set/SukhumvitSet-Light.ttf") format("truetype");
+  font-display: swap;
+}
+@font-face {
+  font-family: "sukhumvit";
+  src: url("assets/fonts/sukhumvit-set/SukhumvitSet-Text.ttf") format("truetype");
+  font-display: swap;
+}
+@font-face {
+  font-family: "sukhumvit-medium";
+  src: url("assets/fonts/sukhumvit-set/SukhumvitSet-Medium.ttf") format("truetype");
+  font-display: swap;
+}
+@font-face {
+  font-family: "sukhumvit-semibold";
+  src: url("assets/fonts/sukhumvit-set/SukhumvitSet-SemiBold.ttf") format("truetype");
+  font-display: swap;
+}
+@font-face {
+  font-family: "sukhumvit-bold";
+  src: url("assets/fonts/sukhumvit-set/SukhumvitSet-Bold.ttf") format("truetype");
+  font-display: swap;
 }
 
-/* Default Setup */
+/* Base */
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html,
+body {
+  background-color: #0f0f12;
+  color: #f3f3f5;
   font-family: "sukhumvit", sans-serif;
 }
 
 .main-page {
-  background-color: #1e1e1f;
-  padding-bottom: 65px;
+  background-color: #0f0f12;
+  padding-bottom: 96px;
   min-height: 100vh;
 }
 
@@ -47,26 +67,23 @@ h1 {
   font-family: "sukhumvit-bold";
   font-size: 24px;
 }
-
 h2 {
   font-family: "sukhumvit-bold";
-  font-size: 22px;
+  font-size: 20px;
 }
-
 h3 {
-  font-size: 18px;
   font-family: "sukhumvit-semibold";
-}
-
-p {
   font-size: 16px;
-  font-family: "sukhumvit-light";
 }
-
-.shadow-card {
-  box-shadow: 0px 6px 6px rgba(112, 144, 176, 0.15);
+p {
+  font-family: "sukhumvit";
+  font-size: 15px;
 }
 
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }

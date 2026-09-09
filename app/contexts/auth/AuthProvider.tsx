@@ -9,9 +9,11 @@ import { ProfileType } from "@/app/types/Profile";
 
 import gif from "@/app/assets/pictures/dont-care-idc.gif";
 
+// POST /auth returns the bare user row — no followedMangaIds, that's
+// populated separately by ProfileProvider once the token is set.
 interface IToken {
   token: string;
-  profile: ProfileType;
+  profile: Omit<ProfileType, "followedMangaIds">;
 }
 
 const AuthProvider = ({ children }: PropsWithChildren): JSX.Element => {
@@ -27,7 +29,7 @@ const AuthProvider = ({ children }: PropsWithChildren): JSX.Element => {
       if (!response) return;
 
       const { token, profile } = response;
-      setProfile(profile);
+      setProfile({ ...profile, followedMangaIds: [] });
       setToken(token);
       // setLoadingToken(false);
     };

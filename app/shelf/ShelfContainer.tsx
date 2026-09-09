@@ -3,14 +3,14 @@
 import MangaCard from "../components/MangaCard";
 import useSearch from "../hooks/UseSearch";
 import useProfile from "../hooks/UseProfile";
-// import testData from "../temp/anime.json";
 import { MangaType } from "../types/Manga";
 import { useEffect, useState } from "react";
 import axiosInstance from "../utils/axios";
-import { getLatestVolImage } from "../services/manga.service";
+import { ImBooks } from "react-icons/im";
+import configEnv from "../config";
+import { mockManga } from "../mock/manga";
 
 const ShelfContainer = () => {
-  // const myManga = testData;
   const { profile, token } = useProfile();
   const { searchText } = useSearch();
 
@@ -18,13 +18,15 @@ const ShelfContainer = () => {
 
   useEffect(() => {
     const loadData = async () => {
+      if (configEnv.USE_MOCK_DATA) {
+        const ids = profile.followedMangaIds ?? [];
+        setMangaOnShelf(mockManga.filter((m) => ids.includes(m.id)));
+        return;
+      }
       try {
-        const res = await axiosInstance("/user/subscribelist", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+        const res = await axiosInstance.get<MangaType[]>("/user/following", {
+          headers: { Authorization: `Bearer ${token}` },
         });
-
         if (res.data) {
           setMangaOnShelf(res.data);
         }
@@ -35,30 +37,33 @@ const ShelfContainer = () => {
     loadData();
   }, [profile, token]);
 
-  let filtered = MangaOnShelf.filter(
-    (manga) =>
-      manga.title.toLowerCase().includes(searchText.toLowerCase()) ||
-      manga.author.toLowerCase().includes(searchText.toLowerCase())
+  const filtered = MangaOnShelf.filter((manga) =>
+    (manga.titleEn || manga.titleOriginal)
+      .toLowerCase()
+      .includes(searchText.toLowerCase())
   );
 
-  return filtered ? (
-    <div className="grid grid-cols-2 place-items-center gap-[18px] px-[5vw]">
-      {filtered.map((data, idx) => {
-        return (
-          <MangaCard
-            id={data._id}
-            key={idx}
-            image={getLatestVolImage(data)}
-            name={data.title}
-            author={data.author}
-            lastVol={data.lastVol}
-          />
-        );
-      })}
+  return filtered.length > 0 ? (
+    <div className="grid grid-cols-2 gap-x-4 gap-y-7 px-5 pt-2">
+      {filtered.map((data) => (
+        <MangaCard
+          id={data.id}
+          key={data.id}
+          image={data.imageUrl}
+          name={data.titleEn || data.titleOriginal}
+        />
+      ))}
     </div>
   ) : (
-    <div className="flex h-[30vh] flex-col justify-end bg-[#1e1e1f] text-center text-[#777777]">
-      your shelf is empty
+    <div className="flex flex-col items-center justify-center gap-4 pt-24 px-10 text-center">
+      <div className="w-16 h-16 rounded-full bg-surface-2 grid place-items-center">
+        <ImBooks size={24} className="text-ink-faint" />
+      </div>
+      <p className="text-ink-soft text-[14px] leading-relaxed">
+        Your shelf is empty.
+        <br />
+        Follow a manga to see it here.
+      </p>
     </div>
   );
 };

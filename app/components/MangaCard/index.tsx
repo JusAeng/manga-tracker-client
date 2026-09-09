@@ -1,5 +1,6 @@
 "use client";
 
+import { motion } from "framer-motion";
 import ImageUtil from "../ImageUtil";
 import { useRouter } from "next/navigation";
 import { StaticImageData } from "next/image";
@@ -9,36 +10,31 @@ interface IMangaCard {
   id: string;
   image: string | StaticImageData;
   name: string;
-  author: string;
-  lastVol: number;
 }
 
-const MangaCardNew: React.FC<IMangaCard> = ({
-  id,
-  image,
-  name,
-  author,
-  lastVol,
-}) => {
+const MangaCardNew: React.FC<IMangaCard> = ({ id, image, name }) => {
   const router = useRouter();
   const handleClick = async () => {
     router.push(`/manga-detail/${id}`);
   };
 
   return (
-    <div className="w-[150px]" onClick={handleClick}>
+    <motion.div
+      whileTap={{ scale: 0.96 }}
+      className="w-[160px] cursor-pointer"
+      onClick={handleClick}
+    >
       <ImageUtil
         image={image || noimage}
-        w={150}
-        h={225}
+        w={160}
+        h={230}
         objectFit="cover"
-        imageClass="rounded-[10px] cursor-pointer"
+        imageClass="rounded-2xl shadow-card"
       />
-      <h3 className="text-white text-center px-[3px] truncate">{name}</h3>
-      <p className="relative bottom-[3px] text-white text-center text-[11px]">
-        lastest vol: {lastVol}
-      </p>
-    </div>
+      <h3 className="text-ink text-[14px] mt-2 text-center truncate font-medium">
+        {name}
+      </h3>
+    </motion.div>
   );
 };
 

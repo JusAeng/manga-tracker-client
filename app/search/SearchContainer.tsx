@@ -1,282 +1,116 @@
 "use client";
 
-import testData from "@/app/temp/anime.json";
 import { MdFilterAlt } from "react-icons/md";
-import { IoChevronBackOutline, IoChevronDownOutline } from "react-icons/io5";
+import { IoSearchOutline } from "react-icons/io5";
 import MangaCardMini from "./MangaCardMini";
-import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
-import FilterDropdown from "./FilterDropdown";
 import { MangaType } from "../types/Manga";
-import { getLatestVolImage, sortingManga } from "../services/manga.service";
-import { VscDebugRestart } from "react-icons/vsc";
+import { sortingManga } from "../services/manga.service";
 import axiosInstance from "../utils/axios";
 import UseProfile from "../hooks/UseProfile";
-
-interface FilterElementsType {
-  accessKey: string;
-  header: string;
-  color?: string;
-}
-
-interface AddedType {
-  [key: string]: string[];
-}
-
-const allFilterElements: FilterElementsType[] = [
-  {
-    accessKey: "publishers",
-    header: "Publishers",
-    color: "#fff6e3",
-  },
-  {
-    accessKey: "genres",
-    header: "Genres",
-    color: "#aaffaa",
-  },
-  {
-    accessKey: "sort",
-    header: "Sort",
-    color: "#666666",
-  },
-];
-
-interface IProp {
-  allManga: MangaType[];
-}
+import configEnv from "../config";
+import { mockGetManga } from "../mock/api";
 
 const SearchContainer = () => {
   const [allManga, setAllManga] = useState([] as MangaType[]);
   const { token } = UseProfile();
   const searchRef = useRef<HTMLInputElement>(null);
-  const [isSearching, setIsSearching] = useState(false);
   const [searchText, setSearchText] = useState("");
-
   const [isFilter, setIsFilter] = useState(false);
-  const [filterOption, setFilterOption] = useState("");
-  const [filterItems, setFilterItems] = useState({
-    publishers: [],
-    genres: [],
-    sort: [],
-  } as AddedType);
+  const [sort, setSort] = useState<"asc" | "desc" | "">("");
 
   const handleTyping = () => {
-    const textSearchRef = searchRef.current?.value || "";
-    setSearchText(textSearchRef);
+    setSearchText(searchRef.current?.value || "");
   };
-
-  const handleInputFocus = () => {
-    setIsSearching(true);
-    setIsFilter(false);
-    setFilterOption("");
-  };
-
-  const toggleFilter = () => {
-    setIsFilter(!isFilter);
-    setFilterOption("");
-  };
-
-  const handleFilterOption = (option: string) => {
-    if (option === filterOption) {
-      setFilterOption("");
-    } else {
-      setFilterOption(option);
-    }
-  };
-
-  const handleOptionManuSelect = (option: string, optionMenu: string) => {
-    // console.log(filterItems);
-    setFilterOption("");
-
-    if (option === "sort") {
-      setFilterItems((prevState) => ({
-        ...prevState,
-        sort: [optionMenu],
-      }));
-      return;
-    }
-
-    if (option === "genres") {
-      if (filterItems.genres.length > 7) {
-        alert("Can't add more than 8 genres");
-        return;
-      }
-    }
-
-    setFilterItems((prevState) => ({
-      ...prevState,
-      [option]: [...prevState[option], optionMenu],
-    }));
-  };
-
-  const handleReset = () => {
-    setFilterItems({
-      publishers: [],
-      genres: [],
-      sort: [],
-    });
-  };
-
-  let filteredMyManga = allManga?.filter((manga) => {
-    const mangaAllGenres = [...manga.otherGenres, manga.genre];
-    return (
-      manga.title.toLowerCase().includes(searchText.toLowerCase()) &&
-      (filterItems.genres.every((element) =>
-        mangaAllGenres.includes(element)
-      ) ||
-        filterItems.genres.length === 0) &&
-      (filterItems.publishers.includes(manga.publisher) ||
-        filterItems.publishers.length === 0)
-    );
-  });
-  if (filterItems.sort.length > 0) {
-    if (filterItems.sort[0] === "A -> Z") {
-      filteredMyManga.sort((a, b) => sortingManga(a, b, "asc"));
-    } else {
-      filteredMyManga.sort((a, b) => sortingManga(a, b, "desc"));
-    }
-  }
 
   useEffect(() => {
     const loadData = async () => {
       try {
-        const response = await axiosInstance.get("/manga", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        const man = response.data;
-        if (man) {
-          setAllManga(man);
-        }
+        const data = configEnv.USE_MOCK_DATA
+          ? await mockGetManga(searchText)
+          : (
+              await axiosInstance.get<MangaType[]>("/manga", {
+                params: searchText ? { q: searchText } : undefined,
+                headers: { Authorization: `Bearer ${token}` },
+              })
+            ).data;
+        setAllManga(data);
       } catch (e) {
-        alert(`catch,${e}`);
+        console.log(e);
       }
     };
     loadData();
-  }, [token]);
+  }, [token, searchText]);
+
+  const sortedManga = [...allManga];
+  if (sort) sortedManga.sort((a, b) => sortingManga(a, b, sort));
 
   return (
-    <main className="pb-[10px]">
-      <section className="sticky top-[0px] z-20 bg-primaryx">
-        <section className="pt-[10px] pb-[10px] px-[10px] flex justify-around items-center relative">
-          {isSearching && (
-            <div
-              onClick={() => setIsSearching(false)}
-              className="cursor-pointer p-[5px] absolute left-[20px]"
-            >
-              <IoChevronBackOutline color={"#777777"} size={28} />
-            </div>
-          )}
-          <motion.input
-            variants={{
-              active: {
-                paddingLeft: "40px",
-                height: 40,
-                paddingRight: "15px",
-                borderRadius: "20px",
-              },
-              default: { borderRadius: "10px", y: 0 },
-            }}
-            onFocus={handleInputFocus}
-            onBlur={() => setIsSearching(false)}
-            animate={isSearching ? "active" : "default"}
-            type="text"
-            className="w-[84%] rounded-[10px] h-[30px] px-[10px]"
-            placeholder="Search"
-            ref={searchRef}
-            onChange={handleTyping}
-          />
-          <div className="p-[5px] cursor-pointer" onClick={toggleFilter}>
-            <MdFilterAlt size={24} color={"#ffffff"} />
+    <main className="pb-6">
+      <div className="sticky top-0 z-20 bg-bg/95 backdrop-blur-md border-b border-border px-5 pt-4 pb-3">
+        <div className="flex items-center gap-2">
+          <div className="flex-1 flex items-center gap-2 bg-surface border border-border rounded-full h-11 px-4">
+            <IoSearchOutline size={18} className="text-ink-faint shrink-0" />
+            <input
+              type="text"
+              className="bg-transparent outline-none w-full text-[15px] text-ink placeholder:text-ink-faint"
+              placeholder="Search manga"
+              ref={searchRef}
+              onChange={handleTyping}
+            />
           </div>
-        </section>
-        {isFilter ? (
-          <motion.section
-            className="bg-primaryx absolute w-[100%] z-20 pb-[12px] rounded-b-[8px] max-h-[35vh]"
-            animate={{ y: "-1px", opacity: 1 }}
-            initial={{ y: "-20%", opacity: 0 }}
-            transition={{ duration: 0.2 }}
+          <button
+            onClick={() => setIsFilter(!isFilter)}
+            className={`shrink-0 grid place-items-center w-11 h-11 rounded-full border transition-colors ${
+              isFilter
+                ? "bg-accent text-accent-ink border-accent"
+                : "bg-surface text-ink-soft border-border"
+            }`}
           >
-            <div className="text-white flex justify-around">
-              {allFilterElements.map((element) => (
-                <div
-                  key={element.accessKey}
-                  className="flex flex-col items-center"
-                >
-                  <button
-                    onClick={() => handleFilterOption(element.accessKey)}
-                    className={`flex items-center gap-[4px] w-fit py-[2px] px-[10px] rounded-[15px] mb-[5px] ${
-                      element.accessKey === filterOption ? "bg-[#68de7c]" : ""
-                    }`}
-                  >
-                    <p>{element.header}</p>
-                    <IoChevronDownOutline size={12} />
-                  </button>
-
-                  <AnimatePresence>
-                    {filterOption === element.accessKey && (
-                      <FilterDropdown
-                        option={element.accessKey}
-                        added={filterItems[element.accessKey]}
-                        callback={handleOptionManuSelect}
-                      />
-                    )}
-                  </AnimatePresence>
-                </div>
-              ))}
-            </div>
-            <div className="pl-[10px]">
-              {allFilterElements.map(
-                (element) =>
-                  filterItems[element.accessKey].length > 0 && (
-                    <div
-                      key={element.accessKey}
-                      className="flex flex-wrap pt-[10px] gap-[8px]"
-                    >
-                      {filterItems[element.accessKey].map((item) => (
-                        <div
-                          key={item}
-                          className="text-black py-[1px] px-[8px] rounded-[15px]"
-                          style={{ backgroundColor: element.color }}
-                        >
-                          {item}
-                        </div>
-                      ))}
-                    </div>
-                  )
-              )}
-            </div>
-            {filterItems.genres.length +
-              filterItems.publishers.length +
-              filterItems.sort.length !==
-              0 && (
-              <div className="mt-[5px] flex justify-end pr-[4px]">
-                <button
-                  className="flex gap-[5px] cursor-pointer px-[5px] py-[3px]"
-                  onClick={handleReset}
-                >
-                  <span className="text-sm text-white">reset</span>
-                  <VscDebugRestart size={20} color={"#ffffff"} />
-                </button>
-              </div>
-            )}
-          </motion.section>
-        ) : (
-          <></>
+            <MdFilterAlt size={20} />
+          </button>
+        </div>
+        {isFilter && (
+          <div className="flex gap-2 pt-3">
+            <button
+              onClick={() => setSort(sort === "asc" ? "" : "asc")}
+              className={`py-1.5 px-4 rounded-full text-[13px] font-medium border transition-colors ${
+                sort === "asc"
+                  ? "bg-accent text-accent-ink border-accent"
+                  : "bg-surface-2 text-ink-soft border-border"
+              }`}
+            >
+              A → Z
+            </button>
+            <button
+              onClick={() => setSort(sort === "desc" ? "" : "desc")}
+              className={`py-1.5 px-4 rounded-full text-[13px] font-medium border transition-colors ${
+                sort === "desc"
+                  ? "bg-accent text-accent-ink border-accent"
+                  : "bg-surface-2 text-ink-soft border-border"
+              }`}
+            >
+              Z → A
+            </button>
+          </div>
         )}
-      </section>
+      </div>
 
-      <section className="grid grid-cols-3 place-items-center gap-y-[10px] px-[4px] pt-[20px]">
-        {filteredMyManga.map((manga) => (
+      <section className="grid grid-cols-3 gap-x-3 gap-y-6 px-5 pt-6">
+        {sortedManga.map((manga) => (
           <MangaCardMini
-            key={manga.title}
-            id={manga._id}
-            image={getLatestVolImage(manga)}
-            name={manga.title}
+            key={manga.id}
+            id={manga.id}
+            image={manga.imageUrl}
+            name={manga.titleEn || manga.titleOriginal}
           />
         ))}
       </section>
+      {sortedManga.length === 0 && (
+        <div className="px-5 pt-10 text-center text-ink-faint text-[14px]">
+          No manga found.
+        </div>
+      )}
     </main>
   );
 };

@@ -5,8 +5,8 @@ on:
     branches: ["main"]
 
 env:
-  PROJECT_ID: totemic-life-417117 # Google Cloud project id
-  GAR_LOCATION: asia-southeast1-docker.pkg.dev/totemic-life-417117/mgt-frontend # Artifact Registry location
+  PROJECT_ID: manga-tracker-app-io # Google Cloud project id
+  GAR_LOCATION: asia-southeast1-docker.pkg.dev/manga-tracker-app-io/mgt-frontend # Artifact Registry location
   SERVICE: manga-tracker-app # Cloud Run service name
   REGION: asia-southeast1 # Cloud Run service region
 
@@ -37,14 +37,17 @@ jobs:
           username: _json_key
           password: ${{ secrets.SERVICE_ACCOUNT_KEY }}
 
-      # - name: Create .env
-      #   run: |-
-      #     echo "LINECLIENTID=${{secrets.LINECLIENTID}}" >> .env \
-      #     && echo "JWT_SIGNED_STRING=${{secrets.JWT_SIGNED_STRING}}" >> .env
-
+      # NEXT_PUBLIC_* vars are inlined into the client bundle at build
+      # time (see Dockerfile), so they're passed in as build args here.
+      # These aren't secrets (they end up in the browser bundle either
+      # way) — set them as repo Variables: Settings > Secrets and
+      # variables > Actions > Variables tab.
       - name: Build and Push Container
         run: |-
-          docker build -t "${{ env.GAR_LOCATION }}/${{env.SERVICE}}" ./
+          docker build \
+            --build-arg NEXT_PUBLIC_API_BASE_URL="${{ vars.NEXT_PUBLIC_API_BASE_URL }}" \
+            --build-arg NEXT_PUBLIC_LIFF_ID="${{ vars.NEXT_PUBLIC_LIFF_ID }}" \
+            -t "${{ env.GAR_LOCATION }}/${{env.SERVICE}}" ./
           docker push "${{ env.GAR_LOCATION }}/${{env.SERVICE}}"
 
       - name: Deploy to Cloud Run
