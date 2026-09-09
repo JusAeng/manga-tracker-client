@@ -50,13 +50,10 @@ jobs:
             -t "${{ env.GAR_LOCATION }}/${{env.SERVICE}}" ./
           docker push "${{ env.GAR_LOCATION }}/${{env.SERVICE}}"
 
-      # Commented out to test just the build+push to Artifact Registry
-      # first. Uncomment once the push succeeds.
-      # - name: Deploy to Cloud Run
-      #   id: deploy
-      #   uses: google-github-actions/deploy-cloudrun@v2
-      #   with:
-      #     service: ${{ env.SERVICE }}
-      #     region: ${{ env.REGION }}
-      #     # NOTE: If using a pre-built image, update the image name here
-      #     image: ${{ env.GAR_LOCATION }}/${{env.SERVICE}}:latest
+      - name: Deploy to Cloud Run
+        id: deploy
+        uses: google-github-actions/deploy-cloudrun@v2
+        with:
+          service: ${{ env.SERVICE }}
+          region: ${{ env.REGION }}
+          image: ${{ env.GAR_LOCATION }}/${{env.SERVICE}}:latest
