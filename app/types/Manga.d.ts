@@ -25,6 +25,14 @@ export type MangaDetailType = MangaType & {
   genres: GenreType[] | null;
 };
 
+// What GET /manga/:id/rating returns, and what PUT/DELETE
+// /user/rating/:id return after rating/un-rating.
+export type MangaRatingType = {
+  averageRating: number | null;
+  ratingCount: number;
+  myRating: number | null;
+};
+
 export type ThaiEditionType = {
   id: string;
   mangaId: string;

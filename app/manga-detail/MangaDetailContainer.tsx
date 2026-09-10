@@ -5,14 +5,22 @@ import Image from "next/image";
 import VolumnCard from "./VolumnCard";
 import ReadMoreContainer from "./ReadMoreContainer";
 import { useEffect, useState } from "react";
-import { MangaDetailType, ThaiEditionType, VolumeType } from "../types/Manga";
+import {
+  MangaDetailType,
+  MangaRatingType,
+  ThaiEditionType,
+  VolumeType,
+} from "../types/Manga";
 import UseProfile from "../hooks/UseProfile";
 import axiosInstance from "../utils/axios";
 import configEnv from "../config";
 import {
+  mockClearRating,
   mockGetMangaById,
+  mockGetMangaRating,
   mockGetThaiEditions,
   mockGetVolumes,
+  mockRateManga,
 } from "../mock/api";
 
 interface IProp {
@@ -27,6 +35,7 @@ interface EditionWithVolumes {
 const MangaDetailContainer: React.FC<IProp> = ({ mangaId }) => {
   const [manga, setManga] = useState<MangaDetailType | null>(null);
   const [editions, setEditions] = useState<EditionWithVolumes[]>([]);
+  const [rating, setRating] = useState<MangaRatingType | null>(null);
   const { token } = UseProfile();
 
   useEffect(() => {
@@ -43,6 +52,7 @@ const MangaDetailContainer: React.FC<IProp> = ({ mangaId }) => {
             }))
           );
           setEditions(withVols);
+          setRating(await mockGetMangaRating(mangaId));
           return;
         }
 
@@ -54,10 +64,16 @@ const MangaDetailContainer: React.FC<IProp> = ({ mangaId }) => {
         );
         setManga(mangaRes.data);
 
-        const editionsRes = await axiosInstance.get<ThaiEditionType[]>(
-          `/manga/${mangaId}/thai-editions`,
-          { headers }
-        );
+        const [editionsRes, ratingRes] = await Promise.all([
+          axiosInstance.get<ThaiEditionType[]>(
+            `/manga/${mangaId}/thai-editions`,
+            { headers }
+          ),
+          axiosInstance.get<MangaRatingType>(`/manga/${mangaId}/rating`, {
+            headers,
+          }),
+        ]);
+        setRating(ratingRes.data);
         const withVolumes = await Promise.all(
           editionsRes.data.map(async (edition) => {
             const volumesRes = await axiosInstance.get<VolumeType[]>(
@@ -74,6 +90,39 @@ const MangaDetailContainer: React.FC<IProp> = ({ mangaId }) => {
     };
     loadData();
   }, [mangaId, token]);
+
+  const handleRate = async (value: number) => {
+    try {
+      if (configEnv.USE_MOCK_DATA) {
+        setRating(await mockRateManga(mangaId, value));
+        return;
+      }
+      const res = await axiosInstance.put<MangaRatingType>(
+        `/user/rating/${mangaId}`,
+        { rating: value },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      setRating(res.data);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const handleClearRating = async () => {
+    try {
+      if (configEnv.USE_MOCK_DATA) {
+        setRating(await mockClearRating(mangaId));
+        return;
+      }
+      const res = await axiosInstance.delete<MangaRatingType>(
+        `/user/rating/${mangaId}`,
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      setRating(res.data);
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   if (!manga) return null;
 
@@ -110,7 +159,12 @@ const MangaDetailContainer: React.FC<IProp> = ({ mangaId }) => {
       </section>
 
       <section className="relative -mt-4 z-10">
-        <ReadMoreContainer manga={manga} />
+        <ReadMoreContainer
+          manga={manga}
+          rating={rating}
+          onRate={handleRate}
+          onClearRating={handleClearRating}
+        />
         <div className="px-5 flex flex-col gap-5 mt-1 pb-28">
           {editions.map(({ edition, volumes }) => (
             <div key={edition.id}>

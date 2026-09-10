@@ -3,13 +3,22 @@
 import { useState } from "react";
 import { FaAngleDown, FaAngleUp } from "react-icons/fa";
 import "./Styles.scss";
-import { MangaDetailType } from "../types/Manga";
+import { MangaDetailType, MangaRatingType } from "../types/Manga";
+import RatingStars from "./RatingStars";
 
 interface IProp {
   manga: MangaDetailType;
+  rating: MangaRatingType | null;
+  onRate: (value: number) => void;
+  onClearRating: () => void;
 }
 
-const ReadMoreContainer: React.FC<IProp> = ({ manga }) => {
+const ReadMoreContainer: React.FC<IProp> = ({
+  manga,
+  rating,
+  onRate,
+  onClearRating,
+}) => {
   const [fullShow, setFullShow] = useState(false);
   const authorNames = (manga.authors ?? []).map((a) => a.name).join(", ");
 
@@ -21,6 +30,7 @@ const ReadMoreContainer: React.FC<IProp> = ({ manga }) => {
       {authorNames && (
         <p className="text-ink-soft text-[13px] mt-0.5">{authorNames}</p>
       )}
+      <RatingStars rating={rating} onRate={onRate} onClear={onClearRating} />
       {manga.introduction && (
         <>
           <div

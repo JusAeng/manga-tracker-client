@@ -1,11 +1,59 @@
 import {
   MangaDetailType,
+  MangaRatingType,
   ThaiEditionType,
   VolumeType,
 } from "@/app/types/Manga";
 import { mockManga, mockThaiEditions, mockVolumes } from "./manga";
 
 const delay = (ms = 0) => new Promise((r) => setTimeout(r, ms));
+
+// In-memory only — resets on reload, same as every other mock store here.
+// Keyed by mangaId; starts empty (no fake seed ratings).
+const mockRatings: Record<string, { total: number; count: number; mine: number | null }> = {};
+
+function ratingSummary(mangaId: string): MangaRatingType {
+  const r = mockRatings[mangaId];
+  if (!r || r.count === 0) return { averageRating: null, ratingCount: 0, myRating: r?.mine ?? null };
+  return { averageRating: r.total / r.count, ratingCount: r.count, myRating: r.mine };
+}
+
+export async function mockGetMangaRating(
+  mangaId: string,
+): Promise<MangaRatingType> {
+  await delay();
+  return ratingSummary(mangaId);
+}
+
+export async function mockRateManga(
+  mangaId: string,
+  value: number,
+): Promise<MangaRatingType> {
+  await delay();
+  const r = mockRatings[mangaId] ?? { total: 0, count: 0, mine: null };
+  if (r.mine !== null) {
+    r.total += value - r.mine;
+  } else {
+    r.total += value;
+    r.count += 1;
+  }
+  r.mine = value;
+  mockRatings[mangaId] = r;
+  return ratingSummary(mangaId);
+}
+
+export async function mockClearRating(
+  mangaId: string,
+): Promise<MangaRatingType> {
+  await delay();
+  const r = mockRatings[mangaId];
+  if (r && r.mine !== null) {
+    r.total -= r.mine;
+    r.count -= 1;
+    r.mine = null;
+  }
+  return ratingSummary(mangaId);
+}
 
 export async function mockGetManga(q?: string): Promise<MangaDetailType[]> {
   await delay();
