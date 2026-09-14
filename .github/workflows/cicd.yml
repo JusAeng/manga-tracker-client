@@ -39,7 +39,15 @@ jobs:
           token: ${{ secrets.ADMIN_REPO_TOKEN }}
           path: admin
 
+      # .env.local (VITE_API_BASE_URL) is gitignored in that repo, so a
+      # fresh checkout here has none — without this it silently falls
+      # back to the "http://127.0.0.1:8080" default baked into api.ts and
+      # ships that into the production bundle. Same backend URL as cli's
+      # own NEXT_PUBLIC_API_BASE_URL, so it's reused rather than adding a
+      # second Variable for the same value.
       - name: Build admin
+        env:
+          VITE_API_BASE_URL: ${{ vars.NEXT_PUBLIC_API_BASE_URL }}
         run: |-
           cd admin
           npm ci
