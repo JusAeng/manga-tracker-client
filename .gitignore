@@ -37,3 +37,7 @@ yarn-error.log*
 next-env.d.ts
 
 # app/**/temp/
+
+# manga-tracker-admin's built output — copied in by CI, never committed
+# (see .github/workflows/cicd.yml)
+/public/admin/

@@ -36,6 +36,19 @@ const nextConfig = {
     ],
   },
   reactStrictMode: false,
+  // manga-tracker-admin (a separate Vite SPA, built and copied into
+  // public/admin/ during CI — see .github/workflows/cicd.yml) is served
+  // from here instead of its own Cloud Run service. Real files under
+  // public/admin/assets/... are matched by Next's filesystem check before
+  // rewrites run, so this only catches paths with no matching static file
+  // (e.g. /admin/manga/123 on a direct load/refresh) and falls back to
+  // the SPA shell, letting React Router take over client-side.
+  async rewrites() {
+    return [
+      { source: "/admin", destination: "/admin/index.html" },
+      { source: "/admin/:path*", destination: "/admin/index.html" },
+    ];
+  },
 };
 
 module.exports = nextConfig;
