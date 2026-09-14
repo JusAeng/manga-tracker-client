@@ -133,7 +133,7 @@ const MangaDetailContainer: React.FC<IProp> = ({ mangaId }) => {
           src={manga.imageUrl}
           alt=""
           fill
-          sizes="100%"
+          sizes="100vw"
           style={{ objectFit: "cover" }}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-bg via-bg/10 to-black/30" />

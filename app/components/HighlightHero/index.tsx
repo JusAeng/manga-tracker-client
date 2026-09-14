@@ -23,7 +23,7 @@ const HighlightHero: React.FC<IProp> = ({ manga }) => {
         src={manga.imageUrl}
         alt=""
         fill
-        sizes="100%"
+        sizes="100vw"
         priority
         style={{ objectFit: "cover" }}
       />

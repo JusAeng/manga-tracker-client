@@ -24,7 +24,7 @@ const ImageUtil: React.FC<IProp> = ({
         src={image || noimage}
         alt=""
         fill
-        sizes="100%"
+        sizes={`${w}px`}
         style={{
           objectFit: objectFit ? objectFit : "cover",
         }}
